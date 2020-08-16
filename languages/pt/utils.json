@@ -1,0 +1,34 @@
+{
+    "ae": {
+        "msg": "Desculpe, o argumento `{{args}}` é invalido ou não foi setado"
+    },
+    "pe": {
+        "msg": "Ops! Você não tem a permissão `{{perm}}`, que é precisa para executar esse comando"
+    },
+    "mc": {
+        "msg": "O usuário `{{user.username}}` foi mutado pelo staff `{{staff.username}}`"
+    },
+    "umc": {
+        "msg": "O usuário `{{user.username}}` foi desmutado pelo staff `{{staff.username}}`"
+    },
+    "bc": {
+        "msg": "O usuário `{{user.username}}` foi banido pelo staff `{{staff.username}}`, pelo motivo `{{motivo}}`"
+    },
+    "ne": {
+        "msg": "O argumento `{{arg}}` não é um número!"
+    },
+    "sm": {
+        "msg":"Você não tem saldo suficiente para isso! Você precisa de `{{precisa}}` de {{money.toUpperCase()}}"
+    },
+    "ap": {
+        "n": {
+            "msg": "Você perdeu todos os seus {{nome}} !"
+        },
+        "c": {
+            "msg": "Você ganhou todos os seus {{nome}} de volta !"
+        },
+        "g": {
+            "msg": "Você ganhou os seus {{nome}} multiplicado por `{{x}}` !"
+        }
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "default": "-x-",
+
+  "ajuda": "[comando]",
+  "config": "<módulo|listar|status>"
+}

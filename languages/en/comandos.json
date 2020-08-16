@@ -1,0 +1,506 @@
+{
+    "addemoji": {
+        "use": "**<emoji name> <emoji link>**",
+        "sperm": "I'm don't have permissions to`Manage Emojis`!",
+        "perm": "Manage Emojis",
+        "confirmation": "The emoji {{emoji}} has been added to guild with successfully!",
+        "error": "Sorry, I couldn't add this emoji"
+    },
+  "stop": {
+    "perm": "<@{{autor}}>, to use this function, you must be the permission ``MANAGE GUILD``.",
+    "canal": "<@{{autor}}, to use this function you must be on the voice channel on which the BOT is. ",
+    "nomusic": "<@{{autor}}>, i am not touching anything right now.",
+    "fim": "The playlist was stopped by <@{{autor}}>."
+  },
+   "sortear": {
+    "perguntas": {
+      "author": "Swift - Giveway",
+      "item": "Olá, <@{{autor}}>. What do you want do draw?",
+      "tempo": "Olá, <@{{autor}}>. How long do you want the draw to last? \n\n Example: 1s, 1m, 1h, 1d...",
+      "ganhadores": "Olá, <@{{autor}}>. Now, i need know how many winners you will have in this draw",
+      "canal": "Olá, <@{{autor}}>. Lastly, I need you to mention the channel where the draw message will be sent."
+    },
+    "embedsorteio": {
+    "author": "Swift - Giveway",
+      "início": "Item to be drawn: **{{item}}** \n\n Winners count: **{{ganhadores}}** \n\n Draw duration: **{{tempo}}**",
+      "embederro": "The number of winners is greater than the number of participants! :frowning:",
+      "mensagemerro": "🎉 **Giveway ended!** 🎉",
+      "footer": "Ended!",
+      "fim": "Item draw: {{item}} \n\n Ganhador(es): {{msgg}}",
+      "footerfim": "Swift - Draw ended"
+  }
+  },
+  "lembrete": {
+    "footer": "To cancel this operation, write 'cancel'",
+    "cancelar": "<@{{autor}}>, did you cancel this operation with sucefully.",
+    "maximo": "<@{{autor}}>, you have already reached the reminder limit (3).",
+    "msg": "<@{{autor}}>, you need enter what do you want to i remember you!",
+    "length1": "<@{{autor}}>, your reminder must be a maximum of 100 characters.",
+    "length2": "<@{{autor}}>, your reminder must be at least 2 characters.",
+    "perguntar": "<:UNSPAcceptIcon:703725149546872932> Now I need of you write how long do you want to me remind you. Don't use space in the time, use this model: 1h ",
+    "erro": "<@{{autor}}>, you must insert a valid time. As stated above, you must insert this specific time model: 1h",
+    "iniciar": "<:UNSPWarntIcon:703725150159241216> <@{{autor}}>, you will be reminded in {{acaba}}", 
+    "fim": "<@{{autor}}>, remind! \n\n Remind: **{{lembrete}}**"
+  },
+  "lembretes": {
+    "embed": {
+      "author": "Swift - Your reminders",
+      "description": "See below for your active reminders"
+  },
+    "erro": "<@{{autor}}>, you don't have active reminders."
+  },
+    "autorole": {
+        "use": "Incorrect use model! Use `{{prefix}}autorole set`, `{{prefix}}autorole desativar or `{{prefix}}autorole status.`",
+        "channel": "Hello, **{{user.username}}**. Please, mention the role if you want to use in Autorole. Remembering, mention just one.",
+        "confirmation": "Role for autorole set successfully.",
+        "isoff": "The autorole is already disabled.",
+        "markoff": "AutoRole successfully disabled!",
+        "status": "AutoRole stats",
+        "statusmark": "{{status}}",
+        "statuscargoOFF": "Disabled",
+        "statuscargoON": "Activated",
+        "cargoName": "Role:",
+        "footer": "Requested by"
+    },
+    "config": {
+        "title": "**Settings menu - Swift**",
+        "entrada": "Entry",
+        "moderation": "Moderation",
+        "ticket": "Ticket",
+        "banco": "Bank",
+        "invite": "AntInvite",
+        "embedMsg": "Configure {{field}} system on your server!",
+        "footer": "Configuration being done by",
+        "confirmation": "System of {{type}} was successfully configured!",
+        "actionCanceled": "Configuration canceled.",
+        "finalizado": "Configuration end",
+        "tickets": {
+            "description1": "Please, send the channel **ID** that will be used to create the ticket. There will be sent the message that when reacted, will create a ticket. \n\n To cancel this operation, send `cancelar`.",
+            "description2": "Please, send the category **ID** that will be created the ticket's.",
+            "description3": "Please, send the name model the ticket that will be created. Use `variables` to replace informations with user id, user name, nickname and others... Example: `${name}'s_ticket",
+            "footer": "Ticket system menu configuration - Swift",
+            "field": "Show the {{field}} of the ticket owner",
+            "react": "React bellow with {{emojiTicket}} to create your ticket."
+        },
+        "entradas": {
+            "msg": "Configure the welcome message! Send the message that you want to appear when someone join on your server! \n- If you want cancel, send `cancelar` \n\n You can use this variables:",
+            "uservar": "Mention the joined user",
+            "totaluservar": "Show the full name of the joined user",
+            "dcUsers": "Show the total number of discord members",
+            "continue": "Ok! Now, the channel that the message will be send:"
+        },
+        "moderacao": {
+            "banimento": "Bans",
+            "mute": "Mute",
+            "combo": "Message and Channel",
+            "comboDescription": "Configure the channel and the message that will be send when someone be banned",
+            "comboDescriptionMute": "Configure the channel and the message that will be send when someone be muted",
+            "privado": "Message (Punished user)",
+            "privadoDescription": "Configure the message that will be send in banned user's direct message",
+            "description": "Here you can confire my moderation commands! React with what you want configure!",
+            "banMessage": "Configure the ban's message! Type it the message that you want that show when someone be banned from server! \n- If you want cancel, type it `cancelar` \n\n Variables can be used:",
+            "type": "Mention banned user",
+            "type1": "Show banned user's name.",
+            "type2": "Show banned user's id.",
+            "type3": "Mention ban author.",
+            "type4": "Show ban's reason.",
+            "type5": "Skip a line.",
+            "continue": "Ok! Now mention the channel that message will be send:",
+            "pv": "Configure the ban's message! Type the message that you want to show in user's DM when he's banned! \n- If you want to cancel, type `cancelar` \n\n Variables can be used:",
+            "mute-field": "Configure the channel and the message that will be send when someone be muted",
+            "embedDescription": "Configure the mute's message! Type the message that you want to show when someone is muted!\n- If you want to cancel, type `cancelar` \n\n Variables can be used:",
+            "types": {
+                "type": "Mention muted user",
+                "type1": "Show the muted user's name",
+                "type2": "Show the muted user's id",
+                "type3": "Mention the mute author",
+                "type4": "Skip a line.",
+                "type5": "Show de mute time."
+            }
+        },
+        "cbanco": {
+            "moeda": "Type on chat the name of coins you want to be! The default name is `money` ",
+            "finalize": "name setted successfully"
+        },
+        "antiinvite": {
+            "msg": "React with <:cristal:689924931882189044> with you want to release the disclosure on any channel \n\n React with <:mencao:689608921782157417> with you want to turn off the disclosure on any channel",
+            "mencione": "Mention **1** channel to be release the disclosure",
+            "finalize": "channel setted successfully"
+        }
+    },
+    "language": {
+        "NEW_LANG": "Put a valid language! (pt or en)",
+        "confirmation": "**Language setted successfully**"
+    },
+    "prefixo": {
+        "NEW_PREFIXO": "Put a prefix",
+        "confirmation": "**Prefix setted successfully**"
+    },
+    "removeemoji": {
+        "sperm": "I don't have the permission `Manage Emojis`!",
+        "perm": "Manage Emojis",
+        "emojiundefined": "Emoji not found!",
+        "confirmation": "Emoji {{emoji}} was removed!"
+    },
+    "renamechannel": {
+        "sperm": "I don't have the permission `Manage Channels`!",
+        "perm": "Manage Channels",
+        "new": "New name",
+        "confirmation": "Renamed channel!"
+    },
+    "ascii": {
+        "args_error": "Text",
+        "error": "Error when trying to get the information from api",
+        "caractere": "Use this command without accent!"
+    },
+    "beijar": {
+        "args_error": "USER",
+        "frase": "You are about to kiss!",
+        "word": "Kisss",
+        "meia": "Ki",
+        "now": "is kissing",
+        "ad": "give a nice kiss haha"
+    },
+    "caraoucoroa": {
+        "girar": "Let's spin the coin!"
+    },
+    "dado": {
+        "grande": "The number of faces is very large!",
+        "result": "I rolled a dice of {{faces}} and the face-up number was: {{result}}"
+    },
+    "fake": {
+        "error": "An error occurred!",
+        "arg": "Message"
+    },
+    "forca": {
+        "instance": "There is already a person playing on this server!",
+        "1": "Let's plaaayyy!!!",
+        "2": "GOOD! GG!!!!",
+        "3": "Oh! Unluckily...",
+        "letter": "Which letter will you choose?",
+        "incorrect": "Incorrect letters: ",
+        "any": "None",
+        "time": "The time is over!",
+        "correct": "You're right! The word was:",
+        "lose": "You lose! The word was: ",
+        "error": "An error occurred!"
+    },
+    "leet": {
+        "arg": "Text"
+    },
+    "perguntar": {
+        "arg": "Question"
+    },
+    "pescar": {
+        "pescou": "You fished one"
+    },
+    "ppt": {
+        "react": "Put a reaction to play!",
+        "win": "You win!",
+        "notwin": "Tie!",
+        "lose": "You lose :("
+    },
+    "print": {
+        "nsfw": "You can use this command on NSFW channels"
+    },
+    "printbomb": {
+        "nsfw": "You can use this command on NSFW channels"
+    },
+    "procurar-gif": {
+        "args": "GIF TO SEARCH",
+        "result": "Search results for gifs:"
+    },
+    "reverse": {
+        "arg": "Text",
+        "result": "Reverse word by"
+    },
+    "soco": {
+        "error": "You can't punch yourself!",
+        "socou": "Punch",
+        "esoco": "Is punching{{s}}",
+        "pare": "stop punching!"
+    },
+    "tweet": {
+        "arg": "User",
+        "arg2": "Text",
+        "error": "An error has occurred!"
+    },
+    "vaporonda": {
+        "arg": "Text"
+    },
+    "virartexto": {
+        "arg": "Text"
+    },
+    "banco": {
+        "perm": "Manage server",
+        "qnt": "Quantity of ",
+        "criando": "Creating an account for this user...",
+        "created": "Account created! Use the command again!",
+        "add": {
+            "confirmation": "Yah! You added ``{{qnt}}`` of {{money}} for {{user}}, that now has ``{{agora}}``"
+        },
+        "saldo": {
+            "confirmation": "The user {{user}} has ``{{saldo}}`` of {{money}}"
+        },
+        "remover": {
+            "menor": "You are trying to withdraw an amount of {{money}} that the {{user}} there is not!",
+            "confirmation": "Yah! You withdrew ``{{qnt}}`` of {{money}} of {{user}}, that now has ``{{now}}``"
+        },
+        "set": {
+            "confirmation": "Yah! You set the {{money}} of {{user}} for ``{{qnt}}``"
+        },
+        "enviar": {
+            "confirmation": "Yah! You sent ``{{qnt}}`` in {{money}} to {{user}}, that now has ``{{now}}``"
+        }
+    },
+    "coins": {
+        "atualmente": "Now you have",
+        "user": "Now have",
+        "footer": "Use the command {{prefix}}coins help to see the commands",
+        "qnt": "Quantify of uCoins",
+        "error": "You don't have enough uCoins",
+        "confirmation": "Successful transfer!",
+        "enviar": {
+            "confirmation": "You send ``{{quantidade}}`` of uCoins for {{user}}. \n\n You new balance: ``{{now}}``. \n\n New balance of {{user}}: ``{{usernow}}``."
+        },
+        "help": {
+            "1": "See the uCoins of someone",
+            "2": "Send uCoins for ",
+            "3": "Set the quantify of uCoins of any user",
+            "4": "Remove a quantify of uCoins of any user",
+            "5": "Add a quantify of uCoins for any user"
+        }
+    },
+    "daily": {
+        "confirmation": "YAY! You collected you diary reward of `{{adicionarpontos}}` uCoins!",
+        "error": "You can pick up your diary again at {{tempoquefalta}}"
+    },
+    "images": {
+        "gerando": "Generating...",
+        "error": "Sorry! I search, but I don't find any image",
+        "1": "Dog",
+        "2": "Cat",
+        "3": "Fox",
+        "4": "Shiba",
+        "18": "No adult content!"
+    },
+    "invert": {
+        "invert": "Inverting...",
+        "error": "Sorry! I couldn't manipulate the image"
+    },
+    "mcconquista": {
+        "arg": "Title | Description",
+        "arg1": "Title",
+        "arg2": "Description"
+    },
+    "mchead": {
+        "error": "Sorry, an error occurred!"
+    },
+    "pp": {
+        "arg": "You don't type anything... How will I guess what you will write? Going to the future?",
+        "error": "You have exceeded the 50 character limit, try to write something shorter ",
+        "aguarde": "1 second...",
+        "ierror": "An error occurred",
+        "sperm": "I don't have the necessary permission for this: `ATTACH_FILES`"
+    },
+    "raposa": {
+        "own": "Own... A fox!!"
+    },
+    "anunciar": {
+        "arg1": "Title",
+        "arg2": "Announcement",
+        "footer": "Announcement by "
+    },
+    "ban": {
+        "perm": "Ban Members",
+        "sperm": "I don't have permission: `Ban Members`",
+        "notban": "I can't ban this user",
+        "nenhuma": "Any reason",
+        "error": "Sorry! I couldn't ban the user because an error occurred: ",
+        "userBan": "Ban Member",
+        "banUser": "Banned by",
+        "motivo": "Readon"
+    },
+    "kick": {
+        "perm": "Kick Members",
+        "sperm": "I don't have permission: `Kick Members`",
+        "notban": "I can't kick this user",
+        "nenhuma": "Any reason",
+        "error": "Sorry! I couldn't kick the user because an error occurred: ",
+        "userBan": "Kicked Member",
+        "banUser": "Kicked by",
+        "motivo": "Reason"
+    },
+    "limpar": {
+        "perm": "Manage Messages",
+        "sperm": "I don't have permission: `Manage Messages`",
+        "arg": "Number of messages",
+        "baixo": "This number is low! (2/100)",
+        "alto": "That number is too high (2/100)",
+        "limpeza": "Clean",
+        "limpo": "Chat clear by: ",
+        "14": "You can't clear messages sended less than 14 days!"
+    },
+    "mute": {
+        "perm": "Mute Members",
+        "sperm": "I don't have permission: `Mute Members`",
+        "notban": "I couldn't mute this member",
+        "nenhuma": "Any reason",
+        "error": "I couldn't mute this user because an error occurred: ",
+        "userBan": "Mute Member",
+        "banUser": "Mutted by",
+        "motivo": "Reason",
+        "tempo": "Time",
+        "notmute": "will unmuted!"
+    },
+    "unmute": {
+        "perm": "Unmute Members",
+        "sperm": "I don't have permission: `Unmute Members`",
+        "notban": "I couldn't unmute this member",
+        "nenhuma": "Any reason",
+        "error": "I couldn't mute this user because an error occurred: ",
+        "userBan": "Unmuted member",
+        "banUser": "Mutted by",
+        "motivo": "Reason",
+        "tempo": "Time",
+        "notmute": "This user isn't mutted"
+    },
+    "vote": {
+        "vote": "Vote"
+    },
+    "mute-all": {
+        "perm": "Manage Messages",
+        "canal": "You don't are in a voice channel",
+        "confirmation": "Yah! All members are mutted now!",
+        "error": "I couldn't mute they, I really have permission do Mute Members?"
+    },
+    "unmute-all": {
+        "perm": "Manage Messages",
+        "canal": "You don't are in a voice channel",
+        "confirmation": "Yah! All members are unmutted now!",
+        "error": "I couldn't mute they, I really have permission do Mute Members?"
+    },
+    "ship": {
+        "arg": "Use {{prefix}}ship @user1 @user2",
+        "error": "Sorry! An error occured",
+        "new": "Do we have a new couple here?"
+    },
+    "wallpaper": {
+        "nsfw": "You can use this command on NSFW channels"
+    },
+    "docs": {
+        "arg": "Seatch Item",
+        "nothing": "I can't find anything with: ``{{pesquisa}}``"
+    },
+    "ajuda": {
+        "ajuda": "Help",
+        "embed": {
+            "description": "React with the categorie you want to view the commands! \n\n Total: `{{size}}` \n\n ",
+            "field": "See here all commands with {{type}}!"
+        },
+        "types": {
+            "fun": "Fun",
+            "mod": "Moderation",
+            "admin": "Administration",
+            "song": "Music",
+            "utils": "Utils",
+            "imgs": "Images"
+        }
+    },
+    "anonimo": {
+        "msg": "Anonymous message",
+        "anonimo": "Anonymous",
+        "enviado": "You send a message for"
+    },
+    "botinfo": {
+        "desc": "Hi! I am <@643304203334189056> and I'm progremmed on **JavaScript**! This is my informations!",
+        "v": "Version",
+        "l": "Language",
+        "b": "Library",
+        "lo": "Location",
+        "s": "Support",
+        "d": "Devs"
+    },
+    "calculadora": {
+        "equa": "Equation",
+        "invalid": "Sorry! Invalid question. An error was occurred:",
+        "calc": "Online Calculator",
+        "click": "Click Here!"
+    },
+    "clima": {
+        "error": "Sorry! I couldn't get the API's informations!",
+        "tempo": "Time",
+        "temp": "Temperature",
+        "hum": "Humidity"
+    },
+    "covid19": {
+        "mundo": "On word",
+        "casos": "Cases",
+        "mortes": "Deathes",
+        "recuperados": "Recovereds",
+        "tests": "Tests",
+        "pais": "on",
+        "error": "An error occurred. This country really exists?"
+    },
+    "emojis": {
+        "sperm": "I don't have permission: `Manage Emojis`!"
+    },
+    "encurtador": {
+        "encurtado": "Shortened link:"
+    },
+    "hastebin": {
+        "colocando": "Putting on"
+    },
+    "hexcolor": {
+        "error": "Error on get the API's informations",
+        "rgb": "The color's `rgb` is"
+    },
+    "membros": {
+        "membros": "members",
+        "description": "Total guild's members",
+        "ausente": "Absent",
+        "ocupados": "Dnd"
+    },
+    "pause": {
+        "pause": "Song paused with successfully!",
+        "nothing": "My beat is not playing anything here!!"
+    },
+    "play": {
+        "canal": "You must to be on a Voice Channel to use this command!",
+        "song": "Song",
+        "mesmo": "You must be on the same voice channel as me to execute this command",
+        "padd": "Playlist added with successfully!",
+        "padd2": "You added a playlist with successfully! ({{n}} songs)",
+        "selection": "Song's selection",
+        "selection2": "Type the number of the song you want to play. For cancel `cancelar`",
+        "canceled": "Operation canceled with successfully",
+        "inse": "Number of song",
+        "n": "You must enter a number greater than 1 and less than 5!",
+        "add": "Added the song {{song.title}} on playlist!",
+        "end": "My playlist ends! DJ SWIFT leaving!",
+        "reconnect": "I disconnected from the channel because there was no one to listen to my beat! To resume the playlist, type s!reconnect",
+        "sobre": " About song... ```ini\n [Name of song] {{song.title}} \n\n [Author of song] {{song.Channel.title}}\n```",
+        "d": "Song's duration",
+        "l": "Song's link",
+        "c": "Click Here",
+        "li": "List of DJ's",
+        "v": "Current volume"
+    },
+    "playlist": {
+        "nothing": "My player isn't playing anything here",
+        "i": "you insert the wrong command model. Use: `{{prefix}}!playlist <page>`, `{{prefix}}!playlist mover <song> <new position>` ou `{{prefix}}!playlist remover <position of a song>`. ",
+        "title": "Swift - Playlist of Songs",
+        "footer": "Total duration of complete playlist: {{convert3}} \nQuantify of songs: {{serverQueue.songs.length}} songs",
+        "mover": "you must to put the number of the song do you want to move",
+        "2": "You have to move songs on position 2+",
+        "ex": "Don't exists this quantify of songs in my playlist!",
+        "moved": "The song **{{serverQueue.songs[1].title}}** was moved to position `{{args[2]}}`with successfully.",
+        "remove": "You must to put the quantify of songs do you want to remove!",
+        "removed": "The song was `removed` with successfully!",
+        "arg": "Fist position"
+    },
+    "reconnect": {
+        "msg": "It's not possible to resume a playlist, because I already playing a song here.",
+        "a": "I don't found any playlist to resume"
+    }
+}

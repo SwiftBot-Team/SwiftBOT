@@ -1,0 +1,14 @@
+{
+  "default": "Um erro ocorreu!",
+
+  "devsOnly": "Para executar esse comando, você precisa ser um desenvolvedor!",
+  "botPermissionError": {
+    "singular": "Não possuo permissão de `{{perm}}`, que é precisa para eu executar esta ação.",
+    "plural": "Não possuo as permissões de `{{perm}}`, que são precisas para eu executar esta ação."
+  },
+  "userPermissionError": {
+    "singular": "Você não possui permissão de `{{perm}}`, que é precisa para executar essa ação.",
+    "plural": "Você não possui as permissões de `{{perm}}`, que são precisas para executar essa ação."
+  },
+  "cooldownError": "Hey, você está em cooldown! Aguarde um pouco!"
+}

@@ -1,0 +1,539 @@
+{
+    "addemoji": {
+        "use": "**<nome do emoji> <link do emoji>**",
+        "sperm": "Estou sem permissão de `Gerenciar Emojis`!",
+        "perm": "Gerenciar Emojis",
+        "confirmation": "O Emoji {{emoji}} foi adicionado com sucesso ao servidor!",
+        "error": "Desculpe, não consegui adicionar este emoji."
+    },
+  "stop": {
+    "perm": "<@{{autor}}>, para utilizar este comando você precisa da permissão ``GERENCIAR SERVIDOR``.",
+    "canal": "<@{{autor}}, para utilizar esta função você deve estar no canal de voz em que o BOT está. ",
+    "nomusic": "<@{{autor}}>, eu não estou tocando nada neste momento.",
+    "fim": "A fila de músicas foi para com sucesso por <@{{autor}}>."
+  },
+  "skip": {
+    "canal": "<@{{autor}}, para utilizar esta função você deve estar no canal de voz em que o BOT está. ",
+    "nomusic": "<@{{autor}}>, não há nada tocando neste momento para que eu possa pular!",
+    "musicapulada": "A música foi pulada por <@{{autor}}>.",
+    "permManage": "Permissão utilizada: MANAGE_SERVER",
+    "puladaautor": "A música foi pulada por quem a colocou <@{{autor}}>",
+    "javotou": "<@{{autor}}>, você já votou para pular essa música uma vez!",
+    "votado": "<@{{autor}}>, votou para pular a playlist. ({{votos}}) votos."
+  },
+  "sortear": {
+    "perguntas": {
+      "author": "Swift - Sorteio",
+      "item": "Olá, <@{{autor}}>. O que você deseja sortear?",
+      "tempo": "Olá, <@{{autor}}>. Quanto tempo você quer que dure o sorteio? \n\n Exemplo: 1s, 1m, 1h, 1d...",
+      "ganhadores": "Olá, <@{{autor}}>. Agora, preciso saber quantos ganhadores terá neste sorteio.",
+      "canal": "Olá, <@{{autor}}>. Por fim, preciso que mencione o canal em que será enviada a mensagem do sorteio."
+    },
+    "embedsorteio": {
+    "author": "Swift - Sorteio",
+      "início": "Item a ser sorteado: **{{item}}** \n\n Quantidade de ganhadores: **{{ganhadores}}** \n\n Duração do sorteio: **{{tempo}}**",
+      "embederro": "O número de ganhadores é maior do que o número de participantes! :frowning:",
+      "mensagemerro": "🎉 **SORTEIO ACABOU** 🎉",
+      "footer": "Acabou!",
+      "fim": "Item sorteado: {{item}} \n\n Ganhador(es): {{msgg}}",
+      "footerfim": "Swift - Sorteio finalizado"
+  }
+  },
+  "lembrete": {
+    "footer": "Para cancelar esta operação, digite 'cancelar'",
+    "cancelar": "<@{{autor}}>, você cancelou a operação com sucesso.",
+    "maximo": "<@{{autor}}>, você já atingiu o limite de lembretes (3).",
+    "msg": "<@{{autor}}>, você deve inserir o que é para eu te lembrar!",
+    "length1": "<@{{autor}}>, seu lembrete deve ter no máximo 100 caracteres.",
+    "length2": "<@{{autor}}>, seu lembrete deve ter pelo menos 2 caracteres.",
+    "perguntar": "<:UNSPAcceptIcon:703725149546872932> Agora preciso que você escreva daqui a quanto tempo você quer que eu te lembre. Não utilize espaços no tempo, utilize este modelo: 1h ",
+    "erro": "<@{{autor}}>, você deve inserir um tempo válido. Como dito acima, você deve inserir um modelo de tempo específico: 1h",
+    "iniciar": "<:UNSPWarntIcon:703725150159241216> <@{{autor}}>, você será lembrado em {{acaba}}",
+    "fim": "<@{{autor}}>, lembrete! \n\n Lembrete: **{{lembrete}}**"
+  },
+  "lembretes": {
+    "embed": {
+      "author": "Swift - Seus lembretes",
+      "description": "Veja abaixo seus lembretes ativos"
+  },
+    "erro": "<@{{autor}}>, você não possui lembretes ativos."
+  },
+    "autorole": {
+        "use": "Modelo de uso incorreto! Use `{{prefix}}autorole set`, `{{prefix}}autorole desativar` ou `{{prefix}}autorole status.`",
+        "channel": "Olá, **{{user.username}}**. Por favor, mencione o cargo de que deseja utilizar na Autorole. Lembrando, mencione apenas **um**.",
+        "confirmation": "Cargo para autorole setado com sucesso.",
+        "isoff": "O AutoRole já está desativado.",
+        "markoff": "AutoRole desativado com sucesso!",
+        "status": "Status do AutoRole",
+        "statusmark": "{{status}}",
+        "statuscargoOFF": "Desativado",
+        "statuscargoON": "Ativado",
+        "cargoName": "Cargo:",
+        "footer": "Solicitado por"
+    },
+    "config": {
+        "title": "Menu de configurações - Swift",
+        "entrada": "Entrada",
+        "moderation": "Moderação",
+        "ticket": "Ticket",
+        "banco": "Banco",
+        "invite": "AntiInvite",
+        "embedMsg": "Configure o sistema de {{field}} em seu servidor!",
+        "footer": "Configuração sendo feita por",
+        "confirmation": "Sistema de {{type}} configurada com sucesso!",
+        "actionCanceled": "Configuração cancelada.",
+        "finalizado": "Configuração finalizada",
+        "tickets": {
+            "description1": "Por favor, envie o **ID** do canal que será utilizado para criar o ticket. Lá será enviada a mensagem que ao reagir, irá criar um ticket. \n\n Para cancelar esta operação digite `cancelar` ",
+            "description2": "Por favor, envie o **ID** da categoria onde será criado os ticket's.",
+            "description3": "Por favor, envie o modelo que será o nome do ticket criado. Utilize `variáveis` para substituir informações como o ID do usuário, nome, nickname e etc.. \n\n Exemplo: `Ticket_de_${nome}`",
+            "footer": "Menu de configurações do sistema de ticket - Swift",
+            "field": "Mostra o {{field}} da pessoa que criou o ticket",
+            "react": "Reaja abaixo com {{emojiTicket}} para abrir seu ticket."
+        },
+        "entradas": {
+            "msg": "Configure a mensagem de bem-vindo! Digite a mensagem que você deseja que apareça quando alguém entra no servidor! \n- Caso queira cancelar, digite `cancelar` \n\n Variáveis que podem ser usadas:",
+            "uservar": "Menciona o usuário que entrou",
+            "totaluservar": "Mostra o nome completo do usuario que entrou",
+            "dcUsers": "Mostra o número total de membros do discord",
+            "continue": "Ok! Agora mencione o canal que irá ser enviado a mensagem:"
+        },
+        "moderacao": {
+            "banimento": "Banimentos",
+            "mute": "Mute",
+            "combo": "Mensagem e Canal",
+            "comboDescription": "Configure o canal e a mensagem que será enviada quando alguém for banido",
+            "comboDescriptionMute": "Configure o canal e a mensagem que será enviada quando alguém for mutado",
+            "privado": "Mensagem (Usuário punido)",
+            "privadoDescription": "Configure a mensagem que será enviada no privado do úsuario que foi banido",
+            "description": "Aqui você pode configurar os meus comandos de moderação! Reaja com oque deseja configurar!",
+            "banMessage": "Configure a mensagem do banimento! Digite a mensagem que você deseja que apareça quando alguém é banido do servidor! \n- Caso queira cancelar, digite `cancelar` \n\n Variáveis que podem ser usadas:",
+            "type": "Menciona o usuario que foi banido.",
+            "type1": "Mostra o nome completo do usuario que foi banido.",
+            "type2": "Mostra o id do usuario banido.",
+            "type3": "Menciona o autor do banimento.",
+            "type4": "Mostra o motivo do banimento.",
+            "type5": "Pula uma linha.",
+            "continue": "Ok! Agora mencione o canal que irá ser enviado a mensagem:",
+            "pv": "Configure a mensagem do banimento! Digite a mensagem que você deseja que apareça no privado do usuario quando ele é banido! \n- Caso queira cancelar, digite `cancelar` \n\n Variáveis que podem ser usadas:",
+            "mute-field": "Configure o canal e a mensagem que será enviada quando alguém for mutado",
+            "embedDescription": "Configure a mensagem do mute! Digite a mensagem que você deseja que apareça quando alguém é mutado do servidor! \n- Caso queira cancelar, digite `cancelar` \n\n Variáveis que podem ser usadas:",
+            "types": {
+                "type": "Menciona o usuario que foi mutado.",
+                "type1": "Mostra o nome completo do usuario que foi mutado.",
+                "type2": "Mostra o id do usuario mutado.",
+                "type3": "Menciona o autor do mute.",
+                "type4": "Pula uma linha.",
+                "type5": "Mostra o tempo do mute."
+            }
+        },
+        "cbanco": {
+            "moeda": "Digite no chat o nome que você quer dar a sua moeda! Por padrão, o nome é `money` ",
+            "finalize": "nome setado com sucesso"
+        },
+        "antiinvite": {
+            "msg": "Reaja com <:cristal:689924931882189044> caso queira liberar a divulgação em algum canal \n\n Reaja com <:mencao:689608921782157417> caso queira desabilitar a divulgação em algum canal",
+            "mencione": "Mencione **1** canal que deseja liberar a divulgação",
+            "mencione1": "Mencione **1** canal que deseja bloquear a divulgação",
+            "finalize": "canal setado com sucesso",
+            "finalize1": "canal setado com sucesso"
+        }
+    },
+    "language": {
+        "NEW_LANG": "Coloque uma lingua válida! (pt ou en)",
+        "confirmation": "**Linguagem setada com sucesso**"
+    },
+    "prefixo": {
+        "NEW_PREFIXO": "Coloque um prefixo",
+        "confirmation": "**Prefixo setada com sucesso**"
+    },
+    "removeemoji": {
+        "sperm": "Estou sem permissão de `Gerenciar Emojis`!",
+        "perm": "Gerenciar Emojis",
+        "emojiundefined": "Emoji não encontrado!",
+        "confirmation": "O emoji {{emoji}} foi removido!"
+    },
+    "renamechannel": {
+        "sperm": "Estou sem permissão de `Gerenciar Canais`!",
+        "perm": "Gerenciar Canais",
+        "new": "Novo Nome",
+        "confirmation": "Canal renomeado!"
+    },
+    "ascii": {
+        "args_error": "Texto",
+        "error": "Erro ao tentar pegar as informações da api.",
+        "caractere": "Use esse comando sem ascento!"
+    },
+    "beijar": {
+        "args_error": "USUÁRIO",
+        "frase": "Você está prestes a beijar!",
+        "word": "Beijooo",
+        "meia": "Bee",
+        "now": "está beijando",
+        "ad": "dá um beijo gostoso em"
+    },
+    "caraoucoroa": {
+        "girar": "Vamos girar a moeda!"
+    },
+    "dado": {
+        "grande": "O número de faces é muito grande!",
+        "result": "Rolei um dado de {{faces}} e o número virado pra cima foi: {{result}}"
+    },
+    "fake": {
+        "error": "Um erro ocorreu!",
+        "arg": "Mensagem"
+    },
+    "forca": {
+        "instance": "Já existe uma pessoa jogando neste servidor!",
+        "1": "Vamos jogaaarrr!!!",
+        "2": "BOAAA! GG!!!!",
+        "3": "Poxa, infelizmente...",
+        "letter": "Qual letra você irá escolher?",
+        "incorrect": "Letras incorretas: ",
+        "any": "Nenhuma",
+        "time": "O tempo acabou!",
+        "correct": "Você acertou! A palavra era:",
+        "lose": "Você perdeu! A palavra era: ",
+        "error": "Um erro ocorreu!"
+    },
+    "leet": {
+        "arg": "Texto"
+    },
+    "perguntar": {
+        "arg": "Pergunta"
+    },
+    "pescar": {
+        "pescou": "Você pescou um"
+    },
+    "ppt": {
+        "react": "Coloque uma reação para jogar!",
+        "win": "Você ganhou!",
+        "notwin": "Empatou!",
+        "lose": "Você perdeu :("
+    },
+    "print": {
+        "nsfw": "Você só pode usar esse comando em canais NSFW"
+    },
+    "printbomb": {
+        "nsfw": "Você só pode usar esse comando em canais NSFW"
+    },
+    "procurar-gif": {
+        "args": "GIF A PESQUISAR",
+        "result": "Resultado da pesquisa de gifs:"
+    },
+    "reverse": {
+        "arg": "Texto",
+        "result": "Palavra reversa por"
+    },
+    "soco": {
+        "error": "Você não pode se socar!",
+        "socou": "Socou",
+        "esoco": "Está socando{{s}}",
+        "pare": "pare de socar!"
+    },
+    "tweet": {
+        "arg": "Usuário",
+        "arg2": "Texto",
+        "error": "Um erro ocorreu!"
+    },
+    "vaporonda": {
+        "arg": "Texto"
+    },
+    "virartexto": {
+        "arg": "Texto"
+    },
+    "banco": {
+        "perm": "Gerenciar Servidor",
+        "qnt": "Quantidade de ",
+        "criando": "Criando uma conta para este usuário...",
+        "created": "Conta criada! Utilize o comando novamente!",
+        "add": {
+            "confirmation": "Yah! Você adicionou ``{{qnt}}`` de {{money}} para {{user}}, que agora tem ``{{agora}}``"
+        },
+        "saldo": {
+            "confirmation": "O usuario {{user}} tem ``{{saldo}}`` de {{money}}"
+        },
+        "remover": {
+            "menor": "Você está tentando retirar uma quantidade de {{money}} que o {{user}} não tem!",
+            "confirmation": "Yah! Você retirou ``{{qnt}}`` de {{money}} do {{user}}, que agora tem ``{{now}}``"
+        },
+        "set": {
+            "confirmation": "Yah! Você setou o {{money}} do {{user}} para ``{{qnt}}``"
+        },
+        "enviar": {
+            "confirmation": "Yah! Você enviou ``{{qnt}}`` de {{money}} para o {{user}}, que agora tem ``{{now}}``"
+        }
+    },
+    "coins": {
+        "atualmente": "você tem atualmente",
+        "user": "tem atualmente",
+        "footer": "Utilize o comando {{prefix}}coins help para ver os comandos",
+        "qnt": "Quantidade de uCoins",
+        "error": "Você não tem uCoins suficientes",
+        "confirmation": "Transferencia realizada com sucesso",
+        "enviar": {
+            "confirmation": "`Você enviou ``{{quantidade}}`` uCoins para {{user}}. \n\n Seu novo saldo: ``{{now}}``. \n\n Novo saldo de {{user}}: ``{{usernow}}``."
+        },
+        "help": {
+            "1": "Veja os uCoins de algum usuário",
+            "2": "Envie uCoins para algum usuário",
+            "3": "Seta a quantidade de uCoins de um usuário",
+            "4": "Remove a quantidade de uCoins de um usuário",
+            "5": "Adiciona a quantidade de uCoins de um usuário"
+        }
+    },
+    "daily": {
+        "confirmation": "YAY! Você coletou sua recompensa diária de `{{adicionarpontos}}` uCoins!",
+        "error": "Você só poderá pegar o seu daily novamente em {{tempoquefalta}}"
+    },
+    "images": {
+        "gerando": "Gerando...",
+        "error": "Me perdoe! Busquei porém não encontrei imagens",
+        "1": "Cachorro",
+        "2": "Gato",
+        "3": "Raposa",
+        "4": "Shiba",
+        "18": "Sem conteudo adulto!"
+    },
+    "invert": {
+        "invert": "Invertendo...",
+        "error": "Não foi possível manipular essa imagem"
+    },
+    "mcconquista": {
+        "arg": "Título | Descrição",
+        "arg1": "Título",
+        "arg2": "Descrição"
+    },
+    "mchead": {
+        "error": "Desculpe, um erro ocorreu!"
+    },
+    "pp": {
+        "arg": "Você não escreveu nada... como vou adivinhar o que você irá escrever? Indo ao futuro?",
+        "error": "Você ultrapassou o limite de 50 caracteres, tente escrever algo menor ",
+        "aguarde": "Aguarde",
+        "ierror": "Ocorreu um erro ao criar a sua imagem, por favor, tente novamente mais tarde.",
+        "sperm": "Eu não tenho a permissão necessária para fazer isso. `ATTACH_FILES`"
+    },
+    "raposa": {
+        "own": "Own... Uma raposa!"
+    },
+    "anunciar": {
+        "arg1": "Título",
+        "arg2": "Anuncio",
+        "footer": "Anuncio feito por "
+    },
+    "ban": {
+        "perm": "Banir Membros",
+        "sperm": "Não tenho permissão de `Banir Membros`",
+        "notban": "Eu não posso banir esse usuário",
+        "nenhuma": "Razão não fornecida",
+        "error": "Desculpe! Não consegui banir o usuário pelo erro: ",
+        "userBan": "Membro banido",
+        "banUser": "Banido por",
+        "motivo": "Motivo"
+    },
+    "kick": {
+        "perm": "Kickar Membros",
+        "sperm": "Não tenho permissão de `Kickar Membros`",
+        "notban": "Eu não posso kickar esse usuário",
+        "nenhuma": "Razão não fornecida",
+        "error": "Desculpe! Não consegui kickar o usuário pelo erro: ",
+        "userBan": "Membro kickado",
+        "banUser": "Kickado por",
+        "motivo": "Motivo"
+    },
+    "limpar": {
+        "perm": "Gerenciar Mensagens",
+        "sperm": "Estou sem permissão de `Gerenciar Mensagens`",
+        "arg": "Número de mensagens",
+        "baixo": "Esse número é muito baixo! (2 a 100)",
+        "alto": "Esse número é muito alto! (2 a 100)",
+        "limpeza": "Limpeza",
+        "limpo": "Chat limpo por: ",
+        "14": "Você só pode limpar mensagens que foram enviadas a menos de 14 dias!"
+    },
+    "mute": {
+        "perm": "Mutar Membros",
+        "sperm": "Não tenho permissão de `Mutar Membros`",
+        "notban": "Eu não posso Mutar esse usuário",
+        "nenhuma": "Razão não fornecida",
+        "error": "Desculpe! Não consegui Mutar o usuário pelo erro: ",
+        "userBan": "Membro Mutado",
+        "banUser": "Mutado por",
+        "motivo": "Motivo",
+        "tempo": "Tempo",
+        "notmute": "foi desmutado!"
+    },
+    "unmute": {
+        "perm": "Desmutar Membros",
+        "sperm": "Não tenho permissão de `Desmutar Membros`",
+        "notban": "Eu não posso Desmutar esse usuário",
+        "nenhuma": "Razão não fornecida",
+        "error": "Desculpe! Não consegui Desmutar o usuário pelo erro: ",
+        "userBan": "Membro desmutado",
+        "banUser": "Mutado por",
+        "motivo": "Motivo",
+        "tempo": "Tempo",
+        "notmute": "Este usuário não está mutado!"
+    },
+    "vote": {
+        "vote": "Votação"
+    },
+    "mute-all": {
+        "perm": "Gerenciar Mensagens",
+        "canal": "Você não está em um canal de voz!",
+        "confirmation": "Yah! Todos foram mutados!",
+        "error": "Não consegui muta-los, provavelmente estou sem permissão!"
+    },
+    "unmute-all": {
+        "perm": "Gerenciar Mensagens",
+        "canal": "Você não está em um canal de voz!",
+        "confirmation": "Yah! Todos foram desmutados!",
+        "error": "Não consegui desmuta-los, provavelmente estou sem permissão!"
+    },
+    "ship": {
+        "arg": "Use {{prefix}}ship @user1 @user2",
+        "error": "Desculpe-me, um erro ocorreu!",
+        "new": "Será que temos um novo casal aqui?"
+    },
+    "wallpaper": {
+        "nsfw": "Use esse comando em um canal marcado com NSFW!"
+    },
+    "docs": {
+        "arg": "Item a pesquisar",
+        "nothing": "Não encontrei nada com ``{{pesquisa}}``"
+    },
+    "ajuda": {
+        "ajuda": "Ajuda",
+        "embed": {
+            "description": "Reaja com a categoria que deseja ver os comandos. \n\n Total: `{{size}}` \n\n ",
+            "field": "Veja aqui todos os comandos de {{type}}!"
+        },
+        "types": {
+            "fun": "Diversão",
+            "mod": "Moderação",
+            "admin": "Administração",
+            "song": "Música",
+            "utils": "Utilidades",
+            "imgs": "Imagens"
+        }
+    },
+    "anonimo": {
+        "msg": "Mensagem Anônima",
+        "anonimo": "Anônimo",
+        "enviado": "Você enviou uma mensagem para"
+    },
+    "botinfo": {
+        "title": "Veja aqui as informações do Swift",
+        "desc": "Olá eu sou o <@643304203334189056>! Eu sou programado em **JavaScript** e essas são as minhas informações!",
+        "v": "Versão",
+        "l": "Linguagem",
+        "b": "Biblioteca",
+        "lo": "Localização",
+        "s": "Suporte",
+        "d": "Desenvolvedores"
+    },
+    "calculadora": {
+        "equa": "Equação",
+        "invalid": "Desculpe-me! Questão inválida. O erro que ocorreu foi:",
+        "calc": "Calculadora online",
+        "click": "Clique aqui!"
+    },
+    "clima": {
+        "error": "Desculpe-me! Não consegui pegar as informações da API.",
+        "tempo": "Tempo",
+        "temp": "Temperatura",
+        "hum": "Humidade"
+    },
+    "covid19": {
+        "mundo": "No mundo",
+        "casos": "Casos",
+        "mortes": "Mortes",
+        "recuperados": "Recuperados",
+        "tests": "Testes",
+        "pais": "no(na)",
+        "error": "Ocorreu um erro! Este país realmente existe?"
+    },
+    "emojis": {
+        "sperm": "Estou sem permissão de `Gerenciar Emojis`!"
+    },
+    "encurtador": {
+        "encurtado": "Link encurtado:"
+    },
+    "hastebin": {
+        "colocando": "Colocando no"
+    },
+    "hexcolor": {
+        "error": "Erro ao tentar pegar as informações da api.",
+        "rgb": "O `rgb` dessa cor é"
+    },
+    "membros": {
+        "membros": "membros",
+        "description": "Membros totais do servidor",
+        "ausente": "Ausentes",
+        "ocupados": "Ocupados"
+    },
+    "pause": {
+        "pause": "Música pausada com sucesso!",
+        "nothing": "O meu batidão não está tocando nada aqui!"
+    },
+    "play": {
+        "canal": "Você precisa estar em um canal de voz para ouvir meu batidão!",
+        "song": "Música",
+        "mesmo": "você deve estar no mesmo canal de voz que eu para executar este comando.",
+        "padd": "Playlist adicionada com sucesso!",
+        "padd2": "Você adicionou a playlist com sucesso! ({{n}} músicas)",
+        "selection": "Seleção de Músicas",
+        "selection2": "Digite abaixo o número correspondente à sua música. Para cancelar, digite `cancelar`",
+        "canceled": "Operação cancelada com sucesso",
+        "inse": "Número da Música",
+        "n": "Você deve inserir um número maior que 1 e menor que 5!",
+        "add": "Adicionei a música {{song.title}} na playlist!",
+        "end": "A minha playlist acabou! DJ SWIFT saindo do canal!",
+        "reconnect": "Eu desconectei do canal por que não tem ninguém para escutar meu batidão. Para retomar a playlist atual, basta enviar o comando s!reconnect.",
+        "sobre": " Sobre a música... ```ini\n [Nome da Música] {{song.title}} \n\n [Autor do vídeo] {{song.Channel.title}}\n```",
+        "d": "Duração da música",
+        "l": "Link da música",
+        "c": "Clique Aqui",
+        "li": "Lista de DJ's",
+        "v": "Volume atual"
+    },
+    "playlist": {
+        "nothing": "O meu batidão não está tocando nada aqui",
+        "i": "você inseriu o modelo de comando incorreto. Utilize: `{{prefix}}!playlist <pagina>`, `{{prefix}}!playlist mover <musica> <posição>` ou `{{prefix}}!playlist remover <posição da musica>`. ",
+        "title": "Swift - Playlist de músicas",
+        "footer": "Duração total da playlist completa: {{convert3}} \nQuantidade de músicas na playlist: {{serverQueue.songs.length}} músicas",
+        "mover": "você deve colocar o número da música que eu devo mover e para qual posição devo mover.",
+        "2": "Você só pode mover músicas apartir da posição 2",
+        "ex": "Não existe essa quantidade de músicas no batidão!",
+        "moved": "A música **{{serverQueue.songs[1].title}}** foi movida para a posição `{{args[2]}}`com sucesso.",
+        "remove": "Você deve colocar o número de músicas que eu devo remover!",
+        "removed": "A música foi `removida` com sucesso!",
+        "arg": "Primeira posição"
+    },
+    "reconnect": {
+        "msg": "não foi possível retomar nenhuma playlist pois já estou tocando em um canal de voz.",
+        "a": "não encontrei nenhuma playlist pare retomar."
+    },
+    "lock": {
+        "bloq": "Canal bloqueado com sucesso!",
+        "perm": "Gerenciar Canais",
+        "sperm": "Estou sem permissão de `Gerenciar Canais`!"
+    },
+    "unlock": {
+        "bloq": "Canal desbloqueado com sucesso!",
+        "perm": "Gerenciar Canais",
+        "sperm": "Estou sem permissão de `Gerenciar Canais`!"
+    },
+    "spotify": {
+        "arg": "Usuário",
+        "embed": {
+            "title": "Informações da música",
+            "field1": "Nome da Música",
+            "field2": "Album",
+            "field3": "Autor",
+            "field4": "Escute você também"
+        },
+        "not": "Este usuário não está disponível e/ou não está ouvindo **Spotify**"
+    }
+}

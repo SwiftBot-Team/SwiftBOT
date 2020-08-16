@@ -1,0 +1,9 @@
+{
+  "default": "Comando sem descrição",
+
+  "ping": "Veja a latencia e o ping entre o bot e o Discord",
+  "kiss": "Beije alguém",
+  "ajuda": "Veja os comandos do bot",
+  "caraoucoroa": "Vamos na sorte???",
+  "emojify": "Converta texto em emojis!"
+}

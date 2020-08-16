@@ -1,0 +1,10 @@
+{
+  "mail": {
+    "errors": {
+      "autorole": {
+        "title": "**Erro no AutoRole**",
+        "body": "Hey! Ocorreu um erro no modulo do AutoRole! Ao tentar setar os cargos para `{{user}}`, "
+      }
+    }
+  }
+}

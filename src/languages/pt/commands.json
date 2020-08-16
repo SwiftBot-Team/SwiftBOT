@@ -1,0 +1,112 @@
+{
+  "sorteio": {
+    "item": "O que você deseja sortear?",
+    "winnerCount": "Quantos ganhadores vão ser?",
+    "time": "Quanto tempo o sorteio vai durar?",
+    "channel": "Em qual canal o sorteio vai acontecer?",
+    "giveaway": "Item a ser sorteado: {{item}} \nDuração do sorteio: {{time}} \nQuantidade de ganhadires: {{winnerCount}}",
+    "end": "Item a ser sorteado: {{item}} \nQuantidade de ganhadires: {{winnerCount}} \nGanhadores: {{winners}}"
+  },
+  "ascii": {
+    "args_error": "<@{{member}}>, você precisa inserir algo para eu converter!",
+    "caractere": "<@{{member}}>, você não pode inserir caracteres especiais!"
+  },
+  "kiss": {
+    "no_user": "<@{{member}}>, você deve inserir quem deseja beijar!",
+    "no_found": "<@{{member}}>, não consegui encontrar este usuário.",
+    "kiss": "acaba de beijar",
+    "author": "Aii, que fofo!"
+  },
+  "coroa": {
+    "girar": "Vamos girar a moeda!"
+  },
+  "dado": {
+    "grande": "<@{{user}}>, o número de faces deve ser entre 1 e 6!",
+    "result": "Rolei um dado de {{faces}} e o número virado foi {{result}}."
+  },
+  "emojify": {
+    "no_args": "<@{{user}}>, você deve inserir um texto para eu converter em emojis!",
+    "error": "<@{{user}}>, não é possível converter caracteres especiais em emoji!"
+  },
+  "ajuda": {
+    "no_command_embed": {
+      "title": "Hey! Não encontrei nenhum comando parecido com `{{cmd}}`"
+    },
+    "commandHelp": {
+      "title": "Aqui vai as informações sobre o comando `{{cmd}}`",
+      "field1": "Alternativas:",
+      "field2": "Modo de usar:",
+      "field3": "Permissões que o usuário precisa:",
+      "field4": "Permissões que o bot precisa:"
+    },
+    "nothing": "Nenhum"
+  },
+  "prefixo": {
+    "invalidOption": "Ops! Você deve colocar uma opção válida! As possíveis opções são: `setar|restaurar`",
+    "invalidNewPrefix": "Você deve colocar o novo prefix que deseja!",
+    "confirmation": "Prefixo alterado com sucesso!"
+  },
+  "language": {
+    "invalidOption": "Ops! Você deve colocar uma opção válida! As possíveis opções são: `setar|restaurar`",
+    "invalidNewLanguage": "Você deve colocar a nova linguagem que deseja! As opções são: `pt|en`",
+    "confirmation": "Linguagem alterada com sucesso!"
+  },
+  "autorole": {
+    "use": "Modelo de uso incorreto! Use `{{prefix}}autorole set`, `{{prefix}}autorole desativar` ou `{{prefix}}autorole status.`",
+    "channel": "Olá, **{{user.username}}**. Por favor, insira o cargo de que deseja utilizar na Autorole. Lembrando, mencione apenas **um**.",
+    "confirmation": "Cargo para autorole setado com sucesso.",
+    "isoff": "O AutoRole já está desativado.",
+    "markoff": "AutoRole desativado com sucesso!",
+    "status": "Status do AutoRole",
+    "statusmark": "{{status}}",
+    "statuscargoOFF": "Desativado",
+    "statuscargoON": "Ativado",
+    "cargoName": "Cargo:",
+    "footer": "Solicitado por",
+    "noArgs1": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, você deve inserir um cargo para eu {{acao}}!",
+    "isAtive": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, o autorole já está ativado.",
+    "isDisabled": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, o autorole já está desativado.",
+    "sucessActived": "<:UNSPAcceptIcon:703725149546872932> | <@{{member}}>, o autorole foi ativado com sucesso.",
+    "sucessDisabled": "<:UNSPAcceptIcon:703725149546872932> | <@{{member}}>, o autorole foi desativado com sucesso.",
+    "roleNoExists": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, o cargo <@&{{role}}> não está no autorole.",
+    "exists": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, não foi possível adicionar a role <@&{{role}}> pois ela já se encontra no autorole.",
+    "noFoundRole": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, não foi possível encontrar a role {{role}}.",
+    "sucessAdd": "<:UNSPAcceptIcon:703725149546872932> | <@{{member}}>, a role <@&{{role}}> foi adicionada ao autorole com sucesso.",
+    "sucessRemove": "<:UNSPAcceptIcon:703725149546872932> | <@{{member}}>, a role <@&{{role}}> foi removida do autorole com sucesso."
+  },
+  "config": {
+    "join": {
+      "title": "Entrada",
+      "submodules": {
+        "status": {
+          "title": "Status(On/Off)",
+          "desc": "Status do módulo de Entrada, se ele está ativado ou não",
+          "msg": "Digite `on` ou `off` para definir se a mensagem de entrada será ativada"
+        },
+        "channel": {
+          "title": "Canal",
+          "desc": "Canal onde será enviado a mensagem de Entrada",
+          "msg": "Mencione o canal aonde será enviado a mensagem de entrada"
+        },
+        "message": {
+          "title": "Mensagem",
+          "desc": "Mensagem que será enviada quando alguém entrar",
+          "msg": "Digite a mensagem que irá aparecer quando alguém entrar. \n\n Você pode utilizar váriaveis: \n ```ini\n[server] - Mostra o nome do servidor. \n[userMention] - Mencionar o usuário. \n[user] - Mostrar o nome do usuário. \n[userId] - Mostrar o id do usuário.\n```"
+        }
+      }
+    },
+    "leave": {
+      "title": "Saída"
+    },
+    "noArgs": "Hey! Está esquecendo de algo, não?!",
+    "examples": "Aqui vai alguns exemplos de como usar este comando!",
+    "footer": "Para mais informações, utilize {{prefix}}config {{arg}} [identificador do módulo]",
+    "listJustModules": "Aqui vai todas os módulos disponíveis",
+    "module": "módulo",
+    "format": "Formato: `[Nome do Módulo]: [Identificador]`",
+    "notFound": "Desculpe-me, mas não encontrei nenhum módulo com o identificador `{{search}}`!",
+    "notSubmoduleFound": "Desculpe-me, mas não encontrei nenhum submódulo com o identificador `{{search}}`!",
+    "moduleInfo": "Informações sobre o módulo `{{module}}`",
+    "formatDescription": "Formato: `[Nome do SubMódulo]: [Identificador]`"
+  }
+}
