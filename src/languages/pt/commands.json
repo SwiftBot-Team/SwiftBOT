@@ -108,56 +108,5 @@
     "notSubmoduleFound": "Desculpe-me, mas não encontrei nenhum submódulo com o identificador `{{search}}`!",
     "moduleInfo": "Informações sobre o módulo `{{module}}`",
     "formatDescription": "Formato: `[Nome do SubMódulo]: [Identificador]`"
-  },
-  "clear": {
-    "notArg": "Hey, você deve colocar, no 1º parâmetro, o número de mensagens!",
-    "notNumber": "Hey, isto não é um número!",
-    "low": "Hey, esse número é muito baixo (use algum número entre 2 e 100)",
-    "hight": "Hey, esse número é muito alto (use algum número entre 2 e 100)"
-  },
-  "botinfo": {
-    "title": "SwiftBOT | Informações",
-    "description-header": "Olá, me chamo **SwiftBOT**! Sou um bot multifuncional para lhe auxiliar e entreter os membros do seu servidor! Ajudo a deixar o seu servidor um local mais agradável!",
-    "stats": {
-      "title": "> **»** Estatísticas",
-      "1": "Servidores: ``{{var}}``",
-      "2": "Usuários: ``{{var}}``",
-      "3": "Comandos: ``{{var}}``",
-      "4": "Canais: ``{{var}}``"
-    },
-    "infos": {
-      "title": "> **»** Informações",
-      "1": "Tecnologias: [JavaScript](https://www.javascript.com/) | [NodeJS](https://nodejs.org/)",
-      "2": "Livraria: [Discord.js](https://discord.js.org/#/)",
-      "3": "Database: [MongoDB](https://www.mongodb.com/) | [Mongoose](https://mongoosejs.com/)"
-    },
-    "status": {
-      "title": "> **»** Status",
-      "1": "Estou online há: ``{{var}}``"
-    }
-  },
-  "serverinfo": {
-    "notFound": "Desculpe-me, mas não encontrei nenhuma guilda com esse id!",
-    "owner": "Dono",
-    "nitro": "Estado de impulsionamento",
-    "nivel": "Nível",
-    "impulso": "Impulsos",
-    "region": "Região",
-    "dates": "Datas",
-    "created": "Criado em: ",
-    "ijoined": "Eu entrei em: ",
-    "infos": "Informações",
-    "text": "Canais de textos:",
-    "voice": "Canais de voz:",
-    "members": "Membros: ",
-    "bots": "Bots: "
-  },
-  "servericon": {
-    "notFound": "<:errado:739176302317273089> **»** Desculpe-me, mas não encontrei nenhuma guilda com esse id!",
-    "description": "🖌️ | Clique [aqui]({{link}}) para baixar o ícone do servidor"
-  },
-  "uptime": {
-    "time": "**{{u.h}}** Hora(s), **{{u.m}}** Minutos, **{{u.s}}** Segundos",
-    "online": "estou online há:"
   }
 }
