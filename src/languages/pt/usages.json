@@ -2,5 +2,11 @@
   "default": "-x-",
 
   "ajuda": "[comando]",
-  "config": "<módulo|listar|status>"
+  "config": "<módulo|listar|status>",
+  "clear": "<quantidade>",
+  "serverinfo": "[id]",
+  "servericon": "[id]",
+  "roleinfo": "<cargo>",
+  "userinfo": "[usuário]",
+  "avatar": "[usuário]"
 }

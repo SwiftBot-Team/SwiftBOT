@@ -1,3 +1,5 @@
 {
-  "inviteDetected": "Hey **{{user}}**, você não pode postar convites de outros servidores aqui!"
+  "inviteDetected": {
+    "msg": "Hey **{{user}}**, você não pode postar convites de outros servidores aqui!"
+  }
 }

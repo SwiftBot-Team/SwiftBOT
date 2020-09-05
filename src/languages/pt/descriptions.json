@@ -5,5 +5,19 @@
   "kiss": "Beije alguém",
   "ajuda": "Veja os comandos do bot",
   "caraoucoroa": "Vamos na sorte???",
-  "emojify": "Converta texto em emojis!"
+  "emojify": "Converta texto em emojis!",
+  "clear": "Limpe conversas dos chats!",
+  "botinfo": "Veja as informações do SwiftBOT",
+  "serverinfo": "Veja as informações do servidor",
+  "autorole": "Cargo que será dado quando o usuário entrar",
+  "config": "Configure as minhas funcionalidades",
+  "language": "Swift poliglota",
+  "prefixo": "Sete o prefixo que reponderei!",
+  "servericon": "Veja o Ícone do servidor",
+  "uptime": "Veja o tempo que o Swift está online",
+  "roleinfo": "Veja as informações de um cargo",
+  "userinfo": "Veja as informações de um usuário",
+  "avatar": "Veja o seu avatar ou o de alguém",
+  "convite": "Me adicione em seu servidor",
+  "emojis": "Veja os emojis do servidor"
 }

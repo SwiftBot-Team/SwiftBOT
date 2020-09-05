@@ -1,11 +1,57 @@
 {
+  "jogodavelha": {
+    "noMentionUser": "<@{{member}}>, você deve mencionar um usuário para jogar!"
+  },
+  "ppt": {
+    "noOption": "<@{{member}}>, por favor, utilize {{prefix}}ppt desafiar <user>",
+    "noMention": "<@{{member}}>, você se esqueceu de mencionar um usuário para ser desafiado!",
+    "noUserFound": "<@{{member}}>, não foi possível encontrar este usuário.",
+    "isBot": "<@{{member}}>, você não pode desafiar um BOT!",
+    "isYou": "<@{{member}}>, você não pode desafiar à si mesmo!",
+    "sendChallenge": {
+      "description": "<@{{user}}>, <@{{member}}> acaba de te desafiar para  uma partida de **Pedra Papel Tesoura!",
+      "footer": "Reaja abaixo com ✅ para aceitar o desafio. (2 minutos)"
+    },
+    "waitingAccept" :"<a:Loading:745327497096331314> O desafio foi enviado para o usuário. Aguardando resposta...",
+    "challengeDeny": "<:errado:739176302317273089> O usuário negou o desafio.",
+    "challengeAccept": "<a:errado:739210548020772926> O usuário aceitou o desafio, verifique seu privado.",
+    "reactToPlay": "Reaja abaixo com a sua jogada.",
+    "waitingPlay": "Aguardando jogada do oponente...",
+    "winMessage": "{{message}} \n\n {{member}} vs {{user}}"
+  },
+  "pescar": {
+    "pescou": "Você pescou um... {{item}}! E por isso ganhou ``{{valor}}`` uCoins.",
+    "author":" Yay! você pescou"
+  },
+  "perguntar": {
+    "noArgs": "<@{{member}}>, você deve inserir alguma pergunta!"
+  },
+  "leet": {
+    "noArgs": "<@{{member}}>, você deve inserir algum texto!"
+  },
   "sorteio": {
     "item": "O que você deseja sortear?",
     "winnerCount": "Quantos ganhadores vão ser?",
     "time": "Quanto tempo o sorteio vai durar?",
     "channel": "Em qual canal o sorteio vai acontecer?",
-    "giveaway": "Item a ser sorteado: {{item}} \nDuração do sorteio: {{time}} \nQuantidade de ganhadires: {{winnerCount}}",
-    "end": "Item a ser sorteado: {{item}} \nQuantidade de ganhadires: {{winnerCount}} \nGanhadores: {{winners}}"
+    "giveaway": "Item a ser sorteado: {{item}} \nDuração do sorteio: {{time}} \nQuantidade de ganhadores: {{winnerCount}}",
+    "end": "Item a ser sorteado: {{item}} \nQuantidade de ganhadores: {{winnerCount}} \nGanhadores: {{winners}}",
+    "author": "Swift - Sorteio",
+    "authorEnd": "Swift - Sorteio finalizado",
+    "endWhen": "Sorteio finaliza",
+    "noReactions": "O sorteio foi cancelado pois a quantidade de reações é muito pequena.",
+    "cancel": "Escreva 'cancelar' a qualquer momento para cancelar a operação.",
+    "canceled": "<@{{member}}>, você cancelou a operação com sucesso.",
+    "1024": "<@{{member}}>, a sua resposta foi grande demais e não consegui enviar para o banco de dados. Por favor, insira uma resposta mais curta.",
+    "noTimeFound": "<@{{member}}>, não consegui entender o tempo inserido. Por favor, insira um tempo válido.",
+    "noChannelFound": "<@{{member}}, eu não consegui encontrar o canal. Tente enviar um canal válido.",
+    "noPermissionsInChannel": "<@{{member}}>, eu não posso realizar o sorteo neste canal pois não tenho permissão para enviar mensagens nele ou adicionar reações. Por favor, insira um canal válido!",
+    "invalidNumber": "<@{{member}}>, a quantidade de ganhadores deve ser um número. Responda novamente com um **número**."
+  },
+  "ressortear": {
+    "noGiveawayFound": "<@{{member}}, não foi possível encontrar este sorteio.",
+    "plural": "Os novos ganhadores são: ",
+    "singular": "O novo ganhador é: "
   },
   "ascii": {
     "args_error": "<@{{member}}>, você precisa inserir algo para eu converter!",
@@ -39,7 +85,8 @@
       "field3": "Permissões que o usuário precisa:",
       "field4": "Permissões que o bot precisa:"
     },
-    "nothing": "Nenhum"
+    "nothing": "Nenhum",
+    "title": "Ajuda"
   },
   "prefixo": {
     "invalidOption": "Ops! Você deve colocar uma opção válida! As possíveis opções são: `setar|restaurar`",
@@ -75,23 +122,28 @@
     "sucessRemove": "<:UNSPAcceptIcon:703725149546872932> | <@{{member}}>, a role <@&{{role}}> foi removida do autorole com sucesso."
   },
   "config": {
+    "statusError": "<:errado:739176302317273089> **»** Você deve colocar `on` ou `off`. Digite o comando novamente!",
+    "cancel": "<a:certo:739210631441547296> **»** Ação cancelada",
     "join": {
       "title": "Entrada",
       "submodules": {
         "status": {
           "title": "Status(On/Off)",
           "desc": "Status do módulo de Entrada, se ele está ativado ou não",
-          "msg": "Digite `on` ou `off` para definir se a mensagem de entrada será ativada"
+          "msg": "Digite `on` ou `off` para definir se a mensagem de entrada será ativada \n\n Digite `cancelar` para cancelar",
+          "sucess": "<a:certo:739210631441547296> **» Oh Yah!** \n\n Você setou o status do módulo de entrada para `{{status}}`!"
         },
         "channel": {
           "title": "Canal",
           "desc": "Canal onde será enviado a mensagem de Entrada",
-          "msg": "Mencione o canal aonde será enviado a mensagem de entrada"
+          "msg": "Mencione o canal aonde será enviado a mensagem de entrada \n\n Digite `cancelar` para cancelar",
+          "sucess": "<a:certo:739210631441547296> **» Oh Yah!** \n\n Você setou o status do módulo de entrada para `{{status}}`!"
         },
         "message": {
           "title": "Mensagem",
           "desc": "Mensagem que será enviada quando alguém entrar",
-          "msg": "Digite a mensagem que irá aparecer quando alguém entrar. \n\n Você pode utilizar váriaveis: \n ```ini\n[server] - Mostra o nome do servidor. \n[userMention] - Mencionar o usuário. \n[user] - Mostrar o nome do usuário. \n[userId] - Mostrar o id do usuário.\n```"
+          "msg": "Digite a mensagem que irá aparecer quando alguém entrar. \n\n Você pode utilizar váriaveis: \n ```ini\n[server] - Mostra o nome do servidor. \n[userMention] - Mencionar o usuário. \n[user] - Mostrar o nome do usuário. \n[userId] - Mostrar o id do usuário.\n``` \n\n Digite `cancelar` para cancelar",
+          "sucess": "<a:certo:739210631441547296> **» Oh Yah!** \n\n Você setou o status do módulo de entrada para `{{status}}`!"
         }
       }
     },
@@ -108,5 +160,64 @@
     "notSubmoduleFound": "Desculpe-me, mas não encontrei nenhum submódulo com o identificador `{{search}}`!",
     "moduleInfo": "Informações sobre o módulo `{{module}}`",
     "formatDescription": "Formato: `[Nome do SubMódulo]: [Identificador]`"
+  },
+  "clear": {
+    "notArg": "Hey, você deve colocar, no 1º parâmetro, o número de mensagens!",
+    "notNumber": "Hey, isto não é um número!",
+    "low": "Hey, esse número é muito baixo (use algum número entre 2 e 100)",
+    "hight": "Hey, esse número é muito alto (use algum número entre 2 e 100)"
+  },
+  "botinfo": {
+    "title": "SwiftBOT | Informações",
+    "description-header": "Olá, me chamo **SwiftBOT**! Sou um bot multifuncional para lhe auxiliar e entreter os membros do seu servidor! Ajudo a deixar o seu servidor um local mais agradável!",
+    "stats": {
+      "title": "> **»** Estatísticas",
+      "1": "Servidores: ``{{var}}``",
+      "2": "Usuários: ``{{var}}``",
+      "3": "Comandos: ``{{var}}``",
+      "4": "Canais: ``{{var}}``"
+    },
+    "infos": {
+      "title": "> **»** Informações",
+      "1": "Tecnologias: [JavaScript](https://www.javascript.com/) | [NodeJS](https://nodejs.org/)",
+      "2": "Livraria: [Discord.js](https://discord.js.org/#/)",
+      "3": "Database: [MongoDB](https://www.mongodb.com/) | [Mongoose](https://mongoosejs.com/)"
+    },
+    "status": {
+      "title": "> **»** Status",
+      "1": "Estou online há: ``{{var}}``"
+    }
+  },
+  "serverinfo": {
+    "notFound": "Desculpe-me, mas não encontrei nenhuma guilda com esse id!",
+    "owner": "Dono",
+    "nitro": "Estado de impulsionamento",
+    "nivel": "Nível",
+    "impulso": "Impulsos",
+    "region": "Região",
+    "dates": "Datas",
+    "created": "Criado em: ",
+    "ijoined": "Eu entrei em: ",
+    "infos": "Informações",
+    "text": "Canais de textos:",
+    "voice": "Canais de voz:",
+    "members": "Membros: ",
+    "bots": "Bots: "
+  },
+  "servericon": {
+    "notFound": "<:errado:739176302317273089> **»** Desculpe-me, mas não encontrei nenhuma guilda com esse id!",
+    "description": "🖌️ | Clique [aqui]({{link}}) para baixar o ícone do servidor"
+  },
+  "uptime": {
+    "time": "**{{u.h}}** Hora(s), **{{u.m}}** Minutos, **{{u.s}}** Segundos",
+    "online": "estou online há:"
+  },
+  "avatar": {
+    "title-1": "<:art:751221968728227951> **»** Aqui está o seu avatar",
+    "title-2": "<:art:751221968728227951> **»** Aqui está o avatar do <@{{user}}>"
+  },
+  "convite": {
+    "1": "<:swiftDiscord:751390656777289798> **»** Verifique o seu privado!",
+    "2": "<:swiftHearts:751406085763498035> **»** [Clique aqui](http://convite.swift.tk) para adicionar o Swift em seu servidor!"
   }
 }
