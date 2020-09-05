@@ -6,7 +6,10 @@ class Configuration extends Base {
       name: "config",
       cooldown: 1000,
       aliases: ["configuration", "configurar"],
-      usage: "usages:config"
+      usage: "usages:config",
+      category: "categories:config",
+      description: "descriptions:config",
+      permissions: ['MANAGE_SERVER']
     });
   }
 
@@ -17,7 +20,7 @@ class Configuration extends Base {
       "join": {
         "emoji": "<:join:744533790386552922>",
         "title": t('commands:config:join.title'),
-        "local": `SwiftBOT/Servidores/${message.guild.id}/config/entrada`,
+        "local": `SwiftBOT/Servidores/${message.guild.id}/config/join`,
         "submodules": {
           "status": {
             "title": t('commands:config:join:submodules:status.title'),
@@ -25,18 +28,18 @@ class Configuration extends Base {
           },
           "channel": {
             "title": t('commands:config:join:submodules:channel.title'),
-            "desc": t('commands:config:join:submodules:status.desc')
+            "desc": t('commands:config:join:submodules:channel.desc')
           },
           "message": {
             "title": t('commands:config:join:submodules:message.title'),
-            "desc": t('commands:config:join:submodules:status.desc')
+            "desc": t('commands:config:join:submodules:message.desc')
           }
         }
       },
       "leave": {
         "title": t('commands:config:leave.title'),
         "emoji": "<:leave:744534182008717355>",
-        "local": `UnspBOT/${message.guild.id}/config/leave`,
+        "local": `SwiftBOT/Servidores/${message.guild.id}/config/leave`,
         "submodules": {
           "status": {
             "title": t('commands:config:leave:submodules:status.title'),
@@ -63,7 +66,7 @@ class Configuration extends Base {
           ],
           [
             `\`${prefix}config ${t(this.help.usage)}\` \n`,
-            `\`${prefix}config join.status off\``,
+            `\`${prefix}config join.status\``,
             `\`${prefix}config mod.ban.message\``,
             `\`${prefix}config list\``,
             `\`${prefix}config status\``
@@ -151,7 +154,52 @@ class Configuration extends Base {
       const messageCollector = await message.channel.createMessageCollector(author => author.author.id === message.author.id, { time: 60000, max: 1, errors: ['time'] })
       message.channel.send(t(`commands:config:${areas[0]}:submodules:${areas[1]}.msg`))
     
-    
+      messageCollector.on('collect', async (r) => {
+        modules[areas[0]]['submodules'][areas[1]]
+        if (r.content.toLowerCase() === 'cancelar') return message.channel.send(t('commands:config.cancel'))
+
+        if (areas[1] === 'status') {
+          if (r.content.toLowerCase() === 'on' || r.content.toLowerCase() === 'off') {
+            let ref = await this.client.database.ref(modules[areas[0]]['local']).once('value')
+
+            if (!ref.val()) {
+              await this.client.database.ref(modules[areas[0]]['local']).set({
+                status: r.content.toLowerCase() === 'on' ? true : false,
+                channel: null,
+                message: null
+              })
+
+              this.respond(t(`commands:config:${areas[0]}:submodules:${areas[1]}.sucess`, { 
+                status: r.content.toLowerCase() 
+              }))
+            } else {
+              if (r.content.toLowerCase() === 'off') {
+                await this.client.database.ref(modules[areas[0]]['local']).set({
+                  status: r.content.toLowerCase() === 'on' ? true : false,
+                  channel: null,
+                  message: null
+                })
+  
+                this.respond(t(`commands:config:${areas[0]}:submodules:${areas[1]}.sucess`, { 
+                  status: r.content.toLowerCase() 
+                }))
+              } else {
+                await this.client.database.ref(modules[areas[0]]['local']).set({
+                  status: r.content.toLowerCase() === 'on' ? true : false,
+                  channel: ref.val().channel ? ref.val().channel : null,
+                  message: ref.val().message ? ref.val().message : null
+                })
+  
+                this.respond(t(`commands:config:${areas[0]}:submodules:${areas[1]}.sucess`, { 
+                  status: r.content.toLowerCase() 
+                }))
+              }
+            }
+          } else {
+            return message.channel.send(t('commands:config.statusError'))
+          }
+        }
+      })
     }
   }
 }
