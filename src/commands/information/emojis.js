@@ -20,7 +20,7 @@ class Emojis extends Base {
     let actualPage = 1;
 
     message.guild.emojis.cache.map(e => {
-      emojis.push(e.id ? e.animated ? `<a:${e.name}:${e.id}>` : `<:${e.name}:${e.id}>` : e.name)  // tem animated tbm '-'(tem a na frente)
+      emojis.push(e.id ? e.animated ? `<a:${e.name}:${e.id}>` : `<:${e.name}:${e.id}>` : e.name)
     });
     
     const pages = Math.ceil(emojis.length() / 30);
