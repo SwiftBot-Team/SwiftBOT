@@ -26,7 +26,7 @@ const nodes = [
   }
 ]
 
-const client = new SwiftInstance(instance, { config: './config.json' })
+const client = new SwiftInstance(instance, { config: './config.json', fetchAllMembers: true })
 client.login().then(() => {
   client.log('Logado com Sucesso!', { color: 'green', tags: ['Discord Client'] })
 
