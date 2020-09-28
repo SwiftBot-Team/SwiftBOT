@@ -4,8 +4,8 @@ class Emojify extends Base {
     constructor(client) {
         super(client, {
             name: "emojify",
-            description: "descriptions.emojify",
-            category: "categories.fun",
+            description: "descriptions:emojify",
+            category: "categories:fun",
             cooldown: 1000,
             aliases: ['emoji-letter', 'texto-para-emoji']
         });

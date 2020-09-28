@@ -12,7 +12,12 @@ const userSchema = new mongoose.Schema({
         body: String
       }
     }
-  ]
+  ],
+
+  jail: Boolean,
+  coins: Number,
+  hasBank: Boolean,
+  bank: Number
 });
 
 module.exports = mongoose.model('User', userSchema);

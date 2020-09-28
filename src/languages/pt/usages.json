@@ -8,5 +8,10 @@
   "servericon": "[id]",
   "roleinfo": "<cargo>",
   "userinfo": "[usuário]",
-  "avatar": "[usuário]"
+  "avatar": "[usuário]",
+  "npm": "<livraria a pesquisar>",
+  "calculadora": "<expressão>",
+  "alert": "<título> | <anúncio>",
+  "country": "<nome do país>",
+  "hexcolor": "<cor>"
 }

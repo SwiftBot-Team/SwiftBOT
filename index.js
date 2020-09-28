@@ -1,30 +1,21 @@
-require('dotenv/config');
+require('dotenv/config')
+
+const http = require('http');
+const express = require('express');
+const app = express();
+app.get("/", (request, response) => {
+  console.log(Date.now() + " Ping Received");
+  response.sendStatus(200);
+});
+app.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 280000);
 
 const SwiftInstance = require('./src/Swift');
 const GeralInstance = require('./src/Instance');
 
-const Guild = require('./src/database/models/Guild')
-
 const instance = new GeralInstance()
-
-const fs = require('fs')
-const path = require('path')
-
-const i18next = require('i18next')
-const translationBackend = require('i18next-node-fs-backend')
-
-const { GorilinkManager } = require('gorilink');
-
-const { SwiftMusic } = require("./src/services/Music");
-
-const nodes = [
-  {
-    tag: 'Node 1',
-    host: process.env.LAVALINK_HOST,
-    port: process.env.LAVALINK_PORT,
-    password: process.env.LAVALINK_PASSWORD,
-  }
-]
 
 const client = new SwiftInstance(instance, { config: './config.json', fetchAllMembers: true })
 client.login().then(() => {
@@ -34,9 +25,13 @@ client.login().then(() => {
   client.loadEvents(client.config.paths.events)
   client.loadMongo();
   client.loadFirebase();
+  client.initListeners();
+  client.connectLavalink();
 }).catch((err) => { console.log(err); client.log('Ocorreu um erro ao tentar logar! \n\n' + err, { color: 'red', tags: ['Discord Client'] }) })
 
 
 client.on('ready', () => {
   client.initLoaders();
 })
+
+module.exports = client

@@ -19,5 +19,9 @@
   "userinfo": "Veja as informações de um usuário",
   "avatar": "Veja o seu avatar ou o de alguém",
   "convite": "Me adicione em seu servidor",
-  "emojis": "Veja os emojis do servidor"
+  "emojis": "Veja os emojis do servidor",
+  "npm": "Procure uma livraria do NPM",
+  "calculadora": "Calcule uma expressão",
+  "country": "Veja as informações de um país",
+  "hexcolor": "Veja as informações de uma cor"
 }

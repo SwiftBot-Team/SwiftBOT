@@ -10,7 +10,9 @@ class Language extends Base {
       name: "language",
       cooldown: 1000,
       aliases: ["lang", "set-lang"],
-      permissions: ['MANAGE_GUILD']
+      permissions: ['MANAGE_SERVER'],
+      category: "categories:config",
+      description: "descriptions:language"
     });
   }
 

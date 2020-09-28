@@ -1,4 +1,17 @@
 {
+  "play": {
+    "canal": "<@{{member}}>, você precisa estar em um canal de voz para executar este comando!",
+    "isPlaying": "<@{{member}}>, eu já estou tocando em um canal de voz! Entre nele para utilizar o comando.",
+    "noArgs": "<@{{member}}>, você se esqueceu de inserir o que é para mim tocar!",
+    "playlistLoaded": "Foram adicionadas **{{amount}}** músicas na playlist com sucesso.",
+    "musicLoaded": "A música `{{name}}` foi adicionada à playlist com sucesso.",
+    "noMusicFound": "Sinto muito, não foi possível encontrar nenhuma música."
+  },
+  "slap": {
+    "noArgs": "<@{{member}}>, você deve inserir um usuário para bater!",
+    "noFoundUser": "Não foi possível encontrar o usuário informado.",
+    "author": "**<@{{user1}}> deu um tapa em <@{{user2}}>!**"
+  },
   "jogodavelha": {
     "noMentionUser": "<@{{member}}>, você deve mencionar um usuário para jogar!"
   },
@@ -12,7 +25,7 @@
       "description": "<@{{user}}>, <@{{member}}> acaba de te desafiar para  uma partida de **Pedra Papel Tesoura!",
       "footer": "Reaja abaixo com ✅ para aceitar o desafio. (2 minutos)"
     },
-    "waitingAccept" :"<a:Loading:745327497096331314> O desafio foi enviado para o usuário. Aguardando resposta...",
+    "waitingAccept": "<a:Loading:745327497096331314> O desafio foi enviado para o usuário. Aguardando resposta...",
     "challengeDeny": "<:errado:739176302317273089> O usuário negou o desafio.",
     "challengeAccept": "<a:errado:739210548020772926> O usuário aceitou o desafio, verifique seu privado.",
     "reactToPlay": "Reaja abaixo com a sua jogada.",
@@ -21,7 +34,7 @@
   },
   "pescar": {
     "pescou": "Você pescou um... {{item}}! E por isso ganhou ``{{valor}}`` uCoins.",
-    "author":" Yay! você pescou"
+    "author": " Yay! você pescou"
   },
   "perguntar": {
     "noArgs": "<@{{member}}>, você deve inserir alguma pergunta!"
@@ -219,5 +232,49 @@
   "convite": {
     "1": "<:swiftDiscord:751390656777289798> **»** Verifique o seu privado!",
     "2": "<:swiftHearts:751406085763498035> **»** [Clique aqui](http://convite.swift.tk) para adicionar o Swift em seu servidor!"
+  },
+  "emojis": {
+    "title": "Lista de emojis"
+  },
+  "npm": {
+    "notSearch": "<:errado:739176302317273089> **»** Hey! Você deve colocar uma livraria a pesquisar!",
+    "description": "**»** Descrição da livraria",
+    "notDescription": "Não definida",
+    "package": "**»** Acesse a livraria pelo site oficial do npm:"
+  },
+  "calculadora": {
+    "exError": "<:errado:739176302317273089> **»** Hey, coloque uma expressão!",
+    "confirm": "Qual o resultado da expressão `{{e}}`? \n\n Hm... é `{{r}}`!",
+    "error": "<:errado:739176302317273089> **»** Essa expressão é inválida!"
+  },
+  "anunciar": {
+    "arg1": "<:errado:739176302317273089> **»** Coloque um título para o seu anúncio!",
+    "arg2": "<:errado:739176302317273089> **»** Coloque o conteúdo do seu anúncio!",
+    "title": "Você está prestes a realizar o anuncio!",
+    "canceled": "<a:certo:739210631441547296> **»** Anúncio cancelado com sucesso!",
+    "optionsTitle": "Opções do anúncio",
+    "mention": "**»** Menção: ",
+    "mentionNone": "Nenhuma",
+    "end": "**»** O tempo acabou e o anúncio foi cancelado!",
+    "options": "Opções do anúncio",
+    "preview": "Ver preview do anúncio",
+    "final": "Finalizar anúncio",
+    "cancel": "Cancelar anúncio",
+    "end-2": "**»** Tempo limite alcançado. Configuração de opções canceladas."
+  },
+  "country": {
+    "error": "<:errado:739176302317273089> **»** Coloque um país válido!",
+    "names": "**»** Outros nomes",
+    "lang": "**»** Linguas faladas",
+    "city": "**»** Capital",
+    "region": "**»** Região",
+    "population": "**»** População",
+    "area": "**»** Área",
+    "hours": "**»** Fuso horários",
+    "coins": "**»** Moeda",
+    "reqerror": "<:errado:739176302317273089> **»** Um erro ocorreu ao consultar a API"
+  },
+  "hexcolor": {
+    "args": "<:errado:739176302317273089> **»** Coloque uma cor!"
   }
 }

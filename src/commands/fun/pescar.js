@@ -156,9 +156,9 @@ class Pescar extends Base {
     const resultado = Math.floor((Math.random() * randompesca.length));
 
     message.channel.send(new this.client.embed()
-      .setAuthor(t('commands:pescar.author'), this.client.user.displayAvatarURL())
-      .setDescription(t('commands:pescar.pescou', { item: randompesca[resultado].name, valor: randompesca[resultado].valor }))
-      .setImage(randompesca[resultado].img))
+                        .setAuthor(t('commands:pescar.author'), this.client.user.displayAvatarURL())
+                         .setDescription(t('commands:pescar.pescou', {item: randompesca[resultado].name, valor: randompesca[resultado].valor}))
+                         .setImage(randompesca[resultado].img))
   }
 }
 

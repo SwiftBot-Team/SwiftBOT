@@ -8,6 +8,7 @@ class Sorteio extends Base {
             name: "sorteio",
             description: "descriptions:sorteio",
             category: "categories:utils",
+            permissions: ['MANAGE_GUILD'],
             usage: "usages:sorteio",
             cooldown: 1000,
             aliases: ["giveaway", 'gy']
@@ -48,68 +49,46 @@ class Sorteio extends Base {
             if (questions[state]) {
 
                 if (send === true) {
-                    message.channel.send(new this.client.embed(message.author).setDescription(questions[state].msg))
+                    message.channel.send(new this.client.embed(message.author).setDescription(questions[state].msg).setFooter(t('commands:sorteio.cancel'), this.client.user.displayAvatarURL()))
                 }
 
             } else {
                 collector.stop();
-                message.guild.channels.cache.get(response['channel']).send(new this.client.embed(this.client.user).setDescription(t('commands:sorteio.giveaway', {
-                    autor: message.author.id,
-                    time: response['time'],
-                    winnerCount: response['winnerCount'],
-                    item: response['item']
-                }))).then(async msg => {
-                  
-                    msg.react("🎉")
+                let timeNow = Date.now();
+                timeNow += ms(response['time'])
+                timeNow = new Date(timeNow)
+
+                message.guild.channels.cache.get(response['channel']).send(new this.client.embed(this.client.user)
+                    .setAuthor(t('commands:sorteio.author'), this.client.user.displayAvatarURL())
+                    .setFooter(t('commands:sorteio.endWhen'), this.client.user.displayAvatarURL())
+                    .setTimestamp(timeNow)
+                    .setDescription(t('commands:sorteio.giveaway', {
+                        autor: message.author.id,
+                        time: response['time'],
+                        winnerCount: response['winnerCount'],
+                        item: response['item']
+                    }))).then(async msg => {
+
+                        msg.react("🎉")
 
 
-                    this.client.database.ref(`Swift/sorteios/${message.guild.id}/${msg.id}`).set(response);
-                    this.client.database.ref(`Swift/sorteios/${message.guild.id}/${msg.id}`).update({ msg: msg.id, end: Number(ms(response['time']) + Date.now()) })
+                         this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/sorteios/${msg.id}`).set(response);
+                         this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/sorteios/${msg.id}`).update({ msg: msg.id, end: Number(ms(response['time']) + Date.now()) });
 
-                    setTimeout(async () => {
-                      this.client.instance.emit('giveawayEnd', {message})
-                        this.client.database.ref(`Swift/sorteios/${message.guild.id}/${response['item']}/status`).set('inativo');
-                        this.client.database.ref(`Swift/sorteios/${message.guild.id}/lastGiveaway`).set(msg.id);
 
-                        const reactions = msg.reactions.cache.get("🎉").users.cache.array()
+                        setTimeout(() => {
+                            this.client.emit('giveawayEnd', {
+                                guildID: message.guild.id,
+                                channelID: message.channel.id,
+                                messageID: msg.id,
+                                winnerCount: response['winnerCount'],
+                                item: response['item'],
+                                autorID: message.author.id,
+                                time: response['time']
+                            })
+                        }, ms(response['time']))
 
-                        const winners = [];
-
-                        let possibleWinners = [];
-
-                        //if (!reactions.length-1 >= response['winnerCount']) return message.channel.send('cancelado pq n tem user')
-                        let possible = reactions.filter(user => !user.id === this.client.user.id);
-                        
-                        possible.map(p => {
-                          if(winners.includes(p)) return;
-                            possibleWinners.push(p)
-                        });
-                      let random = Math.floor(Math.random() * possibleWinners.length)
-                      let i = 0;
-                      
-                      
-                      while(i < response['winnerCount']) {
-                        
-                        if(!winners.includes(possibleWinners[random])) {
-                          i++;
-                          winners.push(possibleWinners[random]);
-                          random = Math.floor(Math.random() * possibleWinners.length)
-                        }
-                        
-                      }
-
-                        
-
-                        msg.edit(new this.client.embed().setDescription(t('commands:sorteio.end', {
-                            autor: message.author.id,
-                            time: response['time'],
-                            winnerCount: response['winnerCount'],
-                            item: response['item'],
-                            winners: winners.join(', ')
-                        })))
-                    }, ms(response['time']))
-
-                })
+                    })
             }
 
         }
@@ -117,8 +96,16 @@ class Sorteio extends Base {
         sendQuestion(true);
 
         collector.on('collect', async ({ content }) => {
+          
+          if(content.toLowerCase() === 'cancelar') {
+            collector.stop();
+            message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.canceled', {member: message.author.id})));
+            return;
+          }
+          
+          
             if (content.length > 1024) {
-                message.channel.send(new this.client.embed().setDescription(`${message.author}, a sua resposta foi grande demais e não consegui enviar para o banco de dados. Por favor, insira uma resposta mais curta.`).setColor("GREEN"))
+                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.1024', {member: message.author.id})).setColor("GREEN"))
                 setTimeout(async () => {
                     await state--
                     sendQuestion(false)
@@ -128,25 +115,28 @@ class Sorteio extends Base {
 
 
             if (questions[state].save === 'time' && ms(content) === undefined) {
-                message.channel.send(new this.client.embed().setDescription(`${message.author}, não consegui entender o tempo inserido. Por favor, insira um tempo válido.`));
+                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.noTimeFound')));
                 state--
                 await sendQuestion(false);
                 return;
             }
 
             if (questions[state].save === 'channel') content = content.replace('<', '').replace('>', '').replace('#', '');
-            
+
             const channel = message.guild.channels.cache.get(content);
-          
+
             if (questions[state].save === 'channel' && !channel) {
-              message.channel.send(new this.client.embed().setDescription(`${message.member}, eu não consegui encontrar o canal. Tente enviar um canal válido.`))
-                state--
+                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.noChannelFound', {member: message.author.id})));                state--
                 await sendQuestion(false);
                 return;
             }
+          
+          if (questions[state].save === 'channel' && !channel.permissionsFor(this.client.user).has('SEND_MESSAGES') || questions[state].save === 'channel' && !channel.permissionsFor(this.client.user).has('ADD_REACTIONS')) {
+            message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.noPermissionsInChannel', {member: message.author.id})));
+          }
 
             if (questions[state].save === 'winnerCount' && isNaN(content)) {
-                message.channel.send(new this.client.embed().setDescription(`${message.member}, a quantidade de ganhadores deve ser um número. Responda novamente com um **número**.`))
+                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.invalidNumber', {member: message.author.id})));
                 state--
                 await sendQuestion(false);
                 return;

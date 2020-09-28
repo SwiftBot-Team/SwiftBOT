@@ -4,8 +4,8 @@ class Fake extends Base {
     constructor(client) {
         super(client, {
             name: "fake",
-            description: "descriptions.fake",
-            category: "categories.fun",
+            description: "descriptions:fake",
+            category: "categories:fun",
             cooldown: 1000,
             aliases: ['criar-fake', 'hook-fake']
         });
@@ -13,7 +13,7 @@ class Fake extends Base {
 
     async run({ message, args, prefix }, t) {
       let user = message.mentions.members.first() ? message.mentions.members.first() : message.member;
-      if(!args[0].startsWith("<@")) user = message.member;
+      if(args[0] && !args[0].startsWith("<@")) user = message.member;
       
       message.channel.fetchWebhooks().then(async webhooks => {
         let webhook = webhooks.find(w => w.name === 'Webhook');

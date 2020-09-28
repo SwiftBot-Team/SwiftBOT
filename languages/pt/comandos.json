@@ -1,4 +1,9 @@
 {
+    "slap": {
+        "noArgs": "<@{{member}}>, você deve inserir um usuário para bater!",
+        "noFoundUser": "Não foi possível encontrar o usuário informado.",
+        "author": "**<@{{user1}}> deu um tapa em <@{{user2}}>!**"
+    },
     "addemoji": {
         "use": "**<nome do emoji> <link do emoji>**",
         "sperm": "Estou sem permissão de `Gerenciar Emojis`!",
@@ -6,58 +11,58 @@
         "confirmation": "O Emoji {{emoji}} foi adicionado com sucesso ao servidor!",
         "error": "Desculpe, não consegui adicionar este emoji."
     },
-  "stop": {
-    "perm": "<@{{autor}}>, para utilizar este comando você precisa da permissão ``GERENCIAR SERVIDOR``.",
-    "canal": "<@{{autor}}, para utilizar esta função você deve estar no canal de voz em que o BOT está. ",
-    "nomusic": "<@{{autor}}>, eu não estou tocando nada neste momento.",
-    "fim": "A fila de músicas foi para com sucesso por <@{{autor}}>."
-  },
-  "skip": {
-    "canal": "<@{{autor}}, para utilizar esta função você deve estar no canal de voz em que o BOT está. ",
-    "nomusic": "<@{{autor}}>, não há nada tocando neste momento para que eu possa pular!",
-    "musicapulada": "A música foi pulada por <@{{autor}}>.",
-    "permManage": "Permissão utilizada: MANAGE_SERVER",
-    "puladaautor": "A música foi pulada por quem a colocou <@{{autor}}>",
-    "javotou": "<@{{autor}}>, você já votou para pular essa música uma vez!",
-    "votado": "<@{{autor}}>, votou para pular a playlist. ({{votos}}) votos."
-  },
-  "sortear": {
-    "perguntas": {
-      "author": "Swift - Sorteio",
-      "item": "Olá, <@{{autor}}>. O que você deseja sortear?",
-      "tempo": "Olá, <@{{autor}}>. Quanto tempo você quer que dure o sorteio? \n\n Exemplo: 1s, 1m, 1h, 1d...",
-      "ganhadores": "Olá, <@{{autor}}>. Agora, preciso saber quantos ganhadores terá neste sorteio.",
-      "canal": "Olá, <@{{autor}}>. Por fim, preciso que mencione o canal em que será enviada a mensagem do sorteio."
+    "stop": {
+        "perm": "<@{{autor}}>, para utilizar este comando você precisa da permissão ``GERENCIAR SERVIDOR``.",
+        "canal": "<@{{autor}}, para utilizar esta função você deve estar no canal de voz em que o BOT está. ",
+        "nomusic": "<@{{autor}}>, eu não estou tocando nada neste momento.",
+        "fim": "A fila de músicas foi para com sucesso por <@{{autor}}>."
     },
-    "embedsorteio": {
-    "author": "Swift - Sorteio",
-      "início": "Item a ser sorteado: **{{item}}** \n\n Quantidade de ganhadores: **{{ganhadores}}** \n\n Duração do sorteio: **{{tempo}}**",
-      "embederro": "O número de ganhadores é maior do que o número de participantes! :frowning:",
-      "mensagemerro": "🎉 **SORTEIO ACABOU** 🎉",
-      "footer": "Acabou!",
-      "fim": "Item sorteado: {{item}} \n\n Ganhador(es): {{msgg}}",
-      "footerfim": "Swift - Sorteio finalizado"
-  }
-  },
-  "lembrete": {
-    "footer": "Para cancelar esta operação, digite 'cancelar'",
-    "cancelar": "<@{{autor}}>, você cancelou a operação com sucesso.",
-    "maximo": "<@{{autor}}>, você já atingiu o limite de lembretes (3).",
-    "msg": "<@{{autor}}>, você deve inserir o que é para eu te lembrar!",
-    "length1": "<@{{autor}}>, seu lembrete deve ter no máximo 100 caracteres.",
-    "length2": "<@{{autor}}>, seu lembrete deve ter pelo menos 2 caracteres.",
-    "perguntar": "<:UNSPAcceptIcon:703725149546872932> Agora preciso que você escreva daqui a quanto tempo você quer que eu te lembre. Não utilize espaços no tempo, utilize este modelo: 1h ",
-    "erro": "<@{{autor}}>, você deve inserir um tempo válido. Como dito acima, você deve inserir um modelo de tempo específico: 1h",
-    "iniciar": "<:UNSPWarntIcon:703725150159241216> <@{{autor}}>, você será lembrado em {{acaba}}",
-    "fim": "<@{{autor}}>, lembrete! \n\n Lembrete: **{{lembrete}}**"
-  },
-  "lembretes": {
-    "embed": {
-      "author": "Swift - Seus lembretes",
-      "description": "Veja abaixo seus lembretes ativos"
-  },
-    "erro": "<@{{autor}}>, você não possui lembretes ativos."
-  },
+    "skip": {
+        "canal": "<@{{autor}}, para utilizar esta função você deve estar no canal de voz em que o BOT está. ",
+        "nomusic": "<@{{autor}}>, não há nada tocando neste momento para que eu possa pular!",
+        "musicapulada": "A música foi pulada por <@{{autor}}>.",
+        "permManage": "Permissão utilizada: MANAGE_SERVER",
+        "puladaautor": "A música foi pulada por quem a colocou <@{{autor}}>",
+        "javotou": "<@{{autor}}>, você já votou para pular essa música uma vez!",
+        "votado": "<@{{autor}}>, votou para pular a playlist. ({{votos}}) votos."
+    },
+    "sortear": {
+        "perguntas": {
+            "author": "Swift - Sorteio",
+            "item": "Olá, <@{{autor}}>. O que você deseja sortear?",
+            "tempo": "Olá, <@{{autor}}>. Quanto tempo você quer que dure o sorteio? \n\n Exemplo: 1s, 1m, 1h, 1d...",
+            "ganhadores": "Olá, <@{{autor}}>. Agora, preciso saber quantos ganhadores terá neste sorteio.",
+            "canal": "Olá, <@{{autor}}>. Por fim, preciso que mencione o canal em que será enviada a mensagem do sorteio."
+        },
+        "embedsorteio": {
+            "author": "Swift - Sorteio",
+            "início": "Item a ser sorteado: **{{item}}** \n\n Quantidade de ganhadores: **{{ganhadores}}** \n\n Duração do sorteio: **{{tempo}}**",
+            "embederro": "O número de ganhadores é maior do que o número de participantes! :frowning:",
+            "mensagemerro": "🎉 **SORTEIO ACABOU** 🎉",
+            "footer": "Acabou!",
+            "fim": "Item sorteado: {{item}} \n\n Ganhador(es): {{msgg}}",
+            "footerfim": "Swift - Sorteio finalizado"
+        }
+    },
+    "lembrete": {
+        "footer": "Para cancelar esta operação, digite 'cancelar'",
+        "cancelar": "<@{{autor}}>, você cancelou a operação com sucesso.",
+        "maximo": "<@{{autor}}>, você já atingiu o limite de lembretes (3).",
+        "msg": "<@{{autor}}>, você deve inserir o que é para eu te lembrar!",
+        "length1": "<@{{autor}}>, seu lembrete deve ter no máximo 100 caracteres.",
+        "length2": "<@{{autor}}>, seu lembrete deve ter pelo menos 2 caracteres.",
+        "perguntar": "<:UNSPAcceptIcon:703725149546872932> Agora preciso que você escreva daqui a quanto tempo você quer que eu te lembre. Não utilize espaços no tempo, utilize este modelo: 1h ",
+        "erro": "<@{{autor}}>, você deve inserir um tempo válido. Como dito acima, você deve inserir um modelo de tempo específico: 1h",
+        "iniciar": "<:UNSPWarntIcon:703725150159241216> <@{{autor}}>, você será lembrado em {{acaba}}",
+        "fim": "<@{{autor}}>, lembrete! \n\n Lembrete: **{{lembrete}}**"
+    },
+    "lembretes": {
+        "embed": {
+            "author": "Swift - Seus lembretes",
+            "description": "Veja abaixo seus lembretes ativos"
+        },
+        "erro": "<@{{autor}}>, você não possui lembretes ativos."
+    },
     "autorole": {
         "use": "Modelo de uso incorreto! Use `{{prefix}}autorole set`, `{{prefix}}autorole desativar` ou `{{prefix}}autorole status.`",
         "channel": "Olá, **{{user.username}}**. Por favor, mencione o cargo de que deseja utilizar na Autorole. Lembrando, mencione apenas **um**.",

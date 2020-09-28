@@ -10,7 +10,7 @@ class Convite extends Base {
       aliases: ['invite']
     })
   }
-
+ 
   async run({ message, args, prefix }, t) {
     let msg = await message.channel.send(t('commands:convite.1'))
 

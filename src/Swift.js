@@ -14,7 +14,9 @@ const _ = require('lodash')
 
 const SwiftEmbed = require('./services/SwiftEmbed.js');
 
-const SwiftManager = require('./services/SwiftMusic/SwiftManager');
+const { GorilinkManager, GorilinkPlayer } = require('gorilink');
+
+const { SwiftPlayer } = require('./services/index');
 
 const nodes = [
     {
@@ -112,6 +114,7 @@ module.exports = class Swift extends Client {
     }
 
     async getPrefix(guildPrimate, guildDB) {
+        if (guildPrimate && ['729715039413469345', '711623214467645470'].includes(guildPrimate.id)) return "sw!";
         if (!guildPrimate) return 's!'
         if (guildPrimate.id === '631467420510584842') return 'sw!'
 
@@ -185,22 +188,47 @@ module.exports = class Swift extends Client {
             appId: process.env.FIREBASE_APPID
         })
         this.database = firebase.database();
-        console.log(`[Database] Firebase conectado com sucesso.`)
+        this.log('Firebase Conectado com sucesso.', { color: 'green', tags: ['Database'] });
     }
 
     async connectLavalink() {
-        try {
-            this.music = new SwiftManager(this, nodes)
-                .on('nodeConnect', node => {
-                    console.log(`${node.tag || node.host} - Lavalink connected with success.`)
-                })
-                .on('trackStart', (player, track) => {
-                    player.textChannel.send(`Now playing \`${track.info.title}\``)
-                })
-        } catch (err) {
-            console.log('ERRO NO LAVALINK: ' + err)
-        }
-        console.log('Online on the client', this.user.username)
+
+        this.music = new GorilinkManager(this, nodes, {
+            Player: SwiftPlayer
+        })
+            // Listens events
+            .on('nodeConnect', node => {
+                this.log(`${node.tag || node.host} - Lavalink conectado com sucesso.`, { color: 'green', tags: ['SwiftMusic'] })
+            })
+
+            .on('trackStart', async (player, track) => {
+                const msg = await player.textChannel.send(new this.embed()
+                    .setDescription(`<:UNSPMidiaIcon:703725149467312129> Tocando agora: [${track.info.title}](${track.info.uri})  `));
+
+                track.info.messageID = msg.id;
+                player.messageID = msg.id;
+            })
+
+            .on('queueEnd', (player, track) => {
+                player.textChannel.send(new this.embed().setDescription(`<:UNSPWarntIcon:703725150159241216> A fila de músicas acabou e eu saí do canal de voz.`)).then(async msg => { msg.delete({ timeout: 60000 * 5 }) })
+                player.textChannel.messages.fetch(player.messageID).then(async msg => {
+                    if (msg !== undefined) msg.delete({ timeout: 3000 })
+                }).catch(err => { })
+                this.music.leave(player.guild);
+
+            })
+            .on('trackEnd', (player, track) => {
+                player.textChannel.messages.fetch(track.info.messageID).then(async msg => {
+                    if (msg !== undefined) msg.delete({ timeout: 3000 })
+                }).catch(err => { })
+            })
+            .on('nodeClose', async node => {
+                this.log(`A conexão com o node ${node.tag || node.host} foi perdida.`, { color: 'red', tags: ['SwiftMusic'] })
+            })
+            .on('nodeError', async error => {
+                console.log(error)
+                this.log(`Erro emitido no LavaLink: ${error}`, { color: 'red', tags: ['SwiftMusic'] })
+            })
     }
 
     async initListeners() {

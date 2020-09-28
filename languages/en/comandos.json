@@ -7,6 +7,7 @@
         "error": "Sorry, I couldn't add this emoji"
     },
   "stop": {
+    
     "perm": "<@{{autor}}>, to use this function, you must be the permission ``MANAGE GUILD``.",
     "canal": "<@{{autor}}, to use this function you must be on the voice channel on which the BOT is. ",
     "nomusic": "<@{{autor}}>, i am not touching anything right now.",

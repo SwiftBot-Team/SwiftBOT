@@ -4,8 +4,8 @@ class Dado extends Base {
     constructor(client) {
         super(client, {
             name: "dado",
-            description: "descriptions.dado",
-            category: "categories.fun",
+            description: "descriptions:dado",
+            category: "categories:fun",
             cooldown: 1000,
             aliases: ["coc"]
         });

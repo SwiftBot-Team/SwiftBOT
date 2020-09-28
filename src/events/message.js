@@ -27,7 +27,7 @@ module.exports = class {
 
         if (!cmd) return;
 
-        cmd.setMessage(message);
+        cmd.setMessage(message, args);
 
 
         const setFixedT = function (translate) {
@@ -53,7 +53,7 @@ module.exports = class {
             const Embed = new this.client.embed(message.author)
 
             if (cmd.cooldown.has(message.author.id)) {
-                return message.channel.send(Embed.setDescription('<:errado:739176302317273089> '+t('errors:cooldownError')))
+                return message.channel.send(Embed.setDescription('<:errado:739176302317273089> ' + t('errors:cooldownError')))
             }
 
             const verify = await cmd.verifyRequirementes(t)
@@ -76,7 +76,7 @@ module.exports = class {
                 }
             ]
 
-            cmd.run({ message, args, prefix }, t);
+            cmd.run({ message, args, prefix, language }, t);
             this.client.instance.log('COMMAND_EXECUTED', action)
 
             if (cmd.conf.cooldown > 0) cmd.startCooldown(message.author.id);

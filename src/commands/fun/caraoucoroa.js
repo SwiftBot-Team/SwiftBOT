@@ -4,8 +4,8 @@ class Caraoucoroa extends Base {
     constructor(client) {
         super(client, {
             name: "caraoucoroa",
-            description: "descriptions.caraoucoroa",
-            category: "categories.fun",
+            description: "descriptions:caraoucoroa",
+            category: "categories:fun",
             cooldown: 1000,
             aliases: ["coc"]
         });

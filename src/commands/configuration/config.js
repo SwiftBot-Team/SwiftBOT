@@ -67,7 +67,6 @@ class Configuration extends Base {
           [
             `\`${prefix}config ${t(this.help.usage)}\` \n`,
             `\`${prefix}config join.status\``,
-            `\`${prefix}config mod.ban.message\``,
             `\`${prefix}config list\``,
             `\`${prefix}config status\``
           ]

@@ -14,7 +14,8 @@ class Command {
             bot_permissions: options.bot_permissions || [],
             allowDMs: options.allowDMs || false,
             devsOnly: options.devsOnly || false,
-            hidden: options.hidden || false
+            hidden: options.hidden || false,
+            nsfw: options.nsfw || false
         };
         this.cooldown = new Set();
     }
@@ -27,12 +28,35 @@ class Command {
         }, this.conf.cooldown);
     }
 
-    setMessage(message) {
+    setMessage(message, args) {
         this.message = message;
+        this.args = args;
     }
 
-    respond(message) {
-        this.message.channel.send(message);
+    getUsers() {
+        const array = [];
+
+        for (let i = 0; i < this.args.length; i++) {
+            let tostring = this.args[i].toString().replace('@', '').replace('<', '').replace('>', '').replace('!', '');
+
+            const user = this.message.guild.members.cache.get(tostring) || this.message.guild.members.cache.find(member => member.user.username === this.args[i]) || this.message.guild.members.cache.find(member => member.nickname === this.args[i]);
+            if (user) array.push(user);
+
+        }
+
+        return array;
+    }
+    async respond(message, hasFooter = true, options) {
+        const Embed = new this.client.embed(hasFooter ? this.message.author : null)
+        Embed.setDescription(message)
+
+        if (options && options.footer) Embed.setFooter(options.footer);
+        if (options && options.image) Embed.setImage(options.image);
+        if (options && options.author) Embed.setAuthor(options.author.text, options.author.image)
+
+        const send = await this.message.channel.send(Embed);
+
+        return send;
     }
 
     getEmoji(emojiName, fallback) {
@@ -50,9 +74,9 @@ class Command {
 
         const opts = this.conf
 
-        const botGuild = this.client.guilds.cache.get(process.env.OFICIAL_GUILD)
-        const developerRole = botGuild.roles.cache.get('685788548687069196')
-        const isDeveloper = (botGuild.members.cache.get(this.message.author.id).roles.cache.has(developerRole.id))
+        const botGuild = this.client.guilds.cache.get(process.env.OFICIAL_GUILD);
+        const developerRole = botGuild.roles.cache.get('685788548687069196');
+        const isDeveloper = botGuild.members.cache.get(this.message.author.id) ? (botGuild.members.cache.get(this.message.author.id).roles.cache.has(developerRole.id)) : false;
 
         if (opts.devsOnly && !isDeveloper) {
             Embed
@@ -69,13 +93,13 @@ class Command {
                 let translated = []
                 if (opts.bot_permissions.length > 1) {
                     opts.bot_permissions.map(p => {
-                        translated.push(t('permissions:'+p))
+                        translated.push(t('permissions:' + p))
                     })
                 }
-                
+
                 Embed
                     .setTitle(`**Hey, ${this.message.author.username}**`)
-                    .setDescription(t(`errors:botPermissionError.${opts.bot_permissions.length > 1 ? 'plural' : 'singular'}`, { perm: (opts.bot_permissions.length > 1 ? translated.join(' | ') : t('permissions:'+opts.bot_permissions[0])) }))
+                    .setDescription(t(`errors:botPermissionError.${opts.bot_permissions.length > 1 ? 'plural' : 'singular'}`, { perm: (opts.bot_permissions.length > 1 ? translated.join(' | ') : t('permissions:' + opts.bot_permissions[0])) }))
                     .setFooter(this.message.author.username, this.message.author.displayAvatarURL())
 
                 this.message.channel.send(Embed)
@@ -88,13 +112,13 @@ class Command {
                 let translated = []
                 if (opts.bot_permissions.length > 1) {
                     opts.bot_permissions.map(p => {
-                        translated.push(t('permissions:'+p))
+                        translated.push(t('permissions:' + p))
                     })
                 }
-                
+
                 Embed
                     .setTitle(`**Hey, ${this.message.author.username}**`)
-                    .setDescription(t(`errors:userPermissionError.${opts.permissions.length > 1 ? 'plural' : 'singular'}`, { perm: (opts.permissions.length > 1 ? translated.join(' | ') : t('permissions:'+opts.permissions[0])) }))
+                    .setDescription(t(`errors:userPermissionError.${opts.permissions.length > 1 ? 'plural' : 'singular'}`, { perm: (opts.permissions.length > 1 ? translated.join(' | ') : t('permissions:' + opts.permissions[0])) }))
                     .setFooter(this.message.author.username, this.message.author.displayAvatarURL())
 
                 this.message.channel.send(Embed)
@@ -102,8 +126,14 @@ class Command {
             }
         }
 
+        if (opts.nsfw) {
+            this.message.channel.send(new this.client.embed(this.message.author).setDescription(`${this.message.author}, este comando só pode ser executado com um canal \`NSFW\`! `));
+            return true;
+        }
+
         return false
     }
+
 
 }
 
