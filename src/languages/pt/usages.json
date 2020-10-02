@@ -13,5 +13,6 @@
   "calculadora": "<expressão>",
   "alert": "<título> | <anúncio>",
   "country": "<nome do país>",
-  "hexcolor": "<cor>"
+  "hexcolor": "<cor>",
+  "weather": "<cidade>"
 }

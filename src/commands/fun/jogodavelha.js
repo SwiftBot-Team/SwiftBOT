@@ -8,6 +8,7 @@ class Jogodavelha extends Base {
             category: "categories:fun",
             cooldown: 1000,
             aliases: ['tictactoe'],
+            bot_permissions: ['ADD_REACTIONS']
         });
 
         this.finish = false;
@@ -49,12 +50,10 @@ class Jogodavelha extends Base {
         const emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
         const emojisToCompare = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
 
-        let init = await message.channel.send(messageJogo);
-
-        for (let i = 0; i < emojis.length; i++) init.react(emojis[i]);
+        let init = await message.channel.send('<a:Loading:745327497096331314> Carregando tabuleiro.');
 
         const play = () => {
-
+            console.log('a');
             const collector = init.createReactionCollector((r, u) => emojis.includes(r.emoji.name) && u.id === game.atual.player.user.id, { max: 1, time: 60000 * 2 });
 
             collector.on('collect', async (r, u) => {
@@ -99,7 +98,14 @@ class Jogodavelha extends Base {
 
         };
 
-        play();
+        for (let i = 0; i < emojis.length; i++) {
+            init.react(emojis[i]).then(async emoji => {
+                if (i === emojis.length - 1) {
+                    await init.edit(messageJogo, null);
+                    await play();
+                }
+            })
+        };
 
     }
 
@@ -123,8 +129,10 @@ class Jogodavelha extends Base {
                 pos2 = sequence[1], // 1
                 pos3 = sequence[2]; // 2
 
+            console.log(board[pos1] + " - " + board[pos2] + " - " + board[pos3]);
 
-            if (board[pos1] == board[pos2] && board[pos1] == board[pos3] && board[pos2] == board[pos3]) return this.finish = true;         
+
+            if (board[pos1] == board[pos2] && board[pos1] == board[pos3] && board[pos2] == board[pos3]) return this.finish = true;
             //if ((board[pos1] == board[pos2] && board[pos1] == board[pos3]) && board[pos1] != 'x') return this.finish = true;
 
             else continue;

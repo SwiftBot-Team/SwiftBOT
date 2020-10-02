@@ -1,4 +1,4 @@
-const { Client, Collection } = require('discord.js')
+const { Client, Collection, VoiceChannel } = require('discord.js')
 const { readdir } = require("fs");
 
 const FileUtils = require('./utils/FileUtils')
@@ -141,8 +141,8 @@ module.exports = class Swift extends Client {
     }
 
     async getLanguage(guildPrimate) {
-        if (!guildPrimate) return
-        const guild = await Guild.findOne({ guildID: guildPrimate.id })
+        if (!guildPrimate) return;
+        const guild = await Guild.findOne({ guildID: !isNaN(guildPrimate) ? guildPrimate : guildPrimate.id })
         if (guild) {
             let lang = guild.lang
 
@@ -192,35 +192,49 @@ module.exports = class Swift extends Client {
     }
 
     async connectLavalink() {
-
         this.music = new GorilinkManager(this, nodes, {
             Player: SwiftPlayer
         })
-            // Listens events
             .on('nodeConnect', node => {
                 this.log(`${node.tag || node.host} - Lavalink conectado com sucesso.`, { color: 'green', tags: ['SwiftMusic'] })
             })
 
             .on('trackStart', async (player, track) => {
+                const t = await this.getTranslate(player.guild);
+
                 const msg = await player.textChannel.send(new this.embed()
-                    .setDescription(`<:UNSPMidiaIcon:703725149467312129> Tocando agora: [${track.info.title}](${track.info.uri})  `));
+                    .setDescription(t('utils:music.trackStart', { music: track.info.title, url: track.info.uri })));
 
                 track.info.messageID = msg.id;
                 player.messageID = msg.id;
             })
 
-            .on('queueEnd', (player, track) => {
-                player.textChannel.send(new this.embed().setDescription(`<:UNSPWarntIcon:703725150159241216> A fila de músicas acabou e eu saí do canal de voz.`)).then(async msg => { msg.delete({ timeout: 60000 * 5 }) })
+            .on('queueEnd', async (player, track) => {
+                const t = await this.getTranslate(player.guild);
+
+                player.textChannel.send(new this.embed().setDescription(t('utils:music.queueEnd'))).then(async msg => { msg.delete({ timeout: 60000 * 5 }) })
+
                 player.textChannel.messages.fetch(player.messageID).then(async msg => {
                     if (msg !== undefined) msg.delete({ timeout: 3000 })
-                }).catch(err => { })
+                }).catch(err => { });
+
                 this.music.leave(player.guild);
 
+
             })
-            .on('trackEnd', (player, track) => {
+            .on('trackEnd', async (player, track) => {
+                const t = await this.getTranslate(player.guild);
+
                 player.textChannel.messages.fetch(track.info.messageID).then(async msg => {
                     if (msg !== undefined) msg.delete({ timeout: 3000 })
-                }).catch(err => { })
+                }).catch(err => { });
+
+                const guild = this.guilds.cache.get(player.guild);
+
+                if (guild.me.voice.channel.members.filter(m => !m.user.bot).size < 1) {
+                    this.music.leave(player.guild);
+                    player.textChannel.send(new this.embed().setDescription(t('utils:music.noMembers')))
+                }
             })
             .on('nodeClose', async node => {
                 this.log(`A conexão com o node ${node.tag || node.host} foi perdida.`, { color: 'red', tags: ['SwiftMusic'] })
@@ -261,7 +275,7 @@ module.exports = class Swift extends Client {
                 },
                 returnEmptyString: false
             }).then(async t => {
-                resolve(t);
+                await resolve(t);
             })
         })
     }

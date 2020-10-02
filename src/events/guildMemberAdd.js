@@ -8,30 +8,30 @@ module.exports = class {
     this.client = client;
   }
   async run(member) {
-    let t = i18n.getFixedT(this.client.getLanguage(member.guild, guildDB))
+    const t = await this.client.getTranslate(member.guild)
 
     const db = await this.client.database.ref(`Servidores/${member.guild.id}/autorole`).once('value')
-  
+
     if (!db.val()) return
 
-    let InvalidRoles = []
+    const InvalidRoles = []
 
-    for(const i in db.val()) {
-      if(!member.guild.roles.cache.get(db.val()[i])) {
+    for (const i in db.val()) {
+      if (!member.guild.roles.cache.get(db.val()[i])) {
         InvalidRoles.push(db.val()[i])
         continue;
       }
 
-      member.roles.add(db.val()[i])
+      member.roles.add(db.val()[i]);
     }
 
     await Mail.send(
-      member.guild.owner.id, 
+      member.guild.owner.id,
       {
         title: t(''),
         timestamp: convertHourToMinutes(msToTime(Date.now())),
-        body: ''  
-      } 
+        body: ''
+      }
     )
   }
 

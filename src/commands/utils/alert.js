@@ -38,10 +38,10 @@ class Alert extends Base {
       .setTitle(t('commands:anunciar.title'))
       .setDescription(
         '⠀'
-        + '\n<:module:744210050448490576> **»** '+t('commands:anunciar.options')
-        + '\n<:swiftLove:754841489510629477> **»** '+t('commands:anunciar.preview')
-        + '\n<a:certo:739210631441547296> **»** '+t('commands:anunciar.final')
-        + '\n<:errado:739176302317273089> **»** '+t('commands:anunciar.cancel')
+        + '\n<:module:744210050448490576> **»** ' + t('commands:anunciar.options')
+        + '\n<:swiftLove:754841489510629477> **»** ' + t('commands:anunciar.preview')
+        + '\n<a:certo:739210631441547296> **»** ' + t('commands:anunciar.final')
+        + '\n<:errado:739176302317273089> **»** ' + t('commands:anunciar.cancel')
       )
       .setImage('https://images-ext-2.discordapp.net/external/DEVVP8JnNanBG1jmuqau--bJYdHfTdvNGpygemqeRt0/%3Fv%3D1/https/cdn.discordapp.com/emojis/758833296216948776.png')
 
@@ -79,12 +79,12 @@ class Alert extends Base {
           emojis.map(e => {
             sendMessage.react(e)
           })
-          
-          const changeCollector = sendMessage.createReactionCollector((r, u) => (emojis.includes(r.emoji.name)) && u.id === message.author.id, { time: 30000 });
+
+          const changeCollector = sendMessage.createReactionCollector((r, u) => (emojis.includes(r.emoji.name)) && u.id === message.author.id, { time: 120000 });
 
           changeCollector.on('end', () => {
             if (changeCollector.endReason() === 'limit') return;
-      
+
             sendMessage ? sendMessage.delete({ timeout: 100 }) : null
             this.respond(t('commands:anunciar.end-2'))
           })
@@ -141,6 +141,7 @@ class Alert extends Base {
             )
 
           message.channel.send(anuncioembed);
+          collector.stop(['suamae'])
 
           break;
 
@@ -154,8 +155,8 @@ class Alert extends Base {
       }
     })
 
-    collector.on('end', () => {
-      if (collector.endReason() === 'limit') return;
+    collector.on('end', (colleted, reason) => {
+      if (['messageDelete'].includes(reason)) return;
 
       msg.delete({ timeout: 100 })
 

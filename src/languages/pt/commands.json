@@ -1,11 +1,94 @@
 {
+  "playlist": {
+    "noArgs": "<@{{member}}>, você se esqueceu de inserir o que á para mim fazer!\nUtilize ``{{prefix}}playlist ajuda`` para ver os comandos de playlist. ",
+    "criar": {
+      "noArgs1": "<@{{member}}>, você se esqueceu de inserir o nome da playlist que deseja criar!",
+      "invalidName": "<@{{member}}>, o nome da playlist só pode conter 1 palavra!",
+      "exists": "<@{{member}}>, esta playlist já existe. Utilize o comando ``{{prefix}}playlist addmusica <playlist> <musica>`` para adicionar alguma música na mesma. ",
+      "created": "<@{{member}}>, a playlist foi criada com sucesso. Utilize o comando ``{{prefix}}playlist addmusic <plylist> <musica>`` para adicionar alguma música na mesma."
+    },
+    "help": {
+      "commands": "Veja abaixo os comandos de playlist:\n\n``{{prefix}}playlist criar <nome>``\n``{{prefix}}playlist tocar <nome>``\n``{{prefix}}playlist addmusic <playlist> <musica>``\n``{{prefix}}playlist removemusic <playlist> <musica>``\n``{{prefix}}playlist info <playlist>``\n``{{prefix}}playlist listar``\n``{{prefix}}playlist deletar <playlist>``"
+    },
+    "addmusic": {
+      "noArgs1": "<@{{member}}>, você se esqueceu de dizer em qual playlist você deseja adicionar a música. Utilize o comando ``{{prefix}}playlist listar`` para ver suas playlists. ",
+      "noPlaylistFound": "<@{{member}}>, eu não encontrei esta playlist. Utilize o comando ``{{prefix}}playlist listar`` para ver suas playlists.",
+      "noArgsMusic": "<@{{member}}>, você deve inserir a música que deseja adicionar na playlist (id, url, ou nome).",
+      "noMusicFound": "<@{{member}}>, sinto muito, mas nao encontrei esta musica.",
+      "noPlaylistAllowed": "<@{{member}}>, você não pode adicionar playlists em playlists.",
+      "exists": "<@{{member}}>, esta música já está na playlist.",
+      "added": "A mú,sica ``{{musica}}`` foi adicionada na playlist ``{{playlist}}``"
+    },
+    "removemusic": {
+      "noArgs1": "<@{{member}}>, você se esqueceu de dizer de qual playlist você deseja remover a música. Utilize o comando ``{{prefix}}playlist listar`` para ver suas playlists. ",
+      "noPlaylistFound": "<@{{member}}>, eu não encontrei esta playlist. Utilize o comando ``{{prefix}}playlist listar`` para ver suas playlists.",
+      "noArgsMusic": "<@{{member}}>, você deve inserir a música que deseja remover da playlist (id, url, ou nome).",
+      "noMusicFound": "<@{{member}}>, sinto muito, mas nao encontrei esta musica.",
+      "noExists": "<@{{member}}>, esta música não está na playlist.",
+      "removed": "A música ``{{musica}}`` foi removida da playlist ``{{playlist}}`` com sucesso."
+    },
+    "play": {
+      "noArgs1": "<@{{member}}>, você deve inserir o nome da sua playlist que você deseja tocar.",
+      "isPlaying": "<@{{member}}>, você só pode tocar playlists privadas caso não haja nada tocando no momento.",
+      "noMusic": "<@{{member}}>, não há nenhuma música na playlist para eu tocar.",
+      "play": "<@{{member}}>, a playlist ``{{playlist}}`` foi iniciada. ``{{amount}}`` músicas foram inseridas.  "
+    }
+  },
+  "tocando": {
+    "tocando": "<@{{member}}>, música tocando no momento: [{{title}}]({{url}}) "
+  },
+  "resume": {
+    "isPlaying": "<:UNSPDenyIcon:703725149504929812> <@{{member}}>, a música não está pausada.",
+    "resume": "<:UNSPWarntIcon:703725150159241216> A música foi retomada."
+  },
+  "pause": {
+    "pause": "<:UNSPWarntIcon:703725150159241216> A música foi pausada.",
+    "resume": "<:UNSPWarntIcon:703725150159241216> A música foi retomada."
+  },
+  "volume": {
+    "noArgs": "<@{{member}}>, você precisa inserir o numero equivalente a posicai da musica na playlist!",
+    "invalidNumber": "<@{{member}}>, voce deve inserir um numero valido maior que 1 e menor que 200!",
+    "finish": "<:UNSPWarntIcon:703725150159241216> O volume do player foi alterado para ``{{volume}}`` com sucesso."
+  },
+  "remove": {
+    "positionNotFound": "<@{{member}}>, não existe nenhuma música na posição `{{position}}`",
+    "noArgs": "<@{{member}}>, você precisa inserir o numero equivalente a posicai da musica na playlist!",
+    "invalidNumber": "<@{{member}}>, voce deve inserir um numero valido e maior que 1!",
+    "deny": "<@{{member}}>, você não pode remover a música que está tocando."
+  },
+  "loop": {
+    "noVoiceChannel": "<@{{member}}>, você precisa estar em um canal de voz para executar este comando!",
+    "noVoiceChannel2": "<@{{member}}>, você precisa estar no mesmo canal de voz que eu para executar este comando.",
+    "noPlaying": "<@{{member}}>, não estou tocando nada no momento.",
+    "disable": "<:UNSPWarntIcon:703725150159241216> O loop foi desativado.",
+    "enable": "<:UNSPWarntIcon:703725150159241216> O loop foi ativado."
+  },
+  "queue": {
+    "noPlaying": "<@{{member}}>, não estou tocando nada no momento.",
+    "embedAuthor": "Swift - Lista de reprodução",
+    "footer1": "Swift - Lista de músicas na playlist",
+    "footer2": "Swift - Página {{pagina}} de {{paginas}}"
+  },
+  "stop": {
+    "noVoiceChannel": "<@{{member}}>, você precisa estar em um canal de voz para executar este comando!",
+    "noVoiceChannel2": "<@{{member}}>, você precisa estar no mesmo canal de voz que eu para executar este comando.",
+    "noPlaying": "<@{{member}}>, não estou tocando nada no momento."
+  },
+  "skip": {
+    "noVoiceChannel": "<@{{member}}>, você precisa estar em um canal de voz para executar este comando!",
+    "noVoiceChannel2": "<@{{member}}>, você precisa estar no mesmo canal de voz que eu para executar este comando.",
+    "noPlaying": "<@{{member}}>, não estou tocando nada no momento."
+  },
   "play": {
+    "fail": "<:UNSPDenyIcon:703725149504929812> Ocorreu um erro ao pesquisar por esta música.",
     "canal": "<@{{member}}>, você precisa estar em um canal de voz para executar este comando!",
     "isPlaying": "<@{{member}}>, eu já estou tocando em um canal de voz! Entre nele para utilizar o comando.",
     "noArgs": "<@{{member}}>, você se esqueceu de inserir o que é para mim tocar!",
-    "playlistLoaded": "Foram adicionadas **{{amount}}** músicas na playlist com sucesso.",
-    "musicLoaded": "A música `{{name}}` foi adicionada à playlist com sucesso.",
-    "noMusicFound": "Sinto muito, não foi possível encontrar nenhuma música."
+    "playlistLoaded": "<a:certo:739210631441547296> Foram adicionadas **{{amount}}** músicas na playlist com sucesso.",
+    "musicLoaded": "<a:certo:739210631441547296> A música `{{name}}` foi adicionada à playlist com sucesso.",
+    "noMusicFound": "Sinto muito, não foi possível encontrar nenhuma música.",
+    "adding": "<a:Loading:745327497096331314> Adicionando playlist à lista de reprodução...\n Músicas adicionadas: {{amount}}",
+    "added": "<a:certo:739210631441547296> Foram adicionadas {{amount}} músicas na playlist."
   },
   "slap": {
     "noArgs": "<@{{member}}>, você deve inserir um usuário para bater!",
@@ -275,6 +358,19 @@
     "reqerror": "<:errado:739176302317273089> **»** Um erro ocorreu ao consultar a API"
   },
   "hexcolor": {
-    "args": "<:errado:739176302317273089> **»** Coloque uma cor!"
+    "args": "<:errado:739176302317273089> **»** Coloque uma cor!",
+    "error": "<:errado:739176302317273089> **»** Esta cor não existe!"
+  },
+  "weather": {
+    "error": "<:errado:739176302317273089> **»** Coloque o nome de um local!",
+    "cityError": "<:errado:739176302317273089> **»** Desculpe, não encontrei este local na minha API!",
+    "tempo": "Tempo",
+    "temp": "Temperatura",
+    "hum": "Humidade"
+  },
+  "docs": {
+    "error": "<:errado:739176302317273089> **»** Você deve colocar algo a pesquisar nas docs!",
+    "nothing": "<:errado:739176302317273089> **»** Não encontrei nada relacionado a **`{{item}}`**",
+    "author": "Documentação oficial do discord.js"
   }
 }

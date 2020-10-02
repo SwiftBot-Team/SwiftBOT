@@ -32,7 +32,7 @@ module.exports = class SwiftPlayer extends GorilinkPlayer {
 
     if (data.includes('album')) return this.getAlbum(data);
 
-    if (!['playlist', 'track', 'album'].includes(data.toLowerCase())) return false;
+    if (!['playlist', 'track', 'album'].includes(data.toLowerCase())) return [];
 
   }
 
@@ -70,7 +70,7 @@ module.exports = class SwiftPlayer extends GorilinkPlayer {
   async getTrack(data) {
     data = data.split('/track/', -1)[1]
     const request = await this.request(`/tracks/${data}`);
-    return [request.name]
+    return request.name ? [request.name] : [];
   }
 
   async getPlaylist(data, fields = 'fields=items(track(name,artists(name)))') {
@@ -78,16 +78,15 @@ module.exports = class SwiftPlayer extends GorilinkPlayer {
 
     const request = await this.request(`/playlists/${data}`, { fields });
 
-    return request.tracks.items.map(r => r.track.name);
+    return request.tracks ? request.tracks.items.map(r => r.track.name) : [];
   }
 
   async getAlbum(data, limit = 40) {
     data = data.split('/album/', -1)[1];
-    console.log(data)
 
     const request = await this.request(`/albums/${data}/tracks`, { limit });
 
-    return request.items.map(r => r.name);
+    return request.items ? request.items.map(r => r.name) : [];
   }
 
   get tokenHeaders() {

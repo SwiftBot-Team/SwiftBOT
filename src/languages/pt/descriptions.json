@@ -23,5 +23,7 @@
   "npm": "Procure uma livraria do NPM",
   "calculadora": "Calcule uma expressão",
   "country": "Veja as informações de um país",
-  "hexcolor": "Veja as informações de uma cor"
+  "hexcolor": "Veja as informações de uma cor",
+  "weather": "Veja o clima de uma cidade",
+  "docs": "Procure algo nas documentações do discord.js"
 }

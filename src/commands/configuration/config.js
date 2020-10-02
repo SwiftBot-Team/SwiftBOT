@@ -72,7 +72,7 @@ class Configuration extends Base {
           ]
         ])
 
-        return message.channel.send(Embed)
+      return message.channel.send(Embed)
     }
 
     if (args[0] === 'list' || args[0] === 'listar') {
@@ -81,37 +81,37 @@ class Configuration extends Base {
         let module_field = Object.keys(modules)
 
         Embed
-          .setTitle('<:module:744210050448490576> '+t('commands:config.listJustModules'))
-          .setFooter(t('commands:config.footer', { prefix, arg: args[0] }), this.client.user.displayAvatarURL()) 
+          .setTitle('<:module:744210050448490576> ' + t('commands:config.listJustModules'))
+          .setFooter(t('commands:config.footer', { prefix, arg: args[0] }), this.client.user.displayAvatarURL())
           .setDescriptionFromBlockArray([
             [
               `${t('commands:config.format')} \n`
             ],
-            module_field.map(m => 
+            module_field.map(m =>
               [
-                '**'+modules[m].emoji+' '+modules[m].title+':** `'+m.toString()+'`'
+                '**' + modules[m].emoji + ' ' + modules[m].title + ':** `' + m.toString() + '`'
               ]
             )
           ])
-          
+
 
         return message.channel.send(Embed)
       } else {
         let searchedModule = modules[args[1]]
 
-        if (!searchedModule) return message.channel.send('<:errado:739176302317273089> '+t('commands:config.notFound', { search: args[1] }))
+        if (!searchedModule) return message.channel.send('<:errado:739176302317273089> ' + t('commands:config.notFound', { search: args[1] }))
 
         let submodules = Object.keys(searchedModule['submodules'])
 
         Embed
-          .setTitle('<:module:744210050448490576> '+t('commands:config.moduleInfo', { module: args[1] }))
-          .setDescription(t('commands:config.formatDescription')+'\n⠀')
+          .setTitle('<:module:744210050448490576> ' + t('commands:config.moduleInfo', { module: args[1] }))
+          .setDescription(t('commands:config.formatDescription') + '\n⠀')
 
-          submodules.map(s => {
-            Embed.addField(
-              '**'+searchedModule.submodules[s].title+':**'+' `'+s+'`', searchedModule.submodules[s].desc+`\n\`${prefix}config ${args[1]}.${s}\`\n ⠀`
-            )
-          })
+        submodules.map(s => {
+          Embed.addField(
+            '**' + searchedModule.submodules[s].title + ':**' + ' `' + s + '`', searchedModule.submodules[s].desc + `\n\`${prefix}config ${args[1]}.${s}\`\n ⠀`
+          )
+        })
 
         return message.channel.send(Embed)
       }
@@ -120,7 +120,7 @@ class Configuration extends Base {
 
       if (!modules[areas[0]]) {
         Embed
-          .setDescription('<:errado:739176302317273089> '+t('commands:config.notFound', { search: areas[0] }))
+          .setDescription('<:errado:739176302317273089> ' + t('commands:config.notFound', { search: areas[0] }))
 
         return message.channel.send(Embed)
       }
@@ -131,28 +131,28 @@ class Configuration extends Base {
         let submodules = Object.keys(searchedModule['submodules'])
 
         Embed
-          .setTitle('<:module:744210050448490576> '+t('commands:config.moduleInfo', { module: areas[0] }))
-          .setDescription(t('commands:config.formatDescription')+'\n⠀')
+          .setTitle('<:module:744210050448490576> ' + t('commands:config.moduleInfo', { module: areas[0] }))
+          .setDescription(t('commands:config.formatDescription') + '\n⠀')
 
-          submodules.map(s => {
-            Embed.addField(
-              '**'+searchedModule.submodules[s].title+':**'+' `'+s+'`', searchedModule.submodules[s].desc+`\n\`${prefix}config ${areas[0]}.${s}\`\n ⠀`
-            )
-          })
+        submodules.map(s => {
+          Embed.addField(
+            '**' + searchedModule.submodules[s].title + ':**' + ' `' + s + '`', searchedModule.submodules[s].desc + `\n\`${prefix}config ${areas[0]}.${s}\`\n ⠀`
+          )
+        })
 
         return message.channel.send(Embed)
       }
 
       if (!Object.keys(modules[areas[0]]['submodules']).includes(areas[1])) {
         Embed
-          .setDescription('<:errado:739176302317273089> '+t('commands:config.notSubmoduleFound', { search: areas[1] }))
+          .setDescription('<:errado:739176302317273089> ' + t('commands:config.notSubmoduleFound', { search: areas[1] }))
 
         return message.channel.send(Embed)
       }
 
       const messageCollector = await message.channel.createMessageCollector(author => author.author.id === message.author.id, { time: 60000, max: 1, errors: ['time'] })
       message.channel.send(t(`commands:config:${areas[0]}:submodules:${areas[1]}.msg`))
-    
+
       messageCollector.on('collect', async (r) => {
         modules[areas[0]]['submodules'][areas[1]]
         if (r.content.toLowerCase() === 'cancelar') return message.channel.send(t('commands:config.cancel'))
@@ -168,8 +168,8 @@ class Configuration extends Base {
                 message: null
               })
 
-              this.respond(t(`commands:config:${areas[0]}:submodules:${areas[1]}.sucess`, { 
-                status: r.content.toLowerCase() 
+              this.respond(t(`commands:config:${areas[0]}:submodules:${areas[1]}.sucess`, {
+                status: r.content.toLowerCase()
               }))
             } else {
               if (r.content.toLowerCase() === 'off') {
@@ -178,9 +178,9 @@ class Configuration extends Base {
                   channel: null,
                   message: null
                 })
-  
-                this.respond(t(`commands:config:${areas[0]}:submodules:${areas[1]}.sucess`, { 
-                  status: r.content.toLowerCase() 
+
+                this.respond(t(`commands:config:${areas[0]}:submodules:${areas[1]}.sucess`, {
+                  status: r.content.toLowerCase()
                 }))
               } else {
                 await this.client.database.ref(modules[areas[0]]['local']).set({
@@ -188,9 +188,9 @@ class Configuration extends Base {
                   channel: ref.val().channel ? ref.val().channel : null,
                   message: ref.val().message ? ref.val().message : null
                 })
-  
-                this.respond(t(`commands:config:${areas[0]}:submodules:${areas[1]}.sucess`, { 
-                  status: r.content.toLowerCase() 
+
+                this.respond(t(`commands:config:${areas[0]}:submodules:${areas[1]}.sucess`, {
+                  status: r.content.toLowerCase()
                 }))
               }
             }

@@ -30,56 +30,37 @@ module.exports = class {
         cmd.setMessage(message, args);
 
 
-        const setFixedT = function (translate) {
-            t = translate
+        const t = await this.client.getTranslate(message.guild);
+
+        const Embed = new this.client.embed(message.author)
+
+        if (cmd.cooldown.has(message.author.id)) {
+            return message.channel.send(Embed.setDescription('<:errado:739176302317273089> ' + t('errors:cooldownError')))
         }
 
-        const language = await this.client.getLanguage(message.guild, Guild)
+        const verify = await cmd.verifyRequirementes(t)
+        if (verify) return
 
-        setFixedT(i18next.getFixedT(language))
-
-        i18next.use(translationBackend).init({
-            ns: ['categories', 'commands', 'errors', 'permissions', 'utils', 'usages', 'descriptions', 'automod'],
-            preload: await fs.readdirSync('./src/languages/'),
-            fallbackLng: 'pt',
-            backend: {
-                loadPath: `./src/languages/{{lng}}/{{ns}}.json`
+        const action = [
+            {
+                name: message.author.username,
+                id: message.author.id,
+                display: message.author.displayAvatarURL()
             },
-            interpolation: {
-                escapeValue: false
+            {
+                name: message.guild.name,
+                id: message.guild.id
             },
-            returnEmptyString: false
-        }).then(async t => {
-            const Embed = new this.client.embed(message.author)
-
-            if (cmd.cooldown.has(message.author.id)) {
-                return message.channel.send(Embed.setDescription('<:errado:739176302317273089> ' + t('errors:cooldownError')))
+            {
+                uuid: v4(),
+                time: convertHourToMinutes(msToTime(Date.now())),
+                cmd
             }
+        ]
 
-            const verify = await cmd.verifyRequirementes(t)
-            if (verify) return
+        cmd.run({ message, args, prefix }, t);
+        this.client.instance.log('COMMAND_EXECUTED', action)
 
-            const action = [
-                {
-                    name: message.author.username,
-                    id: message.author.id,
-                    display: message.author.displayAvatarURL()
-                },
-                {
-                    name: message.guild.name,
-                    id: message.guild.id
-                },
-                {
-                    uuid: v4(),
-                    time: convertHourToMinutes(msToTime(Date.now())),
-                    cmd
-                }
-            ]
-
-            cmd.run({ message, args, prefix, language }, t);
-            this.client.instance.log('COMMAND_EXECUTED', action)
-
-            if (cmd.conf.cooldown > 0) cmd.startCooldown(message.author.id);
-        })
+        if (cmd.conf.cooldown > 0) cmd.startCooldown(message.author.id);
     }
 };

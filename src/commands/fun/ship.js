@@ -8,7 +8,8 @@ class Ship extends Command {
       name: 'ship',
       aliases: ['shippar', 'love', 'amor'],
       description: "descriptions:ship",
-      category: "categories:fun"
+      category: "categories:fun",
+      cooldown: 10000
     })
   }
 

@@ -50,7 +50,7 @@ class ServerInfo extends Base {
       if (!guild) return message.channel.send(Embed.setDescription(t('commands:serverinfo.notFound')))
 
       Embed
-        .setAuthor(guild.name+` (${guild.id})`, guild.iconURL())
+        .setAuthor(guild.name + ` (${guild.id})`, guild.iconURL())
         .addField('<:coroa:747236534914121759> **»** ' + t('commands:serverinfo.owner'), '▫️ <@' + guild.owner + '> \n⠀')
         .addField('<a:nitro:747189991486259300> **»** ' + t('commands:serverinfo.nitro'),
           `▫️ ${t('commands:serverinfo.nivel')} : ${guild.premiumTier}`
@@ -69,7 +69,7 @@ class ServerInfo extends Base {
       const guild = message.guild
 
       Embed
-        .setAuthor(guild.name+` (${guild.id})`, guild.iconURL())
+        .setAuthor(guild.name + ` (${guild.id})`, guild.iconURL())
         .addField('<:coroa:747236534914121759> **»** ' + t('commands:serverinfo.owner'), '▫️ <@' + guild.owner + '> \n⠀')
         .addField('<a:nitro:747189991486259300> **»** ' + t('commands:serverinfo.nitro'),
           `▫️ ${t('commands:serverinfo.nivel')} : ${guild.premiumTier}`
@@ -81,11 +81,11 @@ class ServerInfo extends Base {
           `▫️ ${t('commands:serverinfo.created')}` + `${moment(guild.createdAt).format('LLL')} (${checkDays(message.channel.guild.createdAt)}) \n`
           + `▫️ ${t('commands:serverinfo.ijoined')} ${moment(guild.me.joinedAt).format('LLL')} (${checkDays(guild.me.joinedAt)})` + '\n⠀'
         )
-        .addField('<:infos:747238192700325988> **»** ' + t('commands:serverinfo.infos'), 
+        .addField('<:infos:747238192956178493> **»** ' + t('commands:serverinfo.infos'),
           `▫️ ${t('commands:serverinfo.text')} ${guild.channels.cache.filter(c => c.type === 'text').size} \n`
-          +`▫️ ${t('commands:serverinfo.voice')} ${guild.channels.cache.filter(c => c.type === 'voice').size} \n`
-          +`▫️ ${t('commands:serverinfo.members')} ${guild.members.cache.filter(c => !this.client.users.cache.get(c.id).bot).size}\n`
-          +`▫️ ${t('commands:serverinfo.bots')} ${guild.members.cache.filter(c => this.client.users.cache.get(c.id).bot).size}\n`
+          + `▫️ ${t('commands:serverinfo.voice')} ${guild.channels.cache.filter(c => c.type === 'voice').size} \n`
+          + `▫️ ${t('commands:serverinfo.members')} ${guild.members.cache.filter(c => !this.client.users.cache.get(c.id).bot).size}\n`
+          + `▫️ ${t('commands:serverinfo.bots')} ${guild.members.cache.filter(c => this.client.users.cache.get(c.id).bot).size}\n`
         )
 
       message.channel.send(Embed)

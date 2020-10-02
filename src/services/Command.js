@@ -131,6 +131,16 @@ class Command {
             return true;
         }
 
+        if (this.help.category === 'categories:music') {
+            if (['playlist'].includes(this.help.name)) return; if (!this.message.member.voice.channel) return this.respond(t('utils:music.canal', { member: this.message.author.id }));
+
+            if (this.message.guild.me.voice.channel && this.message.guild.me.voice.channel !== this.message.member.voice.channel)
+                return this.respond(t('utils:music.canal2', { member: this.message.author.id }));
+
+            if (['remove', 'loop', 'queue', 'skip', 'pause', 'stop', 'lyrics', 'volume', 'tocando'].includes(this.help.name) && !this.client.music.players.get(this.message.guild.id))
+                return this.respond(t('utils:music.noPlaying', { member: this.message.author.id }));
+        }
+
         return false
     }
 
