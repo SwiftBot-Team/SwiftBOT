@@ -6,7 +6,7 @@ const instance = new GeralInstance()
 
 const client = new SwiftInstance(instance, { config: './config.json', fetchAllMembers: true })
 client.login().then(() => {
-  client.log('Logado com Sucesso!', { color: 'green', tags: ['Discord Client'] })
+  client.log('Logado com Sucesso!', { color: 'green', tags: ['Discord Client'] });
 
   client.loadCommands(client.config.paths.commands)
   client.loadEvents(client.config.paths.events)
