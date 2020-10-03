@@ -16,8 +16,6 @@ class seek extends Base {
 
         const player = this.client.music.players.get(message.guild.id);
 
-        if (!player) return this.respond(t('commands:seek.noIsPlaying', { member: message.author.id }));
-
         if (!args[0]) return this.respond(t('commands:seek.noArgs', { member: message.author.id }));
 
         const seekSplit = args[0].split(':');
