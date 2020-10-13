@@ -14,5 +14,6 @@
   "alert": "<título> | <anúncio>",
   "country": "<nome do país>",
   "hexcolor": "<cor>",
-  "weather": "<cidade>"
+  "weather": "<cidade>",
+  "covid19": "[local]"
 }

@@ -86,7 +86,6 @@ module.exports = class {
       Canvas.loadImage('https://cdn.discordapp.com/emojis/751406085763498035.png?'),
       Canvas.loadImage('https://cdn.discordapp.com/emojis/709840579080486982.png?')
     ]);
-    console.log(await IMAGE_ASSETS)
 
     const [user1AvatarImage, user2AvatarImage] = await IMAGE_ASSETS
     const [maybe, heart, love] = await ICONS_ASSETS
@@ -181,5 +180,56 @@ module.exports = class {
     })
 
     return image
+  }
+
+  async covid19(cases, deaths, recovered, local, client, guild) {
+    const t = await client.getTranslate(guild.id)
+
+    function numberWithCommas(x) {
+      x = x.toString();
+      var pattern = /(-?\d+)(\d{3})/;
+      while (pattern.test(x))
+        x = x.replace(pattern, "$1 $2");
+      return x;
+    }
+
+    const IMAGE_ASSETS = Promise.all([
+      Canvas.loadImage('src/assets/Covid.png'),
+      Canvas.loadImage('https://img.icons8.com/cotton/2x/earth-planet--v2.png')
+    ])
+
+    const [covid, earth] = await IMAGE_ASSETS
+
+    const canvas = Canvas.createCanvas(700, 200)
+    const ctx = canvas.getContext('2d')
+
+    ctx.drawImage(covid, 10, 10)
+
+    ctx.fillStyle = '#fff'
+    ctx.font = '18px Montserrat'
+    ctx.fillText(numberWithCommas(deaths), 75, 70)
+
+    ctx.fillStyle = '#fff'
+    ctx.font = '18px Montserrat'
+    ctx.fillText(numberWithCommas(cases), 272, 70)
+
+    ctx.fillStyle = '#fff'
+    ctx.font = '18px Montserrat'
+    ctx.fillText(numberWithCommas(recovered), 180, 152)
+
+    ctx.fillStyle = '#fff'
+    ctx.font = '18px Montserrat'
+    ctx.fillText(t('commands:covid19.all'), 595, 150)
+
+    if (!local) {
+      earth.onload = () => {
+        earth.height = 100
+        earth.width = 100
+      }
+
+      ctx.drawImage(earth, 613-40, 18, 100, 100)
+    }
+
+    return canvas.toBuffer()
   }
 }

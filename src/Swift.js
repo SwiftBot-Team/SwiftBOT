@@ -192,6 +192,8 @@ module.exports = class Swift extends Client {
     }
 
     async connectLavalink() {
+        return true
+        
         this.music = new GorilinkManager(this, nodes, {
             Player: SwiftPlayer
         })

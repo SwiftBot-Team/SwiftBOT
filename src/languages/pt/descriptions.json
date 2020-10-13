@@ -25,5 +25,6 @@
   "country": "Veja as informações de um país",
   "hexcolor": "Veja as informações de uma cor",
   "weather": "Veja o clima de uma cidade",
-  "docs": "Procure algo nas documentações do discord.js"
+  "docs": "Procure algo nas documentações do discord.js",
+  "covid19": "Veja as informações sobre a covid19"
 }

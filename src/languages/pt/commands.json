@@ -372,5 +372,10 @@
     "error": "<:errado:739176302317273089> **»** Você deve colocar algo a pesquisar nas docs!",
     "nothing": "<:errado:739176302317273089> **»** Não encontrei nada relacionado a **`{{item}}`**",
     "author": "Documentação oficial do discord.js"
+  },
+  
+  "covid19": {
+    "all": "Mundo",
+    "error": "<:errado:739176302317273089> **»** Desculpe-me, um erro ocorreu!"
   }
 }

@@ -75,7 +75,7 @@ class Command {
         const opts = this.conf
 
         const botGuild = this.client.guilds.cache.get(process.env.OFICIAL_GUILD);
-        const developerRole = botGuild.roles.cache.get('685788548687069196');
+        const developerRole = botGuild.roles.cache.get('764922809985138698');
         const isDeveloper = botGuild.members.cache.get(this.message.author.id) ? (botGuild.members.cache.get(this.message.author.id).roles.cache.has(developerRole.id)) : false;
 
         if (opts.devsOnly && !isDeveloper) {
