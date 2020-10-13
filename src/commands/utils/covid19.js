@@ -12,7 +12,7 @@ class Covid19 extends Base {
       description: "descriptions:covid19",
       category: "categories:info",
       usage: "usages:covid19",
-      cooldown: 1000,
+      cooldown: 8000,
       aliases: ['covid', 'pandemia']
     })
   }
@@ -38,6 +38,10 @@ class Covid19 extends Base {
         return this.respond(t('commands:covid19.error'))
       }
       if (data.cases === undefined) return this.respond(t('commands:covid19.error'))
+
+      const img = await new Images().covid19(data.cases, data.deaths, data.recovered, { name: data.countryInfo.iso3, flag: data.countryInfo.flag }, this.client, message.guild)
+
+      message.channel.send(new Discord.MessageAttachment(img))
     }
   }
 }

@@ -377,5 +377,9 @@
   "covid19": {
     "all": "Mundo",
     "error": "<:errado:739176302317273089> **»** Desculpe-me, um erro ocorreu!"
+  },
+  
+  "support": {
+    "click": "**»** Clique [aqui](https://discord.gg/F7WHYU5) para entrar no servidor de suporte."
   }
 }

@@ -217,10 +217,6 @@ module.exports = class {
     ctx.font = '18px Montserrat'
     ctx.fillText(numberWithCommas(recovered), 180, 152)
 
-    ctx.fillStyle = '#fff'
-    ctx.font = '18px Montserrat'
-    ctx.fillText(t('commands:covid19.all'), 595, 150)
-
     if (!local) {
       earth.onload = () => {
         earth.height = 100
@@ -228,6 +224,27 @@ module.exports = class {
       }
 
       ctx.drawImage(earth, 613-40, 18, 100, 100)
+
+      ctx.fillStyle = '#fff'
+      ctx.font = '18px Montserrat'
+      ctx.fillText(t('commands:covid19.all'), 595, 150)
+    } else {
+      const ARG_LOCAL = Promise.all([
+        Canvas.loadImage(local.flag)
+      ])
+
+      const [flag] = await ARG_LOCAL
+
+      flag.onload = () => {
+        flag.height = 84
+        flag.width = 56
+      }
+
+      ctx.drawImage(flag, 580, 40, 84, 56)
+
+      ctx.fillStyle = '#fff'
+      ctx.font = '18px Montserrat'
+      ctx.fillText(local.name, 605, 150)
     }
 
     return canvas.toBuffer()
