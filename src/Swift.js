@@ -45,6 +45,7 @@ module.exports = class Swift extends Client {
         this.embed = SwiftEmbed
 
         this.music = []
+        this.controllers = {}
     }
 
     login(token = process.env.TOKEN) {

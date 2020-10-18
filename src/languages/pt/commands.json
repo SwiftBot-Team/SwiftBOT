@@ -381,5 +381,39 @@
   
   "support": {
     "click": "**»** Clique [aqui](https://discord.gg/F7WHYU5) para entrar no servidor de suporte."
+  },
+
+  "daily": {
+    "not": "<:moedas:721725801862660097> **»** Hey, você não pode pegar o seu daily... Aguarde `{{remain}}` para pegar novamente!",
+    "ok": "<a:certo:739210631441547296> **»** Gêgê! Você pegou o seu daily de `{{daily}} sCoins`"
+  },
+
+  "coins": {
+    "moneyUser": "<:moedas:721725801862660097> **»** {{user}} tem `{{money}} sCoins` em mãos!",
+    "money": "<:moedas:721725801862660097> **»** Você tem `{{money}} sCoins` em mãos.",
+
+    "withoutBank": "<:banco:721757555226968065> **»** {{user}} não possui um banco.",
+    "withoutBankAuthor": "<:banco:721757555226968065> **»** Você não possui um banco.",
+
+    "userMoneyBank": "<:banco:721757555226968065> **»** {{user}} possui `{{bank}} sCoins` no banco.",
+    "moneyBank": "<:banco:721757555226968065> **»** Você possui `{{bank}} sCoins` no banco."
+  },
+
+  "buy-bank": {
+    "not": "<:banco:721757555226968065> **»** Você não possui dinheiro suficiente para comprar um banco. Você necessita de mais `{{buy}} sCoins`",
+    "ok": "<:banco:721757555226968065> **»** Você comprou um banco! GêGê!",
+    "notOk": "<:banco:721757555226968065> **»** Você já possui um banco"
+  },
+
+  "debitar": {
+    "not": "<:moedas:721725801862660097> **»** Coloque uma quantidade válida!",
+    "notMoney": "<:moedas:721725801862660097> **»** Você não tem todo esse money!",
+    "ok": "<:moedas:721725801862660097> **»** Debitado com sucesso!"
+  },
+
+  "depositar": {
+    "not": "<:banco:721757555226968065> **»** Coloque uma quantidade válida!",
+    "notMoney": "<:banco:721757555226968065> **»** Você não tem todo esse money!",
+    "ok": "<:banco:721757555226968065> **»** Depositado com sucesso!"
   }
 }

@@ -15,5 +15,9 @@
   "country": "<nome do país>",
   "hexcolor": "<cor>",
   "weather": "<cidade>",
-  "covid19": "[local]"
+  "covid19": "[local]",
+  "coins": "[usuário]",
+  "debitar": "<quantidade>",
+  "depositar": "<quantidade>"
+
 }

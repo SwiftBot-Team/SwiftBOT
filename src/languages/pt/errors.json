@@ -11,5 +11,6 @@
     "plural": "Você não possui as permissões de `{{perm}}`, que são precisas para executar essa ação."
   },
   "cooldownError": "Hey, você está em cooldown! Aguarde um pouco!",
-  "private": "<:swiftBravo:751407111791050793> Não consegui enviar a mensagem na sua DM... ela está aberta??"
+  "private": "<:swiftBravo:751407111791050793> Não consegui enviar a mensagem na sua DM... ela está aberta??",
+  "isJailed": "<:errado:739176302317273089> **»** Hey, você está preso... não pode realizar essa ação..."
 }

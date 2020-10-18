@@ -8,7 +8,7 @@
     "node": "12.x"
   },
   "scripts": {
-    "start": "node ."
+    "start": "nodemon index.js"
   },
   "dependencies": {
     "axios": "^0.19.2",

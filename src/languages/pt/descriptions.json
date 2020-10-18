@@ -27,5 +27,11 @@
   "weather": "Veja o clima de uma cidade",
   "docs": "Procure algo nas documentações do discord.js",
   "covid19": "Veja as informações sobre a covid19",
-  "support": "Entre no servidor de suporte do SwiftBOT"
+  "support": "Entre no servidor de suporte do SwiftBOT",
+  "daily": "Pegue o seu dinheiro diário!",
+  "coins": "Veja o seu dinheiro ou o dinheiro de outra pessoa",
+  "buy-bank": "Compre um banco e fique mais protegido contra roubos!",
+  "debitar": "Pegue dinheiro do seu banco",
+  "depositar": "Deposite dinheiro no seu banco"
+
 }

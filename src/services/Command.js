@@ -53,6 +53,7 @@ class Command {
         if (options && options.footer) Embed.setFooter(options.footer);
         if (options && options.image) Embed.setImage(options.image);
         if (options && options.author) Embed.setAuthor(options.author.text, options.author.image)
+        if (options && options.thumbnail) Embed.setThumbnail(options.thumbnail)
 
         const send = await this.message.channel.send(Embed);
 
