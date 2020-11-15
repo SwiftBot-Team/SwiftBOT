@@ -13,12 +13,12 @@ class BotInfo extends Base {
   }
 
   async run({ message, args, prefix }, t) {
-    
+
     let u = convertMS(this.client.uptime)
     let ontime = `${u.h}` + " Hora(s), " + `${u.m}` + " Minutos, " + `${u.s}` + " Segundos"
 
     const Embed = new this.client.embed(message.author)
-      
+
     Embed
       .setDescription('<a:Loading:745327497096331314>')
       .setFooter('', '')
@@ -31,21 +31,30 @@ class BotInfo extends Base {
         .setAuthor(t('commands:botinfo.title'), this.client.user.displayAvatarURL())
         .setDescriptionFromBlockArray([
           [
-            `${this.getEmoji('swiftlove')} `+t('commands:botinfo.description-header')
-            +'\n\n ⠀'
+            `${this.getEmoji('swiftlove')} ` + t('commands:botinfo.description-header')
+            + '\n\n ⠀'
           ]
         ])
 
         .addField(t('commands:botinfo:stats.title'),
-          `${t('commands:botinfo:stats.1', { var: this.client.guilds.cache.size })}\n`+
-          `${t('commands:botinfo:stats.2', { var: this.client.users.cache.size })}\n`+
-          `${t('commands:botinfo:stats.3', { var: this.client.commands.length })}\n`+
-          `${t('commands:botinfo:stats.4', { var: this.client.channels.cache.size })}\n ⠀`,
+          `${t('commands:botinfo:stats.1', { var: this.client.guilds.cache.size })}\n` +
+          `${t('commands:botinfo:stats.2', { var: this.client.users.cache.size })}\n` +
+          `${t('commands:botinfo:stats.3', { var: this.client.commands.length })}\n` +
+          `${t('commands:botinfo:stats.4', { var: this.client.channels.cache.size })}\n` +
+          `⠀`
+        )
+
+        .addField(t('commands:botinfo:host.title'),
+          `${t('commands:botinfo:host.1', { var: 'Dual Xeon E5-2650 v2 - 2.60 GHz (Turbo 3.40 Ghz) 4v Core' })}\n` +
+          `${t('commands:botinfo:host.2', { var: (process.memoryUsage().rss / 1024 / 1024).toFixed(2) })}\n` +
+          `${t('commands:botinfo:host.3', { var: (process.cpuUsage().system / 1024 / 1024).toFixed(2) })}\n` +
+          `⠀`,
         )
         .addField(t('commands:botinfo:infos.title'),
-          `${t('commands:botinfo:infos.1')}\n`+
-          `${t('commands:botinfo:infos.2')}\n`+
-          `${t('commands:botinfo:infos.3')}\n  ⠀`,
+          `${t('commands:botinfo:infos.1')}\n` +
+          `${t('commands:botinfo:infos.2')}\n` +
+          `${t('commands:botinfo:infos.3')}\n  ⠀` +
+          `⠀`,
         )
         .addField(t('commands:botinfo:status.title'),
           `${t('commands:botinfo:status.1', { var: ontime })}\n  ⠀`

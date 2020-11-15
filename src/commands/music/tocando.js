@@ -8,13 +8,14 @@ class tocando extends Base {
             category: "categories:music",
             usage: "usages:tocando",
             cooldown: 1000,
-            aliases: []
+            aliases: [],
+            requiresChannel: false
         })
     }
 
-    async run({ message, args, prefix }, t) {
+    async run({ message, args, prefix, player }, t) {
 
-        const player = client.music.players.get(message.guild.id);
+        if (!player) return this.respond('n to tocando nada moço')
 
         this.respond(t('commands:tocando.tocando', {
             title: player.queue[0].info.title,

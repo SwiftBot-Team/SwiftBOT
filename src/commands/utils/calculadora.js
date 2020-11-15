@@ -5,13 +5,18 @@ const math = create(all)
 const limitedEvaluate = math.evaluate
 
 math.import({
-  'import':     function () { throw new Error('Function import is disabled') },
-  'createUnit': function () { throw new Error('Function createUnit is disabled') },
-  'evaluate':   function () { throw new Error('Function evaluate is disabled') },
-  'parse':      function () { throw new Error('Function parse is disabled') },
-  'simplify':   function () { throw new Error('Function simplify is disabled') },
-  'derivative': function () { throw new Error('Function derivative is disabled') },
-  'format':     function () { throw new Error('Function format is disabled') }
+  'import': function () { },
+  'createUnit': function () { },
+  'evaluate': function () { },
+  'parse': function () { },
+  'simplify': function () { },
+  'derivative': function () { },
+  'format': function () { },
+  'ones': function () { },
+  'zeros': function () { },
+  'identity': function () { },
+  'range': function () { },
+  'matrix': function () { }
 }, { override: true })
 
 class Calculadora extends Base {
@@ -25,15 +30,20 @@ class Calculadora extends Base {
       aliases: ['calcular', 'math', 'calc']
     })
   }
- 
+
   async run({ message, args, prefix }, t) {
     const Embed = new this.client.embed(message.author)
-    const expression = args.join(' ')
 
-    if (!expression) return this.respond(t('commands:calculadora.exError'))
+    if (!args[0]) return this.respond(t('commands:calculadora.exError'))
+
+    const expression = args.join(' ').replace(':', '/')
 
     try {
-      const result = limitedEvaluate(expression)
+
+      const result = limitedEvaluate(expression);
+      console.log(typeof result)
+      if (['array', 'object', 'function', 'string'].includes(typeof result) || !result) return this.respond(t('commands:calculadora.error'))
+
       Embed
         .setTitle(t('commands:calculadora.confirm', { e: expression, r: result }))
         .setThumbnail('https://cdn.discordapp.com/emojis/754843351152590898.png?v=1')

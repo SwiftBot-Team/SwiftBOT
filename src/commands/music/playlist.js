@@ -17,14 +17,22 @@ class playlist extends Base {
 
         if (['criar', 'create'].includes(args[0].toLowerCase())) {
             if (!args[1]) return this.respond(t('commands:playlist:criar.noArgs1', { member: message.author.id }));
-            const db = await this.client.database.ref(`SwiftBOT/musica/playlist/${message.author.id}/${args.slice(1).join(" ")}`).once('value');
 
-            if (args[2]) return this.respond(t('commands:playlist:criar.invalidName', { member: message.author.id }));
-            if (db.val()) return this.respond(t('commands:playlist:criar.exists', { member: message.author.id, prefix: prefix }));
+            if (args[1].length > 20 || !isNaN(args[1])) return this.respond(t('commands:playlist:criar.chatLimit', { member: message.author.id }));
+
+            if (args[2] || ((/\W|_|[0-9]/.test(args[1])))) return this.respond(t('commands:playlist:criar.invalidName', { member: message.author.id }));
+
+            const db = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/`).once('value');
+
+            if (db.val() && db.val()[args[1]]) return this.respond(t('commands:playlist:criar.exists', { member: message.author.id, prefix: prefix }));
+
+            if (db.val() && Object.values(db.val()).length >= 5) return this.respond(t('commands:playlist:criar.playlistLimit', { member: message.author.id, limit: 5 }))
+
             this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args.slice(1).join(" ")}`)
                 .set({
                     id: message.author.id,
-                    criada: Date.now()
+                    criada: Date.now(),
+                    nome: args.slice(1).join(" ")
                 });
             this.respond(t('commands:playlist:criar.created', { member: message.author.id, prefix: prefix }));
         }
@@ -41,22 +49,23 @@ class playlist extends Base {
 
             if (!db.val()) return this.respond(t('commands:playlist:addmusic.noPlaylistFound', { member: message.author.id, prefix: prefix }));
 
-            if (!args[2]) return this.respond(t('commands:playlist:addmusic.noArgsMusic', { member: message.author.id }));
+            if (!args[2] && !this.client.music.players.get(message.guild.id)) return this.respond(t('commands:playlist:addmusic.noArgsMusic', { member: message.author.id }));
 
-            const tudo = await db.val();
-            let array = [];
+            const toAdd = args[2] ? args.slice(2).join(" ") : this.client.music.players.get(message.guild.id).track.info.uri
 
-            const tracks = await this.client.music.fetchTracks(args.slice(2).join(" "));
+            const tracks = await this.client.music.fetchTracks(toAdd);
 
             if (!tracks.tracks[0]) return this.respond(t('commands:playlist:addmusic.noMusicFound', { member: message.author.id }));
             if (tracks.loadType === 'PLAYLIST_LOADED') return this.respond(t('commands:playlist:addmusic.noPlaylistAllowed', { member: message.author.id }));
 
             const musica = tracks.tracks[0]
 
-            const dbj = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/${musica.info.identifier}`).once('value');
+            const dbj = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.info.identifier}`).once('value');
 
             if (dbj.val()) return this.respond(t('commands:playlist:addmusic.exists', { member: message.author.id }));
-            this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/${musica.info.identifier}`).set({ id: musica.info.uri, title: musica.info.title });
+
+            this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.info.identifier}`).set(musica);
+
             this.respond(t('commands:playlist:addmusic.added', { musica: musica.info.title, playlist: args[1] }));
 
         }
@@ -80,10 +89,11 @@ class playlist extends Base {
 
             const musica = tracks.tracks[0]
 
-            const dbj = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/${musica.info.identifier}`).once('value');
+            const dbj = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.info.identifier}`).once('value');
 
             if (!dbj.val()) return this.respond(t('commands:playlist:removemusic.noExists', { member: message.author.id }));
-            this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/${musica.info.identifier}`).set(null);
+
+            this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.info.identifier}`).remove();
 
             this.respond(t('commands:playlist:removemusic.removed', { musica: musica.info.title, playlist: args[1] }));
         }
@@ -92,7 +102,8 @@ class playlist extends Base {
             if (!args[1]) return this.respond(t('commands:playlist:play.noArgs1', { member: message.author.id }));
             const db = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}`).once('value');
 
-            const tudo = await db.val();
+            if (!db.val() || !db.val().musicas) return this.respond(t('commands:playlist:play.noMusic', { member: message.author.id }));
+
             const player = await this.client.music.join({
                 guild: message.guild.id,
                 voiceChannel: message.member.voice.channel.id,
@@ -101,43 +112,30 @@ class playlist extends Base {
 
             if (player.playing) return this.respond(t('commands:playlist:play.isPlaying', { member: message.author.id }));
 
-            let array = [];
+            Object.values(db.val().musicas).map(async musica => {
 
-            for (const i in tudo) {
-                if (tudo[i] === message.author.id) continue;
-                if (!isNaN(tudo[i])) continue;
-                let tracks = await this.client.music.fetchTracks(tudo[i].title);
-                player.queue.add(tracks.tracks[0]);
-                player.queue[player.queue.length - 1].info.autorID = message.author.id;
-                array.push(tudo[i].id)
-            }
+                musica.info.autorID = message.author.id;
 
-            if (!array.length) return this.respond(t('commands:playlist:play.noMusic', { member: message.author.id }));
+                await player.queue.add(musica);
 
-            player.play();
+                if (!player.playing) player.play();
+            })
 
-            this.respond(t('commands:playlist:play.play', { member: message.author.id, playlist: args[1], amount: array.length }));
+            this.respond(t('commands:playlist:play.play', { member: message.author.id, playlist: args[1], amount: Object.values(db.val().musicas).length }));
         }
 
         if (['info', 'informação'].includes(args[0].toLowerCase())) {
-            if (!args[1]) return message.channel.send(utils.getEmbed(`${message.author}, você se esqueceu de dizer em qual playlist você deseja ver as informações. Utilize o comando \`${prefix}playlist listar\` para ver suas playlists. `));
+            if (!args[1]) return this.respond(`${message.author}, você se esqueceu de dizer em qual playlist você deseja ver as informações. Utilize o comando \`${prefix}playlist listar\` para ver suas playlists. `);
             this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}`)
                 .once('value')
-                .then(async function (db) {
-                    if (!db.val()) return message.channel.send(utils.getEmbed(`${message.author}, eu não encontrei esta playlist. Utilize o comando \`${prefix}playlist listar\` para ver suas playlists.`));
-                    let array = [];
-                    let tudo = await db.val();
-                    for (const i in tudo) {
-                        if (tudo[i] === message.author.id) continue;
-                        if (!isNaN(tudo[i])) continue;
-                        array.push(tudo[i].title)
-                    }
+                .then(async (db) => {
+                    if (!db.val()) return this.respond(`${message.author}, eu não encontrei esta playlist. Utilize o comando \`${prefix}playlist listar\` para ver suas playlists.`);
+
                     let index = 0;
-                    let embed = new Discord.MessageEmbed()
+                    let embed = new this.client.embed()
                         .setAuthor(`Swift - Nome da playlist: ${args[1]}`, 'https://cdn.discordapp.com/emojis/703725149467312129.png?v=1')
-                        .addField("Quantidade de músicas:", array.length)
-                        .addField('Músicas:', array.map(i => `${++index} - \`${i.length > 30 ? i.substring(0, 30) + '...' : i}\` `).join('\n'))
-                        .setColor(utils.cor)
+                        .addField("Quantidade de músicas:", db.val().musicas ? `\`${Object.values(db.val().musicas).length}\`` : '``0``')
+                        .addField('Músicas:', db.val().musicas ? Object.values(db.val().musicas).map(i => `${++index} - \`${i.info.title.length > 30 ? i.info.title.substring(0, 30) + '...' : i.info.title}\` `).join('\n') : 'Nenhuma')
                         .setFooter("Swift - Informações de Playlist", this.client.user.displayAvatarURL())
                     message.channel.send(embed)
 
@@ -145,13 +143,31 @@ class playlist extends Base {
         }
 
         if (['deletar', 'delete', 'del', 'apagar'].includes(args[0].toLowerCase())) {
-            if (!args[1]) return message.channel.send(utils.getEmbed(`${message.author}, você se esqueceu de dizer em qual playlist você deseja deletar. Utilize o comando \`${prefix}playlist listar\` para ver suas playlists. `));
+            if (!args[1]) return this.respond(`${message.author}, você se esqueceu de dizer em qual playlist você deseja deletar. Utilize o comando \`${prefix}playlist listar\` para ver suas playlists. `);
             this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}`)
                 .once('value')
-                .then(async function (db) {
-                    if (!db.val()) return message.channel.send(utils.getEmbed(`${message.author}, eu não encontrei esta playlist. Utilize o comando \`${prefix}playlist listar\` para ver suas playlists.`));
+                .then(async (db) => {
+                    if (!db.val()) return this.respond(`${message.author}, eu não encontrei esta playlist. Utilize o comando \`${prefix}playlist listar\` para ver suas playlists.`);
                     this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}`).set(null);
-                    message.channel.send(utils.getEmbed(`${message.author}, você deletou a playlist com sucesso.`))
+                    this.respond(`${message.author}, você deletou a playlist com sucesso.`);
+                })
+        }
+
+        if (['listar', 'list'].includes(args[0].toLowerCase())) {
+            this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/`)
+                .once('value')
+                .then(async db => {
+                    if (!db.val()) return this.respond(t('commands:playlist:listar.noPlaylist', { member: message.author.id, prefix: prefix }))
+                    const embed = new this.client.embed()
+                        .setAuthor(t('commands:playlist:listar.veja'), this.client.user.displayAvatarURL())
+                        .setFooter(t('commands:playlist:listar.footer', { prefix: prefix }));
+                    Object.values(db.val()).map(playlist => {
+
+                        embed.addField(t('commands:playlist:listar.playlistName', { name: playlist.nome }),
+                            `Quantidade de músicas: \`${playlist.musicas ? Object.values(playlist.musicas).length : '0'}\` `)
+                    });
+
+                    await message.channel.send(embed)
                 })
         }
     }

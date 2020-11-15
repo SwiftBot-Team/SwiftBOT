@@ -8,7 +8,8 @@ class pause extends Base {
             category: "categories:music",
             usage: "usages:pause",
             cooldown: 1000,
-            aliases: []
+            aliases: ['pausar'],
+            requiresChannel: true
         })
     }
 
@@ -16,13 +17,7 @@ class pause extends Base {
 
         const player = this.client.music.players.get(message.guild.id);
 
-        if (player.paused === false) {
-            player.pause(true);
-            this.respond(t('commands:pause.pause'));
-        } else {
-            player.pause(false);
-            this.respond(t('commands:pause.resume'));
-        };
+        player.pause(true)
 
         message.react('👍');
     }

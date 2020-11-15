@@ -8,7 +8,7 @@ class Jogodavelha extends Base {
             category: "categories:fun",
             cooldown: 1000,
             aliases: ['tictactoe'],
-            bot_permissions: ['ADD_REACTIONS']
+            bot_permissions: []
         });
 
         this.finish = false;
@@ -34,12 +34,10 @@ class Jogodavelha extends Base {
             },
             status: [
                 {
-                    player: message.member,
-                    marcadas: []
+                    player: message.member
                 },
                 {
-                    player: message.mentions.members.first(),
-                    marcadas: []
+                    player: message.mentions.members.first()
                 }
             ],
             board: ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
@@ -53,7 +51,7 @@ class Jogodavelha extends Base {
         let init = await message.channel.send('<a:Loading:745327497096331314> Carregando tabuleiro.');
 
         const play = () => {
-            console.log('a');
+
             const collector = init.createReactionCollector((r, u) => emojis.includes(r.emoji.name) && u.id === game.atual.player.user.id, { max: 1, time: 60000 * 2 });
 
             collector.on('collect', async (r, u) => {
@@ -132,7 +130,7 @@ class Jogodavelha extends Base {
             console.log(board[pos1] + " - " + board[pos2] + " - " + board[pos3]);
 
 
-            if (board[pos1] == board[pos2] && board[pos1] == board[pos3] && board[pos2] == board[pos3]) return this.finish = true;
+            if (board[pos1] !== 'x' && board[sequence[0]] == board[sequence[1]] && board[sequence[0]] == board[sequence[2]] && board[sequence[1]] == board[sequence[2]]) return this.finish = true;
             //if ((board[pos1] == board[pos2] && board[pos1] == board[pos3]) && board[pos1] != 'x') return this.finish = true;
 
             else continue;

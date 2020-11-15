@@ -8,7 +8,7 @@ class Prefixo extends Base {
       name: "prefix",
       cooldown: 1000,
       aliases: ["prefixo", "setprefix"],
-      permissions: ["MANAGE_SERVER"],
+      permissions: ["MANAGE_GUILD"],
       usage: 'usages:prefixo',
       category: "categories:config",
       description: "descriptions:prefixo"

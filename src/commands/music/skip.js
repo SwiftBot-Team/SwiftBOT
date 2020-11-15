@@ -6,6 +6,7 @@ module.exports = class Skip extends Base {
             name: 'skip',
             aliases: ['pular', 's'],
             category: "categories:music",
+            requiresChannel: true
         })
     }
 

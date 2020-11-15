@@ -6,6 +6,7 @@ module.exports = class Loop extends Base {
             name: 'remove',
             aliases: ['r', 'removemusic'],
             category: "categories:music",
+            requiresChannel: true
         })
     }
 

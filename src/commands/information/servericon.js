@@ -24,7 +24,7 @@ class ServerIcon extends Base {
       Embed
         .setAuthor(guild.name, guild.iconURL())
         .setDescription(t('commands:servericon.description', { link: guild.iconURL() }))
-        .setImage(guild.iconURL({ size: 2048 }))
+        .setImage(guild.iconURL({ size: 2048, dynamic: true }))
 
       return message.channel.send(Embed)
     } else {
@@ -35,7 +35,7 @@ class ServerIcon extends Base {
       Embed
         .setAuthor(guild.name, guild.iconURL())
         .setDescription(t('commands:servericon.description', { link: guild.iconURL() }))
-        .setImage(guild.iconURL({ size: 2048 }))
+        .setImage(guild.iconURL({ size: 2048, dynamic: true }))
 
       return message.channel.send(Embed)
     }

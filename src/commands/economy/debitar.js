@@ -8,7 +8,7 @@ class Debitar extends Base {
       category: "categories:economy",
       usage: "usages:debitar",
       cooldown: 1000,
-      aliases: ['retirar']
+      aliases: ['retirar', 'remover']
     })
   }
  
@@ -19,8 +19,7 @@ class Debitar extends Base {
   
     if (await this.client.controllers.money.getBalanceInBank(message.author.id) < amount) return this.respond(t('commands:debitar.notMoney'))
 
-    const taxa = (5*amount)/100
-    await this.client.controllers.money.debit(message.author.id, amount-taxa)
+    await this.client.controllers.money.debit(message.author.id, amount)
     return this.respond(t('commands:debitar.ok'), true, { thumbnail: 'https://cdn.discordapp.com/emojis/752530660459151482.png?v=1' })
   }
 }

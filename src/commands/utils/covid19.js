@@ -18,10 +18,10 @@ class Covid19 extends Base {
   }
 
   async run({ message, args, prefix }, t) {
-    const local = args.join(' ')
+    const local = args.join(' ');
 
     if (!local) {
-      const { data } = await axios.get('https://corona.lmao.ninja/v2/all')
+      const { data } = await axios.get('https://corona.lmao.ninja/v2/all');
 
       const img = await new Images().covid19(data.cases, data.deaths, data.recovered, false, this.client, message.guild)
 
@@ -31,10 +31,11 @@ class Covid19 extends Base {
 
       try {
         const { data: d } = await axios.get('https://corona.lmao.ninja/v2/countries/' + local);
-      
+
         data = d
       } catch (err) {
         console.log(err)
+
         return this.respond(t('commands:covid19.error'))
       }
       if (data.cases === undefined) return this.respond(t('commands:covid19.error'))

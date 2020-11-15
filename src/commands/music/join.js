@@ -8,7 +8,8 @@ class join extends Base {
             category: "categories:music",
             usage: "usages:join",
             cooldown: 1000,
-            aliases: []
+            aliases: [],
+            requiresChannel: true
         })
     }
 

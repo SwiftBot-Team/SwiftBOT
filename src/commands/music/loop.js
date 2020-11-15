@@ -6,6 +6,8 @@ module.exports = class Loop extends Base {
             name: 'loop',
             aliases: ['lp', 'loopqueue'],
             category: "categories:music",
+            requiresChannel: true
+            
         })
     }
 

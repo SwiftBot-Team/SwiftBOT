@@ -8,7 +8,7 @@ class Depositar extends Base {
       category: "categories:economy",
       usage: "usages:depositar",
       cooldown: 1000,
-      aliases: ['retirar']
+      aliases: ['dep']
     })
   }
  

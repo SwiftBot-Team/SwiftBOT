@@ -64,6 +64,10 @@ class ServerInfo extends Base {
         )
         .addField('<:coroa:747236534914121759> **»** ' + t('commands:serverinfo.owner'), guild.owner + ' \n⠀')
 
+        .setImage(guild.bannerURL() ? guild.bannerURL({ dynamic: true, format: 'png', size: 2048 }) : 'https://google.com')
+
+        .setThumbnail(guild.iconURL({ dynamic: true, size: 2048 }))
+        
       message.channel.send(Embed)
     } else {
       const guild = message.guild
@@ -87,6 +91,10 @@ class ServerInfo extends Base {
           + `▫️ ${t('commands:serverinfo.members')} ${guild.members.cache.filter(c => !this.client.users.cache.get(c.id).bot).size}\n`
           + `▫️ ${t('commands:serverinfo.bots')} ${guild.members.cache.filter(c => this.client.users.cache.get(c.id).bot).size}\n`
         )
+
+        .setImage(guild.bannerURL() ? guild.bannerURL({ dynamic: true, format: 'png', size: 2048 }) : 'https://google.com')
+
+        .setThumbnail(guild.iconURL({ dynamic: true, size: 2048 }))
 
       message.channel.send(Embed)
     }

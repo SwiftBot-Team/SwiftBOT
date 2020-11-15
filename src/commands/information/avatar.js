@@ -23,8 +23,8 @@ class Avatar extends Base {
 
     user = this.client.users.cache.get(user.id)
     const embed = new this.client.embed(message.author)
-      .setDescription(t(`commands:avatar.title-${number}`, { user }))
-      .setImage(user.displayAvatarURL({ size: 2048 }))
+      .setDescription(t(`commands:avatar.title-${number}`, { user: user.id }))
+      .setImage(user.displayAvatarURL({ size: 2048, dynamic: true }))
 
     message.channel.send(embed)
   }

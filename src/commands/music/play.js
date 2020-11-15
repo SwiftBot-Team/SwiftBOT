@@ -6,12 +6,17 @@ module.exports = class Play extends Base {
       name: 'play',
       aliases: ['p', 'tocar'],
       category: "categories:music",
+      cooldown: 5000,
+      requiresChannel: true
     })
   }
 
   async run({ message, args }, t) {
 
-    if (!args[0]) return this.respond(t('comandos:play:noArgs', { member: message.author.id }));
+    if (!this.client.music.nodes.filter(node => node.connected === true))
+      return this.respond(t('commands:play.noNodes', { member: message.author.id }))
+
+    if (!args[0]) return this.respond(t('commands:play.noArgs', { member: message.author.id }));
 
     const player = await this.client.music.join({
       guild: message.guild.id,
@@ -30,15 +35,16 @@ module.exports = class Play extends Base {
 
       const tracks = await this.client.music.fetchTracks(music.data[i]);
 
-      if (tracks.error) return this.respond(t('commands:play.fail'));
+      if (tracks.error) continue;
 
       if (tracks.loadType === 'PLAYLIST_LOADED') {
 
-        tracks.map(async track => {
+        tracks.tracks.map(async track => {
           amount++;
           player.queue.add(track);
           player.queue[player.queue.length - 1].info.autorID = message.author.id;
-          if (!player.playing) await player.play();
+
+          if (!player.playing) player.play();
 
           if (player.queue.length >= 1 && !wait && music.data.length >= 5) wait = await this.respond(t('commands:play.adding', { amount: amount }));
 
@@ -48,11 +54,16 @@ module.exports = class Play extends Base {
 
       } else {
         if (!tracks.tracks[0]) continue;
+
+        if (player.queue.length > 0 && music.data.length === 1) {
+          this.respond(t('commands:play.musicLoaded', { name: tracks.tracks[0].info.title }));
+        }
+
         amount++
         tracks.tracks[0].info.autorID = message.author.id;
         player.queue.add(tracks.tracks[0]);
 
-        if (!player.playing && !amount > 1) await player.play();
+        if (!player.playing) player.play();
 
         if (player.queue.length >= 1 && !wait && music.data.length >= 5) wait = await this.respond(t('commands:play.adding', { amount: amount }));
 
@@ -60,9 +71,13 @@ module.exports = class Play extends Base {
       }
     }
 
+    if (amount === 0) {
+      return this.respond('Não encontrei esta música.')
+    }
+
     await message.react('👍');
 
-    if (player.playing) wait ? wait.edit(new this.client.embed().setDescription(t('commands:play.added', { amount: amount }))) : this.respond(amount > 1 ? t('commands:play.playlistLoaded', { amount: amount }) : t('commands:play.musicLoaded', { name: player.queue[player.queue.length - 1].info.title }));
+    if (player.playing && wait) wait.edit(new this.client.embed().setDescription(t('commands:play.added', { amount: amount })));
 
     if (!player.playing) return player.play();
 

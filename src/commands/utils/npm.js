@@ -26,7 +26,7 @@ class NPM extends Base {
     const Embed = new this.client.embed(message.author)
       .setThumbnail('https://raw.githubusercontent.com/npm/logos/master/npm%20logo/npm-logo-red.png')
       .addField(t('commands:npm.description'), npm.description ? npm.description : t('commands:npm.notDescription'))
-      .setTitle('<:swiftDab:754827710777524298> '+npm.name)
+      .setTitle('<:swiftDab:754827711272321035> '+npm.name)
       .setDescriptionFromBlockArray([
         [
           npm.keywords && npm.keywords.length > 0 ? '**»** '+npm.keywords.map(k => `\`${k}\``).join(', ') : null

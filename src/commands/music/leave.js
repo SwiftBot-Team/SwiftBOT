@@ -8,7 +8,8 @@ class leave extends Base {
             category: "categories:music",
             usage: "usages:leave",
             cooldown: 1000,
-            aliases: []
+            aliases: [],
+            requiresChannel: true
         })
     }
 

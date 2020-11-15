@@ -14,13 +14,14 @@ class Eval extends Base {
     });
   }
 
-  async run({ message, args, prefix }, t) {
+  async run({ message, args, prefix, player }, t) {
     let code = args.join(" ")
 
     const user = (id) => client.users.find((user) => user.id == id);
 
     code = code.replace(/^`{3}(js)?|`{3}$/g, '')
     code = code.replace(/<@!?(\d{16,18})>/g, 'user($1)')
+    code = code.replace('--nolog', '')
 
     console.log(code)
 
@@ -38,7 +39,7 @@ class Eval extends Base {
 
     result = result.replace(/_user\((\d{16,18})\)/g, '<@$1>');
 
-    message.channel.send(result, { code: 'js' });
+    if (!args.join("").includes('--nolog')) message.channel.send(result, { code: 'js' });
   }
 }
 

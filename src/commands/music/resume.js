@@ -8,7 +8,8 @@ class resume extends Base {
             category: "categories:music",
             usage: "usages:resume",
             cooldown: 1000,
-            aliases: []
+            aliases: ['unpause', 'retomar'],
+            requiresChannel: true
         })
     }
 

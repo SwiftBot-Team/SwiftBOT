@@ -8,7 +8,8 @@ class seek extends Base {
             category: "categories:music",
             usage: "usages:seek",
             cooldown: 1000,
-            aliases: []
+            aliases: [],
+            requiresChannel: true
         })
     }
 
@@ -20,7 +21,7 @@ class seek extends Base {
 
         const seekSplit = args[0].split(':');
 
-        if (!seekSplit.length || seekSplit.lenght === 1) return this.respond(t('commands:seek.invalidTime', { member: message.author.id }));
+        if (!seekSplit.length || seekSplit.length === 1) return this.respond(t('commands:seek.invalidTime', { member: message.author.id }));
 
         if (seekSplit.length > 3) return this.respond(t('commands:seek.limit', { member: message.author.id }));
         if (seekSplit.some(number => isNaN(number))) return this.respond(t('commands:seek.invalidTime', { member: message.author.id }));
@@ -32,6 +33,7 @@ class seek extends Base {
             minutes = seekSplit[1] * 60 * 1000;
             seconds = seekSplit[2] * 1000;
         } else {
+
             minutes = seekSplit[0] * 60 * 1000;
             seconds = seekSplit[1] * 1000;
         };

@@ -6,6 +6,7 @@ module.exports = class Stop extends Base {
             name: 'stop',
             aliases: ['parar'],
             category: "categories:music",
+            requiresChannel: true
         })
     }
 

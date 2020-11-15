@@ -6,6 +6,7 @@ module.exports = class Queue extends Base {
             name: 'queue',
             aliases: ['q', 'lista'],
             category: "categories:music",
+            requiresChannel: false
         })
     }
 
