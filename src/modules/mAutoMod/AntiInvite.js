@@ -9,10 +9,13 @@ module.exports = class AntiInvite {
     this.client.on('message', async (message) => {
       if (message.channel.type === 'dm') return;
 
-      if (message.guild.id === '747420727908630658' || message.guild.id === '729715039413469345') return
-      let t = await this.client.getTranslate(message.guild)
+      const ref = await this.client.database.ref(`SwiftBOT/config/antiinvite/${message.guild.id}`).once('value');
 
-      if (message.channel.type === "dm") return;
+      if (!ref.val() || !ref.val().stats) return;
+
+      if (ref.val().permissions && Object.values(ref.val().permissions).map(id => id.id).some(id => message.author.id === id || message.channel.id === id || message.member.roles.cache.has(id))) return;
+
+      let t = await this.client.getTranslate(message.guild.id);
 
       let regex = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|(discord|discordapp)\.com\/invite)\/.+[a-z]/g
 

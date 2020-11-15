@@ -249,4 +249,24 @@ module.exports = class {
 
     return canvas.toBuffer()
   }
+
+
+  async loadGift(code) {
+    const IMAGE_ASSETS = Promise.all([
+      Canvas.loadImage('src/assets/Gift.jpg'),
+    ])
+
+    const [background] = await IMAGE_ASSETS
+
+    const canvas = Canvas.createCanvas(500, 188)
+    const ctx = canvas.getContext('2d')
+
+    ctx.drawImage(background, 10, 10)
+
+    ctx.fillStyle = '#fff'
+    ctx.font = '18px Montserrat'
+    ctx.fillText(code, 261, 98)
+
+    return canvas.toBuffer()
+  }
 }

@@ -1,5 +1,4 @@
 const Guild = require('../database/models/Guild');
-const i18n = require('i18next');
 
 module.exports = class Listeners {
 
@@ -28,12 +27,12 @@ module.exports = class Listeners {
                 .setDescription(t('commands:sorteio.messageNoFound')));
 
 
-             this.client.database.ref(`SwiftBOT/Servidores/${guildID}/sorteios/${messageID}/status`).set('inativo');
-             this.client.database.ref(`SwiftBOT/Servidores/${guildID}/sorteios/lastGiveaway`).set(messageID);
+            this.client.database.ref(`SwiftBOT/Servidores/${guildID}/sorteios/${messageID}/status`).set('inativo');
+            this.client.database.ref(`SwiftBOT/Servidores/${guildID}/sorteios/lastGiveaway`).set(messageID);
 
             const reactions = msg.reactions.cache.get("🎉").users.cache.array().filter(user => !user.bot);
 
-            const t = i18n.getFixedT(await this.client.getLanguage(guild, Guild))
+            const t = await this.client.getTranslate(message.guild.id)
 
             if (reactions.length < winnerCount) return channel.send(new this.client.embed(this.client.user).setDescription(t('commands:sorteio.noReactions')));
 
@@ -56,6 +55,20 @@ module.exports = class Listeners {
                     item: item,
                     winners: message
                 })))
+        });
+
+        this.client.on('guildBanAdd', async (member, autor, reason) => {
+            if (!reason) return;
+
+            const guild = this.client.guilds.cache.get(member.guild.id);
+
+            const ref = await this.client.database.ref(`SwiftBOT/servidores/${guild.id}/config/modlogs`).once('value');
+
+            if (!ref.val() || !ref.val().allowed) return;
+
+            const channel = await guild.channels.cache.get(ref.val().channelID);
+
+
         })
     }
 

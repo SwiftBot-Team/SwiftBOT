@@ -15,13 +15,14 @@ class Command {
             allowDMs: options.allowDMs || false,
             devsOnly: options.devsOnly || false,
             hidden: options.hidden || false,
-            nsfw: options.nsfw || false
+            nsfw: options.nsfw || false,
+            requiresChannel: options.requiresChannel || false
         };
-        this.cooldown = new Set();
+        this.cooldown = new Map();
     }
 
     startCooldown(user) {
-        this.cooldown.add(user);
+        this.cooldown.set(user, Date.now() + this.conf.cooldown);
 
         setTimeout(() => {
             this.cooldown.delete(user);
@@ -33,24 +34,46 @@ class Command {
         this.args = args;
     }
 
-    getUsers() {
-        const array = [];
+    getUsers(arg = false) {
 
-        for (let i = 0; i < this.args.length; i++) {
-            let tostring = this.args[i].toString().replace('@', '').replace('<', '').replace('>', '').replace('!', '');
+        const args = arg ? arg.split(" ") : this.args;
 
-            const user = this.message.guild.members.cache.get(tostring) || this.message.guild.members.cache.find(member => member.user.username === this.args[i]) || this.message.guild.members.cache.find(member => member.nickname === this.args[i]);
-            if (user) array.push(user);
+        const users = args
+            .filter(arg => this.message.guild.members.cache.get(arg.replace(/[^0-9]/gi, '')) || this.message.guild.members.cache.find(c => c.user.username === arg) || this.message.guild.members.cache.find(c => c.nickname === arg))
+            .map(arg => this.message.guild.members.cache.get(arg.replace(/[^0-9]/gi, '')) || this.message.guild.members.cache.find(c => c.user.username === arg) || this.message.guild.members.cache.find(c => c.nickname === arg))
 
-        }
-
-        return array;
+        return users;
     }
+
+    getRoles(argg = false) {
+
+        const args = argg ? argg.split(" ") : this.args;
+
+        const roles = args
+            .filter(arg => this.message.guild.roles.cache.get(arg.replace(/[^0-9]/gi, '')) || this.message.guild.roles.cache.find(r => r.name === arg))
+            .map(arg => this.message.guild.roles.cache.get(arg.replace(/[^0-9]/gi, '')) || this.message.guild.roles.cache.find(r => r.name === arg))
+
+        return roles;
+    }
+
+    getEmojis(argg = false) {
+
+        const unicode = require("emoji-unicode-map");
+
+        const args = argg ? argg.split(" ") : this.args;
+
+        const emojis = args
+            .filter(arg => this.client.emojis.cache.get(arg.replace(/[^0-9]/gi, '')) || unicode.get(arg))
+            .map(e => e.replace(/[^0-9]/gi, '').length ? e.replace(/[^0-9]/gi, '') : e);
+
+        return emojis;
+    }
+
     async respond(message, hasFooter = true, options) {
         const Embed = new this.client.embed(hasFooter ? this.message.author : null)
         Embed.setDescription(message)
 
-        if (options && options.footer) Embed.setFooter(options.footer);
+        if (options && options.footer) Embed.setFooter(options.footer, this.client.user.displayAvatarURL());
         if (options && options.image) Embed.setImage(options.image);
         if (options && options.author) Embed.setAuthor(options.author.text, options.author.image)
         if (options && options.thumbnail) Embed.setThumbnail(options.thumbnail)
@@ -79,7 +102,7 @@ class Command {
         const developerRole = botGuild.roles.cache.get('764922809985138698');
         const isDeveloper = botGuild.members.cache.get(this.message.author.id) ? (botGuild.members.cache.get(this.message.author.id).roles.cache.has(developerRole.id)) : false;
 
-        if (opts.devsOnly && !isDeveloper) {
+        if (opts.devsOnly && !isDeveloper && !['375356261211963392', '417067105897414667'].includes(this.message.author.id)) {
             Embed
                 .setTitle(`**Hey, ${this.message.author.username}**`)
                 .setDescription(t('errors:devsOnly'))
@@ -93,7 +116,7 @@ class Command {
             if (!this.message.guild.members.cache.get(this.client.user.id).permissions.has(opts.bot_permissions)) {
                 let translated = []
                 if (opts.bot_permissions.length > 1) {
-                    opts.bot_permissions.map(p => {
+                    opts.bot_permissions.filter(perm => !this.message.guild.me.permissions.has(perm)).map(p => {
                         translated.push(t('permissions:' + p))
                     })
                 }
@@ -108,7 +131,7 @@ class Command {
             }
         }
 
-        if (opts.permissions && opts.permissions.length > 0) {
+        if (opts.permissions && opts.permissions.length > 0 && !isDeveloper) {
             if (!this.message.guild.members.cache.get(this.message.author.id).permissions.has(opts.permissions)) {
                 let translated = []
                 if (opts.bot_permissions.length > 1) {
@@ -133,12 +156,16 @@ class Command {
         }
 
         if (this.help.category === 'categories:music') {
-            if (['playlist'].includes(this.help.name)) return; if (!this.message.member.voice.channel) return this.respond(t('utils:music.canal', { member: this.message.author.id }));
+            if (!this.conf.requiresChannel) return;
+
+            if (['playlist'].includes(this.help.name)) return;
+
+            if (!this.message.member.voice.channel) return this.respond(t('utils:music.canal', { member: this.message.author.id }));
 
             if (this.message.guild.me.voice.channel && this.message.guild.me.voice.channel !== this.message.member.voice.channel)
                 return this.respond(t('utils:music.canal2', { member: this.message.author.id }));
 
-            if (['remove', 'loop', 'queue', 'skip', 'pause', 'stop', 'lyrics', 'volume', 'tocando'].includes(this.help.name) && !this.client.music.players.get(this.message.guild.id))
+            if (['remove', 'loop', 'queue', 'skip', 'pause', 'stop', 'lyrics', 'volume', 'tocando', 'seek'].includes(this.help.name) && !this.client.music.players.get(this.message.guild.id))
                 return this.respond(t('utils:music.noPlaying', { member: this.message.author.id }));
         }
 

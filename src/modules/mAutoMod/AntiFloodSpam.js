@@ -8,14 +8,14 @@ module.exports = class AntiInvite {
     async run() {
         this.client.on('message', async (message) => {
             if (message.channel.type === 'dm') return;
-            if (message.guild.id === '729715039413469345' || message.guild.id === "425864977996578816") return;
+            if (message.guild.id === '729715039413469345' || message.guild.id === "425864977996578816" || message.guild.id === '584456795259535379') return;
 
             // if (message.guild.id === '747420727908630658' || message.guild.id === '729715039413469345') return
-            let t = await this.client.getTranslate(message.guild)
+            let t = await this.client.getTranslate(message.guild.id);
 
             const db = await this.client.database.ref(`SwiftBOT/servidores/${message.guild.id}/config`).once('value');
 
-            // if (!db.val() || !db.val().autoMod) return;
+            if (!db.val() || !db.val().autoMod) return;
 
             const args = message.content.split(" ");
 
@@ -32,7 +32,7 @@ module.exports = class AntiInvite {
                 }
             }
 
-            let amount = 0;
+            let amount = 0; 771872289125171201
             let oldChar = args[0].split('')[0];
 
             for (const s in message.content.split('')) {
