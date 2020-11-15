@@ -5,7 +5,15 @@ const GeralInstance = require('./src/Instance');
 
 const instance = new GeralInstance()
 
-const client = new SwiftInstance(instance, { config: './config.json', fetchAllMembers: true })
+const client = new SwiftInstance(instance, {
+  config: './config.json',
+  fetchAllMembers: true,
+  ws:
+  {
+    intents: ['GUILDS', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_BANS', 'GUILD_EMOJIS', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
+  }
+});
+
 client.login().then(() => {
   client.log('Logado com Sucesso!', { color: 'green', tags: ['Discord Client'] })
 
