@@ -22,21 +22,18 @@ module.exports = class Render extends Command {
 
         if (adultContent) return this.respond('sem site adulto pfv');
 
-        let sucess = false;
-
         const url = args[0].replace('https://', '').replace('http://', '')
 
 
         setTimeout(() => {
 
-            if (!sucess) return this.repond('deu erro kk')
+            return this.repond('deu erro kk')
+            
         }, 5000)
 
         const search = await get(
             `https://api.apiflash.com/v1/urltoimage?access_key=215ab93a0b4641b28b5f76ceb9427c05&url=https://${url}`
         ).then(() => {
-
-            sucess = true;
 
             const embed = new this.client.embed()
 
@@ -44,13 +41,11 @@ module.exports = class Render extends Command {
 
                 .setImage(`https://api.apiflash.com/v1/urltoimage?access_key=215ab93a0b4641b28b5f76ceb9427c05&url=https://${url}&format=png&width=1366&height=768&accept_language=pt-BR`);
 
-            message.channel.send(embed);
+            return message.channel.send(embed);
 
         }, (err) => {
 
-            sucess = true;
-
-            this.respond('deu erro kk');
+            return this.respond('deu erro kk');
         })
     }
 }
