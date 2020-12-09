@@ -17,6 +17,10 @@ class pause extends Base {
 
         const player = this.client.music.players.get(message.guild.id);
 
+        if (!player.paused) {
+            player.queue.current.pausedStartAt = Date.now();
+        }
+
         player.pause(true)
 
         message.react('👍');

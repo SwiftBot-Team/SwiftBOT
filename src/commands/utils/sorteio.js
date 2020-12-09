@@ -58,37 +58,37 @@ class Sorteio extends Base {
                 timeNow += ms(response['time'])
                 timeNow = new Date(timeNow)
 
-                message.guild.channels.cache.get(response['channel']).send(new this.client.embed(this.client.user)
-                    .setAuthor(t('commands:sorteio.author'), this.client.user.displayAvatarURL())
-                    .setFooter(t('commands:sorteio.endWhen'), this.client.user.displayAvatarURL())
-                    .setTimestamp(timeNow)
-                    .setDescription(t('commands:sorteio.giveaway', {
-                        autor: message.author.id,
-                        time: response['time'],
-                        winnerCount: response['winnerCount'],
-                        item: response['item']
-                    }))).then(async msg => {
-
-                        msg.react("🎉")
-
-
-                         this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/sorteios/${msg.id}`).set(response);
-                         this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/sorteios/${msg.id}`).update({ msg: msg.id, end: Number(ms(response['time']) + Date.now()) });
-
-
-                        setTimeout(() => {
-                            this.client.emit('giveawayEnd', {
-                                guildID: message.guild.id,
-                                channelID: message.channel.id,
-                                messageID: msg.id,
-                                winnerCount: response['winnerCount'],
-                                item: response['item'],
-                                autorID: message.author.id,
-                                time: response['time']
-                            })
-                        }, ms(response['time']))
-
-                    })
+                this.client.controllers.sorteios.start(message.guild.channels.cache.get(response['channel']), {
+                    time: ms(response['time']),
+                    prize: response['item'],
+                    winnerCount: parseInt(response['winnerCount']),
+                    embedColor: "#D90000",
+                    embedColorEnd: "#D90000",
+                    hostedBy: message.author,
+                    botsCanWin: false,
+                    exemptPermissions: false,
+                    exemptMembers: false,
+                    reaction: '🎉',
+                    messages: {
+                        giveaway: '',
+                        giveawayEnded: '',
+                        timeRemaining: t('commands:sorteio:giveaway.timeRemaining'),
+                        inviteToParticipate: t('commands:sorteio:giveaway.inviteToParticipate'),
+                        winMessage: t('commands:sorteio:giveaway.winMessage'),
+                        embedFooter: t('commands:sorteio:giveaway.embedFooter'),
+                        noWinner: t('commands:sorteio:giveaway.noWinner'),
+                        hostedBy: t('commands:sorteio:giveaway.hostedBy'),
+                        winners: t('commands:sorteio:giveaway.winners'),
+                        endedAt: t('commands:sorteio:giveaway.endedAt'),
+                        units: {
+                            seconds: t('commands:sorteio:giveaway:units.segundos'),
+                            minutes: t('commands:sorteio:giveaway:units.minutos'),
+                            hours: t('commands:sorteio:giveaway:units.horas'),
+                            days: t('commands:sorteio:giveaway:units.dias'),
+                            pluralS: false // Not needed, because units end with a S so it will automatically removed if the unit value is lower than 2
+                        }
+                    }
+                })
             }
 
         }
@@ -96,16 +96,16 @@ class Sorteio extends Base {
         sendQuestion(true);
 
         collector.on('collect', async ({ content }) => {
-          
-          if(content.toLowerCase() === 'cancelar') {
-            collector.stop();
-            message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.canceled', {member: message.author.id})));
-            return;
-          }
-          
-          
+
+            if (content.toLowerCase() === 'cancelar') {
+                collector.stop();
+                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.canceled', { member: message.author.id })));
+                return;
+            }
+
+
             if (content.length > 1024) {
-                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.1024', {member: message.author.id})).setColor("GREEN"))
+                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.1024', { member: message.author.id })).setColor("GREEN"))
                 setTimeout(async () => {
                     await state--
                     sendQuestion(false)
@@ -126,17 +126,17 @@ class Sorteio extends Base {
             const channel = message.guild.channels.cache.get(content);
 
             if (questions[state].save === 'channel' && !channel) {
-                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.noChannelFound', {member: message.author.id})));                state--
+                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.noChannelFound', { member: message.author.id }))); state--
                 await sendQuestion(false);
                 return;
             }
-          
-          if (questions[state].save === 'channel' && !channel.permissionsFor(this.client.user).has('SEND_MESSAGES') || questions[state].save === 'channel' && !channel.permissionsFor(this.client.user).has('ADD_REACTIONS')) {
-            message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.noPermissionsInChannel', {member: message.author.id})));
-          }
+
+            if (questions[state].save === 'channel' && !channel.permissionsFor(this.client.user).has('SEND_MESSAGES') || questions[state].save === 'channel' && !channel.permissionsFor(this.client.user).has('ADD_REACTIONS')) {
+                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.noPermissionsInChannel', { member: message.author.id })));
+            }
 
             if (questions[state].save === 'winnerCount' && isNaN(content)) {
-                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.invalidNumber', {member: message.author.id})));
+                message.channel.send(new this.client.embed().setDescription(t('commands:sorteio.invalidNumber', { member: message.author.id })));
                 state--
                 await sendQuestion(false);
                 return;

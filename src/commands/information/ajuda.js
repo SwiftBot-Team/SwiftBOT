@@ -52,24 +52,33 @@ class Ajuda extends Base {
       }
     } else {
       Embed
-        .setAuthor(`SwiftBOT - ${t('commands:ajuda.title')}`, this.client.user.displayAvatarURL())
+        .setAuthor(`SwiftBOT - ${t('commands:ajuda.title')}`, this.client.user.displayAvatarURL());
 
-      const categories = validCommands.map(c => c.help.category).filter((v, i, a) => a.indexOf(v) === i)
+      const lockedCmds = await this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/lockedcmds`).once('value');
+
+      const locked = lockedCmds.val() || [];
+
+      const categories = validCommands.map(c => c.help.category).filter((v, i, a) => a.indexOf(v) === i);
+
       categories
         .sort((a, b) => t(`${a}`).localeCompare(t(`${b}`)))
-        .forEach(category => {
+        .forEach(async (category) => {
+
           const commands = validCommands
             .filter(c => c.help.category === category)
             .sort((a, b) => a.help.name.localeCompare(b.name))
-            .map(c => `\`${c.help.name}\``).join('**, **')
+            .filter(c => !locked.includes(c.help.name.toLowerCase()))
+            .map(c => `\`${c.help.name}\``)
+            .join('**, **');
+
 
           const length = validCommands
             .filter(c => c.help.category === category).length
 
-          Embed.addField(`${t(`${category}`)} [**${length}**]`, commands, false)
+          Embed.addField(`${t(`${category}`)} [**${length}**]`, commands || t('commands:ajuda.noCommands'), false)
         })
 
-      Embed.setFooter(`Use ${prefix}${this.help.name} ${t('usages:ajuda')}`, this.client.user.displayAvatarURL)
+      Embed.setFooter(`Use ${prefix}${this.help.name} ${t('usages:ajuda')} \n\n ${locked.length ? t('commands:ajuda.footer', { locked: locked.length || 0 }) : ''}\n`, this.client.user.displayAvatarURL())
       Embed.setThumbnail('https://cdn.discordapp.com/emojis/754841489510629477.png?v=1')
 
       message.channel.send(Embed)

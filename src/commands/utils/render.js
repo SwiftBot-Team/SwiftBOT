@@ -1,6 +1,7 @@
 const { Command } = require('../../index');
 
 const { get } = require('axios');
+const { Error } = require('mongoose');
 
 module.exports = class Render extends Command {
     constructor(client) {
@@ -22,30 +23,37 @@ module.exports = class Render extends Command {
 
         if (adultContent) return this.respond('sem site adulto pfv');
 
+        let sucess = false;
+
         const url = args[0].replace('https://', '').replace('http://', '')
 
 
         setTimeout(() => {
 
-            return this.repond('deu erro kk')
-            
+            if (!sucess) return this.repond('deu erro kk')
         }, 5000)
 
-        const search = await get(
-            `https://api.apiflash.com/v1/urltoimage?access_key=215ab93a0b4641b28b5f76ceb9427c05&url=https://${url}`
-        ).then(() => {
+        try {
 
-            const embed = new this.client.embed()
+            const search = await get(
+                `https://api.apiflash.com/v1/urltoimage?access_key=${process.env.RENDER_API}&url=https://${url}`
+            ).then(() => {
 
-                .setDescription(`[Clique aqui](https://google.com/)`)
+                sucess = true;
 
-                .setImage(`https://api.apiflash.com/v1/urltoimage?access_key=215ab93a0b4641b28b5f76ceb9427c05&url=https://${url}&format=png&width=1366&height=768&accept_language=pt-BR`);
+                const embed = new this.client.embed()
 
-            return message.channel.send(embed);
+                    .setDescription(`[Clique aqui](https://google.com/)`)
 
-        }, (err) => {
+                    .setImage(`https://api.apiflash.com/v1/urltoimage?access_key=${process.env.RENDER_API}&url=https://${url}&format=png&width=1366&height=768&accept_language=pt-BR`);
 
-            return this.respond('deu erro kk');
-        })
+                message.channel.send(embed);
+
+            }, (err) => this.respond(`Deu erro kk`))
+        } catch (err) {
+            console.log(err)
+
+            this.respond('deu erro kk');
+        }
     }
 }

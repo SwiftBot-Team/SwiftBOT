@@ -14,6 +14,8 @@ class Configuration extends Base {
   }
 
   async run({ message, args, prefix }, t) {
+    return this.respond(`Hey! Este comando se encontra em manutenção`)
+
     const Embed = new this.client.embed(message.author)
 
     let modules = {

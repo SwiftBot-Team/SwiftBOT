@@ -20,7 +20,7 @@ class lavalink extends Base {
             .setAuthor('Swift - Status dos Nodes Lavalink', this.client.user.displayAvatarURL())
 
         this.client.music.nodes.map(node => {
-            embed.addField(node.tag,
+            embed.addField(node.options.tag,
                 `Players conectados: \`${node.stats.players}\`
                     Uptime: \`${this.client.msToTime(node.stats.uptime)}\`
                     RAM Usage: \`${Math.floor(node.stats.memory.used / 1000 / 1000)} MB\`

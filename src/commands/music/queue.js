@@ -10,10 +10,11 @@ module.exports = class Queue extends Base {
         })
     }
 
-    async run({ message, args }, t) {
-        const player = this.client.music.players.get(message.guild.id);
+    async run({ message, args, player }, t) {
 
-        let paginas = Math.ceil(player.queue.length / 15);
+        if (!player.queue.size) return this.respond(t('commands:queue.noQueue', { member: message.author.id }))
+
+        let paginas = Math.ceil(player.queue.length / 10);
         let pagina = 1;
         let array = [];
         let index = 0;
@@ -24,15 +25,23 @@ module.exports = class Queue extends Base {
         const pushArray = async () => {
             array = [];
 
-            for (let i = pagina * 15 - 15; i < (pagina * 15) && i < player.queue.length; i++) {
+            for (let i = pagina * 10 - 10; i < (pagina * 10) && i < player.queue.length; i++) {
                 embed.setFooter(paginas === 1 ? t('commands:queue.footer1') : t('commands:queue.footer2', { pagina: pagina, paginas: paginas }), this.client.user.displayAvatarURL())
-                array.push(player.queue[i])
+
+                const song = player.queue[i]
+                array.push(`**${i + 1}** - \`\`${song.title.length > 30 ? song.title.substring(0, 30) + '...' : song.title}\`\` [${song.requester}] `)
             }
         };
 
         await pushArray();
 
-        await embed.setDescription(`${array.map(r => `${++index} - \`${r.info.title.length > 30 ? r.info.title.substring(0, 30) + '...' : r.info.title}\` [${this.client.users.cache.get(r.info.autorID)}]`).join("\n")}`)
+        await embed.setDescription(`${t('commands:queue:embed.playing', {
+            url: player.queue.current.uri, title: player.queue.current.title.length > 30 ? player.queue.current.title.substring(0, 30) + '...' : player.queue.current.title
+        })} 
+        ${t('commands:queue:embed.totalTime', { time: await this.convertTime(player.queue.duration) })}
+        ${t('commands:queue:embed.description')}
+
+        ${array.join("\n")}`)
 
         const msg = await message.channel.send(embed);
 
@@ -56,7 +65,14 @@ module.exports = class Queue extends Base {
                             index = (pagina - 1) * 15;
 
                             await pushArray();
-                            await embed.setDescription(`${array.map(r => `${++index} - \`${r.info.title.length > 30 ? r.info.title.substring(0, 30) + '...' : r.info.title}\` [${this.client.users.cache.get(r.info.autorID)}]`).join("\n")}`)
+
+                            await embed.setDescription(`${t('commands:queue:embed.playing', {
+                                url: player.queue.current.uri, title: player.queue.current.title.length > 30 ? player.queue.current.title.substring(0, 30) + '...' : player.queue.current.title
+                            })} 
+        ${t('commands:queue:embed.totalTime', { time: await this.convertTime(player.queue.duration) })}
+        ${t('commands:queue:embed.description')}
+
+        ${array.join("\n")}`)
 
                             msg.edit(embed)
 
@@ -75,7 +91,14 @@ module.exports = class Queue extends Base {
 
                             await pushArray();
 
-                            await embed.setDescription(`${array.map(r => `${++index} - \`${r.info.title.length > 30 ? r.info.title.substring(0, 35) + '...' : r.info.title}\` [${this.client.users.cache.get(r.info.autorID)}]`).join("\n")}`)
+                            await embed.setDescription(`${t('commands:queue:embed.playing', {
+                                url: player.queue.current.uri, title: player.queue.current.title.length > 30 ? player.queue.current.title.substring(0, 30) + '...' : player.queue.current.title
+                            })} 
+                            ${t('commands:queue:embed.totalTime', { time: await this.convertTime(player.queue.duration) })}
+                            ${t('commands:queue:embed.description')}
+                    
+                            ${array.join("\n")}`)
+
                             await msg.edit(embed)
 
                             break;

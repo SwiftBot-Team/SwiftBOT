@@ -15,6 +15,8 @@ class Debitar extends Base {
   async run({ message, args, prefix }, t) {
     const amount = args[0]
 
+    if (!await this.client.controllers.money.hasBank(message.author.id)) return this.respond(t('commands:debitar.bank'))
+
     if (!amount || isNaN(amount) || amount[0] === '-') return this.respond(t('commands:debitar.not'))
   
     if (await this.client.controllers.money.getBalanceInBank(message.author.id) < amount) return this.respond(t('commands:debitar.notMoney'))

@@ -20,12 +20,16 @@ class Kiss extends Base {
 
         const kiss = async (user1, user2) => {
 
-            const img = await fetch('https://nekos.life/api/v2/img/kiss').then(res => res.json());
+            const { KSoftClient } = require('@ksoft/api');
+
+            const ksoft = new KSoftClient(process.env.KSOFT_API);
+
+            const { url } = await ksoft.images.random('kiss', { nsfw: false });
 
             message.channel.send(new this.client.embed()
                 .setAuthor(t('commands:kiss.author'), 'https://cdn.discordapp.com/emojis/703725149312122982.png?v=1')
                 .setDescription(`${user1} ${t('commands:kiss.kiss')} ${user2}!`)
-                .setImage(img.url)
+                .setImage(url)
                 .setFooter(t('commands:kiss.author'), 'https://cdn.discordapp.com/emojis/703725149312122982.png?v=1')).then(async msg => {
                     msg.react("🔁")
                     msg.createReactionCollector((r, u) => r.emoji.name === '🔁' && u.id === user2.user.id, { max: 1, time: 60000 * 10 })

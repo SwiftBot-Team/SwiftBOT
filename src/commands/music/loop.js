@@ -7,7 +7,7 @@ module.exports = class Loop extends Base {
             aliases: ['lp', 'loopqueue'],
             category: "categories:music",
             requiresChannel: true
-            
+
         })
     }
 
@@ -15,12 +15,12 @@ module.exports = class Loop extends Base {
 
         const player = this.client.music.players.get(message.guild.id);
 
-        if (player.looped === 1 || player.looped === 2) {
-            player.loop(0)
+        if (player.queueRepeat) {
+            player.setQueueRepeat(false)
             return this.respond(t('commands:loop.disable'));
 
         } else {
-            player.loop(2);
+            player.setQueueRepeat(true)
             return this.respond(t('commands:loop.enable'));
         }
     }

@@ -6,7 +6,7 @@ class Atendimento extends Base {
             name: "atendimento",
             cooldown: 1000,
             aliases: ["ticket"],
-            permissions: ["MANAGE_GUILD", 'MANAGE_CHANNELS'],
+            permissions: ["MANAGE_GUILD", 'MANAGE_CHANNELS', 'MANAGE_WEBHOOKS'],
             usage: 'usages:atendimento',
             category: "categories:config",
             description: "descriptions:atendimento",
@@ -28,13 +28,11 @@ class Atendimento extends Base {
                 ${t('commands:atendimento:help.5', { prefix })}
                 ${t('commands:atendimento:help.6', { prefix })}
                 ${t('commands:atendimento:help.7', { prefix })}
-                ${t('commands:atendimento:help.8', { prefix })}
-                ${t('commands:atendimento:help.9', { prefix })}
                 `);
 
             await message.channel.send(embed)
         }
-        if (['iniciar', 'start', 'on', 'enable', 'turn-on'].includes(args[0].toLowerCase())) {
+        if (['iniciar', 'on', 'enable', 'turn-on', 'ligar'].includes(args[0].toLowerCase())) {
 
             const ref = await this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}`).once('value');
 
@@ -42,7 +40,7 @@ class Atendimento extends Base {
 
             if (ref.val().enabled) return this.respond(t('commands:atendimento:enable.isEnabled', { member: message.author.id }));
 
-            if (!ref.val().categories.length) return this.respond(t('commands:atendimento:enable.noCategories', { member: message.author.id, prefix }))
+            if (!Object.values(ref.val().categories).length) return this.respond(t('commands:atendimento:enable.noCategories', { member: message.author.id, prefix }))
 
             this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}/enabled`).set(true);
 
@@ -66,7 +64,7 @@ class Atendimento extends Base {
 
             const ref = await this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}`).once('value');
 
-            if (ref.val()) return this.respond(t('commands:atendimento:config.isConfig', { member: message.author.id }))
+            if (ref.val()) return this.respond(t('commands:atendimento:config.isConfig', { member: message.author.id, prefix }))
 
             const filter = ({ author }) => author.id === message.author.id;
 
@@ -104,14 +102,25 @@ class Atendimento extends Base {
 
                 } else {
                     collector.stop();
-                    this.respond('coletor finalizado super voadora :)')
+                    this.respond(t('commands:atendimento:config.sucess', { prefix }))
 
                     this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}`)
                         .set({
                             category: response.category,
                             channel: response.channelID,
-                            allowUserClose: response.allowUserClose === '1' ? false : true
-                        })
+                            allowUserClose: response.allowUserClose === '1' ? false : true,
+                            enabled: false
+                        });
+
+                    this.client.controllers.atendimentos.set(message.guild.id, {
+                        id: message.guild.id,
+                        category: response.category,
+                        channel: response.channelID,
+                        allowUserClose: response.allowUserClose === '1' ? false : true,
+                        abertos: [],
+                        categories: [],
+                        enabled: false
+                    })
                 }
 
             }
@@ -209,7 +218,9 @@ class Atendimento extends Base {
             const categoryName = questionName.channel.createMessageCollector(m => m.author.id === message.author.id, { time: 120000 })
 
                 .on('collect', async ({ content }) => {
-                    if (/[^a-z|0-9]/gi.test(content)) {
+
+                    if (['cancel', 'cancelar'].includes(content.toLowerCase())) return this.respond(t('commands:atendimento:addcategory.canceled', { member: message.author.id }));
+                    if (/[^a-z]/gi.test(content)) {
 
                         this.respond(t('commands:atendimento:addcategory.invalidName', {
                             member: message.author.id
@@ -249,6 +260,8 @@ class Atendimento extends Base {
 
                         .on('collect', async (collected) => {
 
+                            if (['cancel', 'cancelar'].includes(collected.content.toLowerCase())) return this.respond(t('commands:atendimento:addcategory.canceled', { member: message.author.id }));
+
                             const roles = await this.getRoles(collected.content).map(role => role.id);
 
 
@@ -269,6 +282,8 @@ class Atendimento extends Base {
                             const questionEmoji = questionName.channel.createMessageCollector(m => m.author.id === message.author.id, { time: 120000 })
 
                                 .on('collect', async collectedEmoji => {
+
+                                    if (['cancel', 'cancelar'].includes(collectedEmoji.content.toLowerCase())) return this.respond(t('commands:atendimento:addcategory.canceled', { member: message.author.id }));
 
                                     const emojis = await this.getEmojis(collectedEmoji.content);
 
@@ -291,6 +306,8 @@ class Atendimento extends Base {
                                         roles: roles,
                                         emoji: emojis[0]
                                     });
+
+                                    this.client.controllers.atendimentos.get(message.guild.id).categories.push({ emoji: emojis[0], name: content, roles: roles })
 
                                 })
 
@@ -317,6 +334,139 @@ class Atendimento extends Base {
                 })
         }
 
+        if (['removecategory', 'removercategoria', 'remove'].includes(args[0].toLowerCase())) {
+
+            if (!args[1]) return this.respond(t('commands:atendimento:removecategory.noArgs', { member: message.author.id }));
+
+            const ref = await this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}/categories/${args.slice(1).join(" ")}`).once('value');
+
+            if (!ref.val()) return this.respond(t('commands:atendimento:removecategory.noFound', { member: message.author.id, prefix }));
+
+            this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}/categories/${args.slice(1).join(" ")}`).remove();
+
+            const controle = this.controllers.atendimentos.get(message.guild.id);
+
+            controle.categories.splice(controle.categories.find(c => c.name === args[1]) - 1, 1);
+
+            this.respond(t('commands:atendimento:removecategory.sucess', { member: message.author.id }));
+        }
+
+        if (['configmensagem', 'configurarmensagem', 'configmessage', 'configmsg'].includes(args[0].toLowerCase())) {
+
+            const ref = await this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}`).once('value');
+
+            if (!ref.val()) return this.respond(t('commands:atendimento.noConfig', { member: message.author.id, prefix }));
+
+            const response = {};
+
+
+            const questions = [
+                {
+                    name: 'Por favor, insira o título do embed.',
+                    save: 'titulo',
+                    img: 'https://media.discordapp.net/attachments/747853978120749177/781531567042199572/unknown.png?width=643&height=377'
+                },
+                {
+                    name: 'Agora insira o conteúdo do embed.',
+                    save: 'conteudo',
+                    img: 'https://media.discordapp.net/attachments/747853978120749177/781531775284412446/unknown.png?width=607&height=376'
+                },
+                {
+                    name: 'Agora insira o que ficará no Footer do embed.',
+                    save: 'footer',
+                    img: 'https://media.discordapp.net/attachments/747853978120749177/781531933074260008/unknown.png?width=705&height=382'
+                },
+                {
+                    name: 'Agora, caso haja alguma imagem para ser anexada, insira ela (Caso não haja, insira qualquer coisa).',
+                    save: 'imagem',
+                    img: 'https://media.discordapp.net/attachments/747853978120749177/781532112988930058/unknown.png?width=742&height=381'
+                }
+            ];
+
+            const collector = this.message.channel.createMessageCollector(m => m.author.id === this.message.author.id);
+
+            let state = -1
+
+
+            const sendQuestion = async (send = false) => {
+                state++;
+
+                if (questions[state]) {
+
+                    if (send === true) {
+                        this.message.channel.send(new this.client.embed(this.message.author)
+                            .setDescription(questions[state].name)
+                            .setImage(questions[state].img ? questions[state].img : 'https://google.com/')
+                            .setFooter(`Escreva 'cancelar' a qualquer momento para cancelar a operação.`, this.client.user.displayAvatarURL()))
+                    }
+
+                } else {
+                    collector.stop();
+
+                    const embed = new this.client.embed()
+                        .setAuthor(response['titulo'], message.guild.iconURL())
+                        .setDescription(response['conteudo'])
+                        .setFooter(response['footer'], message.guild.iconURL());
+                    if (response['imagem'].startsWith('http')) embed.setImage(response['imagem'])
+
+                    const channel = this.client.channels.cache.get(ref.val().channel);
+
+                    if (!channel) return this.respond(t('commands:atendimento:setmessage.noChannelExists', { member: message.author.id, prefix }));
+
+                    channel.fetchWebhooks().then(async webhooks => {
+                        let webhook = await channel.createWebhook(message.guild.name, { avatar: message.guild.iconURL() });
+
+                        await webhook
+                            .send(embed).then(msg => {
+
+                                webhook.delete();
+
+                                if (ref.val().messageID) channel.messages.fetch(ref.val().messageID).then(msg => msg.delete({ timeout: 1000 }), (err) => err);
+
+                                this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}/messageID`).set(msg.id);
+
+                                this.client.controllers.atendimentos.get(message.guild.id).messageID = msg.id;
+
+                                Object.values(ref.val().categories)
+                                    .map(e => msg.react(e.emoji)
+                                        .catch(err => {
+                                            msg.delete({ timeout: 1000 }).then(err => err);
+
+                                            return this.respond(t('commands:atendimento:setmessage.erroAddReaction', { emoji: e.emoji }))
+                                        }))
+                            }, (err) => this.respond(t('commands:atendimento:setmessage.erroSendMessage', { member: message.author.id })));
+
+                    })
+                }
+            }
+
+            sendQuestion(true);
+
+
+
+            collector.on('collect', async content => {
+                if (content.content.length >= 2048) {
+                    this.respond(t('commands:atendimento:setmessage.maxChar'));
+                    state--
+                    return sendQuestion(false);
+                }
+
+                if (content.content.toLowerCase() === 'cancelar') {
+                    collector.stop();
+                    return this.reply(t('commands:atendimento:setmessage.canceled'))
+
+                }
+                const question = questions[state];
+
+                if (['titulo', 'footer', 'conteudo'].includes(question.save)) content = content.content;
+
+                if (question.save === 'imagem') content = content.attachments.first() ? content.attachments.first().url : content.content;
+                response[question.save] = content;
+                sendQuestion(true)
+
+            })
+        }
+
         if (['stats', 'status', 'info'].includes(args[0].toLowerCase())) {
 
             const ref = await this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}`).once('value');
@@ -334,6 +484,24 @@ class Atendimento extends Base {
                     `${ref.val().categories ? Object.values(ref.val().categories).map(c => `**${c.name} - Emoji: ${this.client.emojis.cache.get(c.emoji) || c.emoji}**`).join('\n') : 'Nenhuma'}`);
 
             await message.channel.send(embed);
+        }
+
+        if (['setchannel', 'setarcanal', 'changechannel', 'mudarcanal'].includes(args[0].toLowerCase())) {
+            const ref = await this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}`).once('value');
+
+            if (!ref.val()) return this.respond(t('commands:atendimento.noConfig', { member: message.author.id, prefix }));
+
+            if (!args[1]) return this.respond(t('commands:atendimento:setchannel.noArgs1', { member: message.author.id }));
+
+            const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1]);
+
+            if (!channel) return this.respond(t('commands:atendimento:setchannel.noChannelFound', { member: message.author.id }));
+
+            this.client.controllers.atendimentos.get(message.guild.id).channel = channel.id;
+
+            this.client.database.ref(`SwiftBOT/config/atendimentos/${message.guild.id}/channel`).set(channel.id);
+
+            this.respond(t('commands:atendimento:setchannel.sucess', { member: message.author.id }));
         }
 
 

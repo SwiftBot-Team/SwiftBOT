@@ -7,7 +7,7 @@ class Meme extends Base {
             description: "descriptions:meme",
             category: "categories:fun",
             cooldown: 1000,
-            aliases: ['random-meme']
+            aliases: []
         });
     }
 
@@ -15,12 +15,14 @@ class Meme extends Base {
 
         const { KSoftClient } = require('@ksoft/api');
 
-        const ksoft = new KSoftClient(process.env.LYRICS_API);
+        const ksoft = new KSoftClient(process.env.KSOFT_API);
 
+        const { url } = await ksoft.images.meme();
 
-        const { url } = await ksoft.images.meme()
+        console.log(url)
 
-        message.channel.send({ files: [url] })
+        message.channel.send({ files: [url] });
+
     }
 }
 

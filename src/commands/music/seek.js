@@ -38,6 +38,20 @@ class seek extends Base {
             seconds = seekSplit[1] * 1000;
         };
 
+        const all = hours + minutes + seconds;
+
+        // if ((Date.now() - player.queue.current.startAt - player.queue.current.pausedTime) < all) {
+        //     player.queue.current.startAt = player.queue.current.startAt - all;
+        //     console.log(all + ' foi removido.')
+        // }
+
+        // if ((Date.now() - player.queue.current.startAt - player.queue.current.pausedTime) > all) {
+        //     player.queue.current.startAt = player.queue.current.startAt + all;
+        //     console.log(all + ' foi adicionado.')
+        // }
+        (Date.now() - player.queue.current.startAt - player.queue.current.pausedTime) > all ? player.queue.current.startAt += (Date.now() - player.queue.current.startAt - player.queue.current.pausedTime) - all : player.queue.current.startAt -= (Date.now() - player.queue.current.startAt - player.queue.current.pausedTime) + all;
+
+
         player.seek(hours + minutes + seconds);
 
         await message.react("👍");

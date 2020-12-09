@@ -17,11 +17,12 @@ class resume extends Base {
 
         const player = this.client.music.players.get(message.guild.id);
 
-        if (player.paused === false) return this.respond(t('commands:resume.isPlaying', { member: message.author.id }));
+        if (!player.paused) return this.respond(t('commands:resume.isPlaying', { member: message.author.id }));
+
+        player.queue.current.pausedTime += Date.now() - player.queue.current.pausedStartAt;
 
         player.pause(false);
 
-        this.respond(t('commands:resume.resume'));
         message.react('👍');
     }
 }

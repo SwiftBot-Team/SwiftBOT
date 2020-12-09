@@ -51,22 +51,23 @@ class playlist extends Base {
 
             if (!args[2] && !this.client.music.players.get(message.guild.id)) return this.respond(t('commands:playlist:addmusic.noArgsMusic', { member: message.author.id }));
 
-            const toAdd = args[2] ? args.slice(2).join(" ") : this.client.music.players.get(message.guild.id).track.info.uri
+            const toAdd = args[2] ? args.slice(2).join(" ") : this.client.music.players.get(message.guild.id).uri;
 
-            const tracks = await this.client.music.fetchTracks(toAdd);
+            const tracks = await this.client.music.search(toAdd, message.author);
 
             if (!tracks.tracks[0]) return this.respond(t('commands:playlist:addmusic.noMusicFound', { member: message.author.id }));
+
             if (tracks.loadType === 'PLAYLIST_LOADED') return this.respond(t('commands:playlist:addmusic.noPlaylistAllowed', { member: message.author.id }));
 
             const musica = tracks.tracks[0]
 
-            const dbj = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.info.identifier}`).once('value');
+            const dbj = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.identifier}`).once('value');
 
             if (dbj.val()) return this.respond(t('commands:playlist:addmusic.exists', { member: message.author.id }));
 
-            this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.info.identifier}`).set(musica);
+            this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.identifier}`).set({ url: musica.uri, title: musica.title });
 
-            this.respond(t('commands:playlist:addmusic.added', { musica: musica.info.title, playlist: args[1] }));
+            this.respond(t('commands:playlist:addmusic.added', { musica: musica.title, playlist: args[1] }));
 
         }
 
@@ -79,46 +80,50 @@ class playlist extends Base {
 
             if (!args[2]) return this.respond(t('commands:playlist:removemusic.noArgsMusic', { member: message.author.id }));
 
-            const tudo = await db.val();
-            let array = [];
-
-            const tracks = await this.client.music.fetchTracks(args.slice(2).join(" "));
+            const tracks = await this.client.music.search(args.slice(2).join(" "), message.author);
 
             if (!tracks.tracks[0]) return this.respond(t('commands:playlist:removemusic.noMusicFound', { member: message.author.id }));
+
             if (tracks.loadType === 'PLAYLIST_LOADED') return this.respond(t('commands:playlist:removemusic.noPlaylistAllowed', { member: message.author.id }));
 
             const musica = tracks.tracks[0]
 
-            const dbj = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.info.identifier}`).once('value');
+            const dbj = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.identifier}`).once('value');
 
             if (!dbj.val()) return this.respond(t('commands:playlist:removemusic.noExists', { member: message.author.id }));
 
-            this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.info.identifier}`).remove();
+            this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}/musicas/${musica.identifier}`).remove();
 
-            this.respond(t('commands:playlist:removemusic.removed', { musica: musica.info.title, playlist: args[1] }));
+            this.respond(t('commands:playlist:removemusic.removed', { musica: musica.title, playlist: args[1] }));
         }
 
         if (['tocar', 'play', 'run'].includes(args[0].toLowerCase())) {
+
+            if (!this.client.music.nodes.filter(node => node.connected === true).size)
+                return this.respond(t('commands:playlist:play.noNodes', { member: message.author.id }))
+
             if (!args[1]) return this.respond(t('commands:playlist:play.noArgs1', { member: message.author.id }));
             const db = await this.client.database.ref(`SwiftBOT/music/playlist/${message.author.id}/${args[1]}`).once('value');
 
             if (!db.val() || !db.val().musicas) return this.respond(t('commands:playlist:play.noMusic', { member: message.author.id }));
 
-            const player = await this.client.music.join({
+            const player = await this.client.music.create({
                 guild: message.guild.id,
                 voiceChannel: message.member.voice.channel.id,
-                textChannel: message.channel
+                textChannel: message.channel.id
             });
+
+            if (player.state === 'DISCONNECTED') player.connect();
 
             if (player.playing) return this.respond(t('commands:playlist:play.isPlaying', { member: message.author.id }));
 
             Object.values(db.val().musicas).map(async musica => {
 
-                musica.info.autorID = message.author.id;
+                const search = await this.client.music.search(musica.url, message.author);
 
-                await player.queue.add(musica);
+                await player.queue.add(search.tracks[0]);
 
-                if (!player.playing) player.play();
+                if (!player.queue.size) player.play();
             })
 
             this.respond(t('commands:playlist:play.play', { member: message.author.id, playlist: args[1], amount: Object.values(db.val().musicas).length }));
@@ -135,7 +140,7 @@ class playlist extends Base {
                     let embed = new this.client.embed()
                         .setAuthor(`Swift - Nome da playlist: ${args[1]}`, 'https://cdn.discordapp.com/emojis/703725149467312129.png?v=1')
                         .addField("Quantidade de músicas:", db.val().musicas ? `\`${Object.values(db.val().musicas).length}\`` : '``0``')
-                        .addField('Músicas:', db.val().musicas ? Object.values(db.val().musicas).map(i => `${++index} - \`${i.info.title.length > 30 ? i.info.title.substring(0, 30) + '...' : i.info.title}\` `).join('\n') : 'Nenhuma')
+                        .addField('Músicas:', db.val().musicas ? Object.values(db.val().musicas).map(i => `${++index} - \`${i.title.length > 30 ? i.title.substring(0, 30) + '...' : i.title}\` `).join('\n') : 'Nenhuma')
                         .setFooter("Swift - Informações de Playlist", this.client.user.displayAvatarURL())
                     message.channel.send(embed)
 

@@ -1,58 +1,57 @@
 const Base = require("../../services/Command");
 
-class Lockcmd extends Base {
+class Unlockcmd extends Base {
     constructor(client) {
         super(client, {
-            name: "lockcmd",
+            name: "unlockcmd",
             cooldown: 1000,
-            aliases: ["bloquearcomando", 'lockcommand', 'bloquear-comando'],
+            aliases: ["desbloquearcomando", 'unlockcommand', 'desbloquear-comando'],
             permissions: ["MANAGE_GUILD"],
             usage: 'usages:prefixo',
             category: "categories:config",
-            description: "descriptions:lockcmd"
+            description: "descriptions:unlockcmd"
         });
     }
 
     async run({ message, args, prefix }, t) {
         const toLock = args[0];
 
-        if (!toLock) return this.respond(t('commands:lockcmd.noArgs', { member: message.author.id }));
+        if (!toLock) return this.respond(t('commands:unlockcmd.noArgs', { member: message.author.id }));
 
         const cmd = this.client.commands.filter(c => !c.conf.devsOnly && c.help.name.toLowerCase() === toLock.toLowerCase() && c.help.category !== 'categories:devs' || t(c.help.category).toLowerCase() === toLock.toLowerCase()) || this.client.commands.map(c => t(c.help.category)).filter(c => c.toLowerCase() === toLock.toLowerCase());
 
-        if (!cmd[0] && !['*', 'all', 'todos'].includes(toLock.toLowerCase())) return this.respond(t('commands:lockcmd.noFound', { member: message.author.id }));
+        if (!cmd[0] && !['*', 'all', 'todos'].includes(toLock.toLowerCase())) return this.respond(t('commands:unlockcmd.noFound', { member: message.author.id }));
 
         if (['*', 'all', 'todos'].includes(toLock.toLowerCase())) {
-            const commands = this.client.commands.filter(c => !c.conf.devsOnly).map(c => c.help.name);
 
-            this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/lockedcmds`).set(commands);
+            this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/lockedcmds`).remove();
 
-            return this.respond(t('commands:lockcmd.allLocked'));
+            return this.respond(t('commands:unlockcmd.allUnlocked'));
         }
 
         const categories = this.client.commands.map(c => t(c.help.category)).filter((v, i, a) => a.indexOf(v) === i).map(c => c.toLowerCase());
 
         if (categories.includes(toLock.toLowerCase())) {
-            const commands = cmd.map(c => c.help.name.toLowerCase())
+            const commands = cmd.map(c => c.help.name.toLowerCase());
 
             const ref = await this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/lockedcmds`).once('value');
 
-            const atual = ref.val() ? [...ref.val(), ...commands] : commands;
+            const atual = ref.val() ? [...ref.val().filter(c => !commands.includes(c))] : [];
 
             this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/lockedcmds`).set(atual);
 
-            return this.respond(t('commands:lockcmd.categoryLocked', { categoria: toLock }));
+            return this.respond(t('commands:unlockcmd.categoryUnlocked', { categoria: toLock }));
 
         }
 
         const ref = await this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/lockedcmds`).once('value');
 
-        const atual = ref.val() ? [...ref.val(), cmd[0].help.name.toLowerCase()] : [cmd[0].help.name.toLowerCase()];
+        const atual = ref.val() ? [...ref.val().filter(c => c !== cmd[0].help.name.toLowerCase())] : [cmd[0].help.name.toLowerCase()];
 
         this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/lockedcmds`).set(atual);
 
-        return this.respond(t('commands:lockcmd.oneLocked', { comando: toLock }));
+        return this.respond(t('commands:unlockcmd.oneUnlocked', { comando: toLock }));
     }
 }
 
-module.exports = Lockcmd;
+module.exports = Unlockcmd;

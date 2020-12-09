@@ -18,10 +18,13 @@ class tocando extends Base {
         if (!player) return this.respond('n to tocando nada moço')
 
         this.respond(t('commands:tocando.tocando', {
-            title: player.queue[0].info.title,
-            url: player.queue[0].info.uri,
+            title: player.queue.current.title,
+            url: player.queue.current.uri,
             member: message.author.id
-        }))
+        }) +
+            `\n\n${await this.converTimePlaying(Date.now() - player.queue.current.startAt - player.queue.current.pausedTime, player.queue.current.duration)}`, true, {
+            thumbnail: player.queue.current.thumbnail
+        })
 
     }
 }

@@ -11,75 +11,52 @@ module.exports = class Play extends Base {
     })
   }
 
-  async run({ message, args }, t) {
+  async run({ message, args, player }, t) {
 
-    if (!this.client.music.nodes.filter(node => node.connected === true))
+    if (!this.client.music.nodes.filter(node => node.connected === true).size)
       return this.respond(t('commands:play.noNodes', { member: message.author.id }))
 
     if (!args[0]) return this.respond(t('commands:play.noArgs', { member: message.author.id }));
 
-    const player = await this.client.music.join({
+    player = player || await this.client.music.create({
       guild: message.guild.id,
       voiceChannel: message.member.voice.channel.id,
-      textChannel: message.channel
+      textChannel: message.channel.id,
+      selfDeafen: true
     });
 
-    const music = await player.getType(args.join(' '));
-    if (!music.data.length) return this.respond(t('commands:play.noMusicFound'));
+
+    if (player.state === 'DISCONNECTED') player.connect();
 
     let amount = 0;
 
-    let wait;
+    const tracks = await this.client.music.search(args.slice(0).join(" "), message.author);
 
-    for (let i = 0; i < music.data.length; i++) {
 
-      const tracks = await this.client.music.fetchTracks(music.data[i]);
+    if (tracks.error) return this.respond(t('commands:play.fail'));
 
-      if (tracks.error) continue;
+    if (!tracks.tracks[0]) return this.respond(t('commands:play.noMusicFound'))
 
-      if (tracks.loadType === 'PLAYLIST_LOADED') {
+    if (tracks.loadType === 'PLAYLIST_LOADED') {
 
-        tracks.tracks.map(async track => {
-          amount++;
-          player.queue.add(track);
-          player.queue[player.queue.length - 1].info.autorID = message.author.id;
+      tracks.tracks.map(async track => {
+        amount++;
 
-          if (!player.playing) player.play();
+        player.queue.add(track);
 
-          if (player.queue.length >= 1 && !wait && music.data.length >= 5) wait = await this.respond(t('commands:play.adding', { amount: amount }));
+        if (!player.queue.size) player.play();
 
-          if (player.queue.length >= 1 && wait && music.data.length >= 5) wait = await wait.edit(new this.client.embed().setDescription(t('commands:play.adding', { amount: amount })));
+      });
 
-        });
+    } else {
 
-      } else {
-        if (!tracks.tracks[0]) continue;
+      amount++
 
-        if (player.queue.length > 0 && music.data.length === 1) {
-          this.respond(t('commands:play.musicLoaded', { name: tracks.tracks[0].info.title }));
-        }
+      player.queue.add(tracks.tracks[0]);
 
-        amount++
-        tracks.tracks[0].info.autorID = message.author.id;
-        player.queue.add(tracks.tracks[0]);
-
-        if (!player.playing) player.play();
-
-        if (player.queue.length >= 1 && !wait && music.data.length >= 5) wait = await this.respond(t('commands:play.adding', { amount: amount }));
-
-        if (player.queue.length >= 1 && wait && music.data.length >= 5) wait = await wait.edit(new this.client.embed().setDescription(t('commands:play.adding', { amount: amount })));
-      }
-    }
-
-    if (amount === 0) {
-      return this.respond('Não encontrei esta música.')
+      if (!player.queue.size) player.play();
     }
 
     await message.react('👍');
-
-    if (player.playing && wait) wait.edit(new this.client.embed().setDescription(t('commands:play.added', { amount: amount })));
-
-    if (!player.playing) return player.play();
-
   }
 }

@@ -2,9 +2,8 @@ const Base = require("../../services/Command");
 
 const axios = require('axios');
 
-const cheerio = require('cheerio');
-
 const fetch = require('node-fetch');
+
 const { relativeTimeRounding } = require("moment");
 
 class lyrics extends Base {
@@ -26,7 +25,7 @@ class lyrics extends Base {
 
         const ksoft = new KSoftClient('6874697b0a12c448b90dd8ffcc2a81bbb6db0ab6');
 
-        const { lyrics, image } = await player.getLyrics();
+        const { lyrics, image } = await this.getLyrics(player);
 
         if (!lyrics) return this.respond(t('commands:lyrics.noFound', { member: message.author.id, music: player.track.info.title }));
 
@@ -35,12 +34,14 @@ class lyrics extends Base {
         let page = 0;
 
         const send = await message.channel.send(new this.client.embed()
-            .setTitle(t('commands:lyrics:embed.title', { title: player.track.info.title }))
+            .setTitle(t('commands:lyrics:embed.title', { title: player.queue.current.title }))
             .setDescription(lyrics.slice(0, 900))
             .setThumbnail(image)
             .setFooter(t('commands:lyrics:embed.footer', { page: page + 1, pages: pages }), this.client.user.displayAvatarURL()));
 
         if (pages === 1) return;
+
+        send.delete({ timeout: 120000 }).then(err => err, (err) => err);
 
         await send.react('⏩');
         await send.react('⏪');
@@ -55,7 +56,7 @@ class lyrics extends Base {
                         page++;
 
                         send.edit(new this.client.embed()
-                            .setTitle(t('commands:lyrics:embed.title', { title: player.track.info.title }))
+                            .setTitle(t('commands:lyrics:embed.title', { title: player.queue.current.title }))
                             .setDescription(lyrics.slice(page * 1000, (page + 1) * 900))
                             .setThumbnail(image)
                             .setFooter(t('commands:lyrics:embed.footer', { page: page + 1, pages: pages }), this.client.user.displayAvatarURL()))
@@ -67,7 +68,7 @@ class lyrics extends Base {
                         page--;
 
                         send.edit(new this.client.embed()
-                            .setTitle(t('commands:lyrics:embed.title', { title: player.track.info.title }))
+                            .setTitle(t('commands:lyrics:embed.title', { title: player.queue.current.title }))
                             .setDescription(lyrics.slice(page * 900, (page + 1) * 900))
                             .setThumbnail(image)
                             .setFooter(t('commands:lyrics:embed.footer', { page: page + 1, pages: pages }), this.client.user.displayAvatarURL()))

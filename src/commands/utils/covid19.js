@@ -34,7 +34,7 @@ class Covid19 extends Base {
 
         data = d
       } catch (err) {
-        console.log(err)
+
 
         return this.respond(t('commands:covid19.error'))
       }

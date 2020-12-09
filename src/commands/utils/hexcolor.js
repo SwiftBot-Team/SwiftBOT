@@ -19,8 +19,10 @@ class HexColor extends Base {
     if (!hex) return this.respond(t('commands:hexcolor.args'))
 
     const { data } = await axios.get(`https://www.thecolorapi.com/id?hex=${hex.replace("#", "")}`)
+    console.log(data)
 
     if (hex !== '#000000' && data.hex.value === '#000000') return this.respond(t('commands:hexcolor.error'))
+    if (data.rgb.r === null) return this.respond(t('commands:hexcolor.error'))
     
     const Embed = new this.client.embed(message.author)
 

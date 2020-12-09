@@ -18,27 +18,22 @@ module.exports = class Loop extends Base {
         if (isNaN(args[0])) return this.respond(t('commands:remove.invalidNumber', { member: message.author.id }));
 
         args = args.sort((a, b) => a - b);
-        if (args[0] < 2) return this.respond(t('commands:remove.deny', { member: message.author.id }));
+        if (args[0] < 1) return this.respond(t('commands:remove.deny', { member: message.author.id }));
 
         let musicas = [];
         let music;
 
-        for (let i in args) if (!player.queue[Number(args[i] - 1)]) return this.respond(t('commands:remove.positionNotFound', { member: message.author.id, position: args[i - 1] }));
+        for (let i = 0; i < args.length; i++) if (!player.queue[Number(args[i] - 1)]) return this.respond(t('commands:remove.positionNotFound', { member: message.author.id, position: args[i] }));
 
         const first = player.queue[args[0] - 1];
 
-        for (let i in args) {
-            if (args[i] === args[0]) {
-                musicas.push(player.queue[Number(args[0] - 1).title])
-                player.queue.remove(Number(args[0] - 1))
-            }
+        for (let i = 0; i < args.length; i++) {
 
-            else {
-                musicas.push(player.queue[Number(args[i] - 1).title])
-                player.queue.remove(Number(args[i] - 1) - 1)
-            }
+            musicas.push(player.queue[Number(args[i] - 1)])
+            player.queue.splice(Number(args[i]) - (i === 0 ? 1 : i + 1), 1)
+
         }
 
-        await this.respond(musicas.length === 1 ? `A musica [${first.info.title}](${first.info.uri}) foi removida com sucesso.` : `Foram removidas \`${musicas.length}\` músicas da playlist.`);
+        await this.respond(musicas.length === 1 ? `A musica [${first.title}](${first.uri}) foi removida com sucesso.` : `Foram removidas \`${musicas.length}\` músicas da playlist.`);
     }
 }

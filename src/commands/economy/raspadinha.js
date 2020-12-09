@@ -7,8 +7,7 @@ class raspadinha extends Base {
             description: "descriptions:raspadinha",
             category: "categories:economy",
             cooldown: 1000,
-            aliases: ['tele-sena'],
-            devsOnly: true
+            aliases: ['tele-sena']
         });
     }
 
@@ -18,12 +17,16 @@ class raspadinha extends Base {
             const mapIds = this.client.raspadinhaEmojis.map(e => e.id).filter((v, i, a) => a.indexOf(v) === i);
             const emojis = mapIds.map(e => this.client.raspadinhaEmojis.filter(r => r.id === e)[0]);
 
-            return this.respond(`Raspadinha do Swift! Utilize ${prefix}raspadinha comprar para comprar uma raspadinha! Veja abaixo os prêmios!
+            return this.respond(`Raspadinha do Swift! Utilize \`${prefix}raspadinha comprar\` para comprar uma raspadinha por \`250 sCoins\`! Veja abaixo os prêmios!
             
             ${emojis.map(e => `${e.nome} - \`${e.valor}\` `).join("\n")}`)
         }
 
         if (['buy', 'comprar'].includes(args[0].toLowerCase())) {
+            if (await this.client.controllers.money.getBalance(message.author.id) < 250) return this.respond(`${message.author}, você não tem \`250 sCoins\` para comprar uma raspadinha. `);
+
+            this.client.controllers.money.setBalance(message.author.id, -250);
+
             const rasp = async (edit) => {
                 const board = [];
 
@@ -70,6 +73,7 @@ class raspadinha extends Base {
                                 let money = 0;
 
                                 for (let i = 0; i < verify.length; i++) {
+                                    await this.client.controllers.money.setBalance(message.author.id, verify[i].valor)
                                     money += verify[i].valor
                                 };
 

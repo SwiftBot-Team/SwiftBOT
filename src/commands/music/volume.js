@@ -12,12 +12,13 @@ module.exports = class Stop extends Base {
 
     async run({ message, args }, t) {
 
+
         if (!args[0]) return this.respond(t('commands:volume.noArgs', { member: message.author.id }));
         if (isNaN(args[0]) || Number(args[0]) < 1 || Number(args[0]) > 200) return this.respond(t('commands:volume.invalidNumber', { member: message.author.id }));
 
         const player = this.client.music.players.get(message.guild.id);
 
-        await player.volume(args[0]);
+        await player.setVolume(args[0]);
 
         await this.respond(t('commands:volume.finish', { volume: args[0] }));
 

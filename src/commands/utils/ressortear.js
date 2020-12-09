@@ -5,80 +5,27 @@ const ms = require('ms');
 class Ressortear extends Base {
     constructor(client) {
         super(client, {
-            name: "ressortear", 
+            name: "ressortear",
             description: "descriptions:ressortear",
             category: "categories:utils",
             usage: "usages:ressortear",
             cooldown: 1000,
-            aliases: ["gerrol"]
+            aliases: ["gerrol"],
+            permissions: ['MANAGE_GUILD']
         });
     }
 
     async run({ message, args, prefix }, t) {
-      
-      let db;
-      
-        if (!args[0]) {
-            const dbLast = await this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/sorteios/lastGiveaway`).once('value');
 
-            if (!dbLast.val()) return message.channel.send(new this.client.embed().setDescription(`${message.member}, não consegui encontrar nenhum sorteio antigo. Tente inserir o ID da mensagem do sorteio para que eu possa encontrar.`));
+        if (!args[0]) return this.respond(t('commands:ressortear.noArgs', { member: message.author.id }));
 
-            db = await await this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/sorteios/${dbLast.val()}`).once('value');
-
-            const channel = message.guild.channels.cache.get(db.val().channel);
-
-            const msg = await channel.messages.fetch(db.val().msg);
-
-            if (!msg) return message.channel.send(new this.client.embed()
-                .setAuthor(t('commands:sorteio.giveawayError'), this.client.user.displayAvatarURL())
-                .setFooter(t('commands:sorteio.giveawayError'), this.client.user.displayAvatarURL())
-                .setDescription(t('commands:sorteio.messageNoFound')));
-
-            const reactions = msg.reactions.cache.get("🎉").users.cache.array().filter(user => !user.bot);
-
-
-            if (reactions.length < db.val().winnerCount) return channel.send(new this.client.embed(this.client.user).setDescription(t('commands:sorteio.noReactions')));
-
-            let messageWinner = "";
-
-
-            for (let i = 0; i < db.val().winnerCount; i++) {
-                let random = Math.floor(Math.random() * reactions.length)
-                let user = reactions[random]
-                messageWinner += `<@${user.id}> \n`
+        this.client.controllers.sorteios.reroll(args[0], {
+            messages: {
+                congrat: t('commands:ressortear.sucess'),
+                error: t('commands:ressortear.error')
             }
-          
-            msg.channel.send(new this.client.embed(this.client.user).setDescription(`${db.val().winnerCount > 1 ? t('commands:ressortear.plural') + messageWinner : t('commands:ressotear.singular') + messageWinner}`));
+        }).then().catch(err => this.respond(t('commands:ressortear.noGiveawayFound', { member: message.author.id })))
 
-        } else {
-          
-          db = await await this.client.database.ref(`SwiftBOT/Servidores/${message.guild.id}/sorteios/${args[0]}`).once('value');
-          
-          if(!db.val()) return message.channel.send(new this.client.embed().setDescription(t('commands:ressortear.noGiveawayFound', {member: message.author.id})));
-          
-          const msg = await this.client.channels.cache.get(db.val().channel).messages.fetch(db.val().msg);
-          
-          if (!msg) return message.channel.send(new this.client.embed()
-                .setAuthor(t('commands:sorteio.giveawayError'), this.client.user.displayAvatarURL())
-                .setFooter(t('commands:sorteio.giveawayError'), this.client.user.displayAvatarURL())
-                .setDescription(t('commands:sorteio.messageNoFound')));
-          
-          const reactions = msg.reactions.cache.get("🎉").users.cache.array().filter(user => !user.bot);
-
-
-            if (reactions.length < db.val().winnerCount) return this.client.channels.cache.get(db.val().channel).send(new this.client.embed(this.client.user).setDescription(t('commands:sorteio.noReactions')));
-
-            let messageWinner = "";
-
-
-            for (let i = 0; i < db.val().winnerCount; i++) {
-                let random = Math.floor(Math.random() * reactions.length)
-                let user = reactions[random]
-                messageWinner += `<@${user.id}> \n`
-            }
-          
-            msg.channel.send(new this.client.embed(this.client.user).setDescription(`${db.val().winnerCount > 1 ? t('commands:ressortear.plural') + messageWinner : t('commands:ressotear.singular') + messageWinner}`));
-        }
     }
 }
 

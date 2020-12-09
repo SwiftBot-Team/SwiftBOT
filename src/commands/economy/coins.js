@@ -14,7 +14,7 @@ class Coins extends Base {
       category: "categories:economy",
       usage: "usages:coins",
       cooldown: 1000,
-      aliases: ['money']
+      aliases: ['money', 'balance']
     })
   }
 
@@ -31,8 +31,8 @@ class Coins extends Base {
       money = numberWithCommas(money)
 
       let bank = await this.client.controllers.money.getBalanceInBank(user.id)
-      
-      if(isNaN(bank) || bank === false) msg = t('commands:coins.withoutBank', { user: user.user.username })
+
+      if (isNaN(bank) || bank === false) msg = t('commands:coins.withoutBank', { user: user.user.username })
       else msg = t('commands:coins.userMoneyBank', { user: user.user.username, bank })
 
       return message.channel.send(
@@ -49,7 +49,7 @@ class Coins extends Base {
       money = numberWithCommas(money)
 
       let bank = await this.client.controllers.money.getBalanceInBank(message.author.id)
-      
+
       if (isNaN(bank) || bank === false) msg = t('commands:coins.withoutBankAuthor')
       else msg = t('commands:coins.moneyBank', { bank })
 
