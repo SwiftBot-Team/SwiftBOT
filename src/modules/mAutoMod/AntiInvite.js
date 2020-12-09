@@ -9,11 +9,13 @@ module.exports = class AntiInvite {
     this.client.on('message', async (message) => {
       if (message.channel.type === 'dm') return;
 
+      if (message.author.bot) return;
+
       const ref = await this.client.database.ref(`SwiftBOT/config/antiinvite/${message.guild.id}`).once('value');
 
       if (!ref.val() || !ref.val().stats) return;
 
-      if (ref.val().permissions && Object.values(ref.val().permissions).map(id => id.id).some(id => message.author.id === id || message.channel.id === id || message.member.roles.cache.has(id))) return;
+      if (ref.val().permissions && Object.values(ref.val().permissions).map(id => id.id).some(id => message.author.id === id || message.channel.id === id || (message.member.roles && message.member.roles.cache.has(id)))) return;
 
       let t = await this.client.getTranslate(message.guild.id);
 

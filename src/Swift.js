@@ -1,11 +1,37 @@
-const { Client, Collection, VoiceChannel } = require('discord.js')
+const { Client, Collection, VoiceChannel, Message } = require('discord.js');
+
+
+// Message.prototype.quote = async function (message, options, id) {
+
+//     if (typeof options === 'object' && typeof message === 'string' && options.code && typeof options.code === 'string') {
+//         message = `\`\`\`${options.code}\n${message}\n\`\`\` `
+//     }
+
+//     const data = {
+//         embed: typeof message === 'object' ? message : undefined,
+
+//         content: typeof message === 'string' ? message : undefined,
+
+//         message_reference: {
+//             message_id: this.id || id,
+//             message_channel: this.channel.id,
+//             options: typeof options === 'object' ? { ...options } : undefined
+//         }
+//     };
+
+//     return await this.client.api.channels[this.channel.id]
+//         .messages
+//         .post({ data })
+//         .then(d => this.client.actions.MessageCreate.handle(d).message);
+// }
+
 const { readdir } = require("fs");
 
 const FileUtils = require('./utils/FileUtils')
 
 const Guild = require('./database/models/Guild');
 
-const Locale = require('../lib/index')
+const Locale = require('../lib')
 
 const fs = require('fs');
 
@@ -14,9 +40,12 @@ const _ = require('lodash')
 
 const SwiftEmbed = require('./services/SwiftEmbed.js');
 
-const { GorilinkManager, GorilinkPlayer } = require('gorilink');
+const { Manager } = require('erela.js');
+
+const Spotify = require('erela.js-spotify');
 
 const { SwiftPlayer } = require('./services/index');
+
 const { notDeepEqual } = require('assert');
 
 const nodes = [
@@ -209,77 +238,111 @@ module.exports = class Swift extends Client {
 
     async connectLavalink() {
         try {
-            this.music = new GorilinkManager(this, nodes, {
-                Player: SwiftPlayer
+
+            this.music = new Manager({
+                nodes,
+                autoPlay: true,
+                send: (guildID, data) => {
+                    const guild = this.guilds.cache.get(guildID);
+
+                    if (guild) guild.shard.send(data);
+                },
+                plugins: [
+                    new Spotify({
+                        clientID: process.env.SPOTIFY_CLIENT_ID,
+                        clientSecret: process.env.SPOTIFY_CLIENT_SECRET
+                    })
+                ]
             })
-                .on('nodeConnect', async node => {
-                    this.log(`${node.tag || node.host} - Lavalink conectado com sucesso.`, { color: 'green', tags: ['SwiftMusic'] });
+
+                .on('nodeConnect', async (node) => {
+                    this.log(`${node.options.tag || node.options.host} - Lavalink conectado com sucesso.`, { color: 'green', tags: ['SwiftMusic'] });
 
                     setTimeout(async () => {
-                        const player = await this.music.join({
+                        const player = await this.music.create({
                             guild: '584456795259535379',
                             voiceChannel: '647910309054382110',
-                            textChannel: this.guilds.cache.get('584456795259535379').channels.cache.get('744254460796207135')
+                            textChannel: '744254460796207135'
                         });
 
-                        const music = await this.music.fetchTracks('https://www.youtube.com/watch?v=FY5N8_9HbVU');
+                        if (player.state === 'DISCONNECTED') player.connect();
 
-                        if (!music.tracks[0]) return console.log('Não encontrei nenhuma música para tocar ao ligar.')
-                        await player.queue.add(music.tracks[0]);
+                        const music = await this.music.search('https://www.youtube.com/watch?v=FY5N8_9HbVU', this.user);
+
+                        if (!music.tracks[0]) return this.log('Não encontrei nenhuma música para tocar ao ligar.', { color: 'red', tags: ['SwiftMusic'] });
+
+                        player.queue.add(music.tracks[0]);
 
                         await player.play();
 
-                        await player.pause(true)
+                        setTimeout(() => player.pause(true), 3000);
                     }, 5000)
                 })
 
+                .on('nodeError', async (node, err) => this.log(`${node.options.tag || node.options.host} - Lavalink Error: ${err} `, { color: 'red', tags: ['LAVALINK'] }))
+
+                .on('nodeDisconnect', async (node, err) => this.log(`O node ${node.options.tag || node.options.host} foi desconectado. `, { color: 'red', tags: ['LAVALINK'] }))
+
                 .on('trackStart', async (player, track) => {
 
+                    track.startAt = Date.now();
+
+                    track.pausedTime = 0;
+
                     const t = await this.getTranslate(player.guild);
 
-                    const msg = await player.textChannel.send(new this.embed()
-                        .setDescription(t('utils:music.trackStart', { music: track.info.title, url: track.info.uri })));
+                    const msg = await this.channels.cache.get(player.textChannel).send(new this.embed()
+                        .setDescription(t('utils:music.trackStart', { music: track.title, url: track.uri })));
 
-                    track.info.messageID = msg.id;
+                    track.messageID = msg.id;
+
                     player.messageID = msg.id;
+
                 })
 
-                .on('queueEnd', async (player, track) => {
+                .on('queueEnd', async (player) => {
+
                     const t = await this.getTranslate(player.guild);
 
-                    player.textChannel.send(new this.embed().setDescription(t('utils:music.queueEnd'))).then(async msg => { msg.delete({ timeout: 60000 * 5 }) })
+                    this.channels.cache.get(player.textChannel).send(new this.embed().setDescription(t('utils:music.queueEnd'))).then(async msg => { msg.delete({ timeout: 60000 * 5 }) })
 
-                    player.textChannel.messages.fetch(player.messageID).then(async msg => {
+                    this.channels.cache.get(player.textChannel).messages.fetch(player.messageID).then(async msg => {
                         if (msg !== undefined) msg.delete({ timeout: 3000 })
                     }).catch(err => { });
 
-                    this.music.leave(player.guild);
-
-
+                    player.destroy();
                 })
+
                 .on('trackEnd', async (player, track) => {
+
+
                     const t = await this.getTranslate(player.guild);
 
-                    player.textChannel.messages.fetch(track.info.messageID).then(async msg => {
+                    this.channels.cache.get(player.textChannel).messages.fetch(track.messageID).then(async msg => {
                         if (msg !== undefined) msg.delete({ timeout: 3000 })
                     }).catch(err => { });
-
-                    const guild = this.guilds.cache.get(player.guild);
-
-                    if (guild.me.voice.channel.members.filter(m => !m.user.bot).size < 1) {
-                        this.music.leave(player.guild);
-                        player.textChannel.send(new this.embed().setDescription(t('utils:music.noMembers')))
-                    }
                 })
-                .on('nodeClose', async node => {
-                    console.log(node)
-                    this.log(`A conexão com o node ${node.tag || node.host} foi perdida.`, { color: 'red', tags: ['SwiftMusic'] })
+
+                .on('trackError', async (player, track, error) => {
+
+                    const t = await this.getTranslate(player.guild);
+
+                    this.channels.cache.get(player.textChannel)
+                        .send(new this.embed().setDescription(t('utils:music.trackError', { track: `[${track.title}](${track.uri})`, error: error.message })))
+
+                    player.destroy();
                 })
-                .on('nodeError', async error => {
-                    this.log(`Ocorreu um erro ao conectar ao Lavalink.`, { color: 'red', tags: ['SwiftMusic'] })
+
+                .on('trackStuck', async (player, track, error) => {
+                    const t = await this.getTranslate(player.guild);
+
+                    this.channels.cache.get(player.textChannel)
+                        .send(new this.embed().setDescription(t('utils:music.trackError', { track: `[${track.title}](${track.uri})`, error: error.message })));
+
+                    player.destroy();
                 })
         } catch (err) {
-
+            console.log(err)
         }
     }
 

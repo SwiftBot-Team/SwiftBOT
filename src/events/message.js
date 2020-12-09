@@ -1,7 +1,4 @@
 const Guild = require('../database/models/Guild');
-const i18next = require('i18next')
-const translationBackend = require('i18next-node-fs-backend')
-const fs = require('fs');
 
 const { v4 } = require('uuid')
 const { msToTime, convertHourToMinutes } = require('../utils/index')
@@ -13,30 +10,59 @@ module.exports = class {
         this.client = client;
     }
     async run(message) {
-        if (!message.author.id === process.env.OWNER_ID) return
-
         if (message.channel.type == 'dm') return;
         if (message.author.bot) return;
-        if (!message.content.startsWith(await this.client.getPrefix(message.guild, Guild))) return
+        if (message.mentions.users.first() !== this.client.user && !message.content.startsWith(await this.client.getPrefix(message.guild, Guild))) return
 
-        const prefix = await this.client.getPrefix(message.guild, Guild)
+        // message.channel.send = (content, options, id = message.id) => {
 
-        const args = message.content.split(/\s+/g);
-        const command = args.shift().slice(String(await this.client.getPrefix(message.guild, Guild)).length).toLowerCase();
+        //     return message.quote(content, (typeof options === 'object' ? options : id), id)
+        // }
+
+        // message.reply = (content, options, id = message.id) => {
+
+        //     return message.quote(`${message.author} ` + content, (typeof options === 'object' ? options : id), id)
+        // }
+
+        const prefix = await this.client.getPrefix(message.guild, Guild);
+
+        let args = message.content.split(/\s+/g);
+
+        if ([this.client.user.toString(), '<@!577139966379819044>'].includes(args[0])) {
+            args = args.slice(1);
+
+            Object.keys(message.mentions).map(key => {
+                if (!message.mentions[key]) return;
+
+                message.mentions[key].delete([...message.mentions[key].keys()][0])
+            })
+        }
+        const command = args.shift().replace(String(prefix), '').toLowerCase();
+
         const cmd = this.client.commands.find(c => c.help.name.toLowerCase() === command || (c.conf.aliases && c.conf.aliases.includes(command)));
 
         if (!cmd) return;
 
-        cmd.setMessage(message, args);
+        const language = await this.client.getLanguage(message.guild.id);
 
-
-        const t = await this.client.getTranslate(message.guild);
+        try {
+            t = await this.client.getTranslate(message.guild.id)
+        } catch (e) {
+            console.log(e);
+        }
 
         const Embed = new this.client.embed(message.author)
 
-        if (cmd.cooldown.has(message.author.id)) {
-            return message.channel.send(Embed.setDescription('<:errado:739176302317273089> ' + t('errors:cooldownError')))
+        if (cmd.cooldown.get(message.author.id)) {
+            return message.channel.send(Embed.setDescription('<:errado:739176302317273089> ' + t('errors:cooldownError', { cooldown: Math.floor((cmd.cooldown.get(message.author.id) - Date.now()) / 1000) })))
         }
+
+        const lockedCmds = await this.client.database.ref(`SwiftBOT / Servidores / ${message.guild.id} / lockedcmds`).once('value');
+
+        if (lockedCmds.val() && lockedCmds.val().includes(cmd.help.name) && !['lockcmd', 'unlockcmd'].includes(cmd.help.name) && !message.member.permissions.has('MANAGE_GUILD')) return message.channel.send(new this.client.embed().setDescription(t('utils:lockedcmd', { member: message.author.id }))).then(msg => msg.delete({ timeout: 7000 }));
+
+
+        cmd.setMessage(message, args);
 
         const verify = await cmd.verifyRequirementes(t)
         if (verify) return
@@ -54,11 +80,16 @@ module.exports = class {
             {
                 uuid: v4(),
                 time: convertHourToMinutes(msToTime(Date.now())),
-                cmd
+                cmd,
+                args
             }
         ]
+        const player = this.client.music.players.get(message.guild.id);
 
-        cmd.run({ message, args, prefix }, t);
+        const games = this.client.games;
+
+        cmd.run({ message, args, prefix, language, player, games, member: message.author.id }, t);
+
         this.client.instance.log('COMMAND_EXECUTED', action)
 
         if (cmd.conf.cooldown > 0) cmd.startCooldown(message.author.id);

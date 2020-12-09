@@ -1,0 +1,5 @@
+{
+  "inviteDetected": {
+    "msg": "Hey **{{user}}**, you can not post invites of others guilds here!"
+  }
+}

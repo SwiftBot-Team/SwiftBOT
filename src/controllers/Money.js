@@ -1,22 +1,28 @@
 const interval = 24 * 60 * 60 * 1000
+const daySchedule = require('../services/DaySchedule')
 
 function msToTime(duration) {
   var seconds = Math.floor((duration / 1000) % 60),
     minutes = Math.floor((duration / (1000 * 60)) % 60),
     hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
 
-  hours = hours < 10 ? '0' + hours : hours;
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  seconds = seconds < 10 ? '0' + seconds : seconds;
-
   return hours.toString().replace('0-', '') + 'h ' + minutes.toString().replace('0-', '') + 'm ' + seconds.toString().replace('0-', '') + 's';
 }
 
 module.exports = class MoneyController {
-  constructor (client, database) {
+  constructor(client, database) {
     this.client = client
     this.database = database
     this.controllerName = 'money'
+
+    const schedule = daySchedule
+
+    schedule.init()
+
+    schedule.on('day_change', () => {
+      if (this.day === 'sun') this.day = 'moon'
+      else this.day = 'sun'
+    })
   }
 
   async canGetDaily(user) {
@@ -24,8 +30,8 @@ module.exports = class MoneyController {
     const boolean = Date.now() < (interval + db.val())
 
     if (!db.val()) return { can: true }
-    
-    
+
+
     const remain = msToTime(Date.now() - (interval + db.val()))
     if (boolean) return { can: false, remain }
     else return { can: true }
@@ -33,7 +39,7 @@ module.exports = class MoneyController {
 
   async getBalance(user) {
     const db = await this.database.ref(`SwiftBOT/Economia/${user}/coins`).once('value')
-    
+
     return db.val() ? db.val() : 0
   }
 
@@ -47,7 +53,7 @@ module.exports = class MoneyController {
     const db = await this.database.ref(`SwiftBOT/Economia/${user}/jailed`).once('value')
 
     return db.val() || false;
-  }  
+  }
 
   async getDaily(user) {
     await this.database.ref(`SwiftBOT/Economia/${user}/daily`).set(Date.now())
@@ -60,23 +66,23 @@ module.exports = class MoneyController {
 
   async setBalance(user, amount) {
     const db = await this.database.ref(`SwiftBOT/Economia/${user}/coins`).once('value')
-      
+
     await this.database.ref(`SwiftBOT/Economia/${user}/coins`).set(db.val() + amount)
-    
+
     return db.val()
   }
 
   async setBalanceInBank(user, amount) {
     const db = await this.database.ref(`SwiftBOT/Economia/${user}/bank`).once('value')
-      
+
     await this.database.ref(`SwiftBOT/Economia/${user}/bank`).set(db.val() + amount)
-    
+
     return db.val()
   }
 
   async hasBank(user) {
     const db = await this.database.ref(`SwiftBOT/Economia/${user}/bank`).once('value')
-      
+
     if (db.val() === false || db.val() === null) return false
     else return true
   }
@@ -103,5 +109,18 @@ module.exports = class MoneyController {
   async deposit(user, amount) {
     await this.setBalance(user, -amount)
     await this.setBalanceInBank(user, +amount)
+  }
+
+  async jail(user) {
+    await this.database.ref(`SwiftBOT/Economia/${user}/jailed`).set(true)
+  }
+
+  async unJail(user) {
+    await this.database.ref(`SwiftBOT/Economia/${user}/jailed`).set(false)
+  }
+
+  async transf(user1, user2, amount) {
+    await this.setBalance(user1, -amount)
+    await this.setBalance(user2, +amount)
   }
 }

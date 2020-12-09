@@ -18,6 +18,6 @@
   "covid19": "[local]",
   "coins": "[usuário]",
   "debitar": "<quantidade>",
-  "depositar": "<quantidade>"
-
+  "depositar": "<quantidade>",
+  "roubar": "<usuário>"
 }

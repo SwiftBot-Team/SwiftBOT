@@ -1,5 +1,10 @@
-class Command {
+const SwiftPlayer = require('./SwiftPlayer');
+
+class Command extends SwiftPlayer {
     constructor(client, options) {
+
+        super();
+
         this.client = client;
         this.help = {
             name: options.name || null,
@@ -76,9 +81,9 @@ class Command {
         if (options && options.footer) Embed.setFooter(options.footer, this.client.user.displayAvatarURL());
         if (options && options.image) Embed.setImage(options.image);
         if (options && options.author) Embed.setAuthor(options.author.text, options.author.image)
-        if (options && options.thumbnail) Embed.setThumbnail(options.thumbnail)
+        if (options && options.thumbnail) Embed.setThumbnail(options.thumbnail);
 
-        const send = await this.message.channel.send(Embed);
+        const send = await this.message.channel.send(Embed)
 
         return send;
     }
@@ -150,7 +155,7 @@ class Command {
             }
         }
 
-        if (opts.nsfw) {
+        if (opts.nsfw && !process.env.DEVELOPERS.includes(this.message.author.id)) {
             this.message.channel.send(new this.client.embed(this.message.author).setDescription(`${this.message.author}, este comando só pode ser executado com um canal \`NSFW\`! `));
             return true;
         }

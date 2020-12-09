@@ -1,7 +1,5 @@
 const Mail = require('../services/Mail')
 const { convertHourToMinutes, msToTime } = require('../utils/index')
-const i18n = require('i18next')
-const guildDB = require('../database/models/Guild')
 
 module.exports = class {
   constructor(client) {
@@ -24,15 +22,6 @@ module.exports = class {
 
       member.roles.add(db.val()[i]);
     }
-
-    await Mail.send(
-      member.guild.owner.id,
-      {
-        title: t(''),
-        timestamp: convertHourToMinutes(msToTime(Date.now())),
-        body: ''
-      }
-    )
   }
 
 }

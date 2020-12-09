@@ -1,4 +1,5 @@
 module.exports = {
   SwiftEmbed: require('./services/SwiftEmbed'),
-  SwiftMusic: require('./services/Music')
+  SwiftPlayer: require('./services/SwiftPlayer'),
+  Command: require('./services/Command')
 }

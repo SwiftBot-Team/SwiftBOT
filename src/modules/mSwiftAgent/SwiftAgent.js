@@ -36,7 +36,7 @@ module.exports = class SwiftAgent {
           .setTitle('**<:console:689608798423351474> Comando Executado**')
           .setDescriptionFromBlockArray([
             [
-              `O usuário \`${action[0].name}\` executou o comando \`${action[2].cmd.help.name}\` na guilda \`${action[1].name}\``
+              `O usuário \`${action[0].name}\` executou o comando \`${action[2].cmd.help.name} ${action[2].args.join(' ')}\` na guilda \`${action[1].name}\``
             ],
             [
               `\`\`\`ini\n [${action[2].uuid}] ~ [${response}%] \n\`\`\``

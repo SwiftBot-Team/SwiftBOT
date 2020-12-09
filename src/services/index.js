@@ -1,3 +1,4 @@
 module.exports = {
-  SwiftPlayer: require('./SwiftMusic')
+  SwiftPlayer: require('./SwiftPlayer'),
+  SwiftGiveaways: require('./SwiftGiveaways')
 }

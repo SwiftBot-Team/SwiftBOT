@@ -3,20 +3,45 @@ module.exports = class {
         this.client = client;
     }
     async run(oldState, newState) {
-        if (newState.member.user.id !== this.client.user.id) return;
-        if (!newState.channelID) {
 
-            const player = this.client.music.players.get(newState.guild.id);
+        const player = this.client.music.players.get(newState.guild.id);
+
+        const t = await this.client.getTranslate(newState.guild.id);
+
+        if (!newState.channelID && newState.member.user.id === this.client.user.id) {
+
             if (player) {
-                const t = await this.client.getTranslate(player.guild);
 
-                this.client.music.leave(newState.guild.id);
+                player.destroy(oldState.guild.id)
 
-                player.textChannel.send(new this.client.embed().setDescription(t('utils:music.voiceStateUpdate')));
+                return this.client.channels.cache.get(player.textChannel).send(new this.client.embed().setDescription(t('utils:music.voiceStateUpdate')));
             }
 
-        } else {
-            await newState.guild.me.voice.setSelfDeaf(true);
         }
+
+        if (!newState.channelID && newState.member.user.id !== this.client.user.id && player && player.voiceChannel === oldState.channelID) {
+
+
+            if (oldState.channel.members.filter(c => !c.user.bot).size === 0) {
+                player.pause(true);
+
+                this.client.channels.cache.get(player.textChannel).send(new this.client.embed()
+                    .setDescription(t('utils:music:voiceStateUpdate.2minutos'))).then(msg => msg.delete({ timeout: 60000 * 2 }))
+
+                setTimeout(() => {
+                    if (!player) return;
+
+                    if (oldState.channel.members.filter(c => !c.user.bot).size > 0) return;
+
+                    player.destroy();
+
+                    return this.client.channels.cache.get(player.textChannel).send(t('utils:music:voiceStateUpdate.2minutosEnd'))
+                }, 2 * 60000);
+            }
+        } else if (newState.channel && newState.channel.members.filter(c => !c.user.bot).size === 1 && player && player.voiceChannel === newState.channelID) {
+
+            player.pause(false);
+        }
+
     }
 }

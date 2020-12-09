@@ -1,0 +1,22 @@
+{
+  "default": "-x-",
+  "ajuda": "[command]",
+  "config": "<module|list|status>",
+  "clear": "<number>",
+  "serverinfo": "[id]",
+  "servericon": "[id]",
+  "roleinfo": "<role>",
+  "userinfo": "[user]",
+  "avatar": "[user]",
+  "npm": "<library>",
+  "calculadora": "<expression>",
+  "alert": "<title> | <body>",
+  "country": "<country's name>",
+  "hexcolor": "<color>",
+  "weather": "<city>",
+  "covid19": "[local]",
+  "coins": "[user]",
+  "debitar": "<number>",
+  "depositar": "<number>",
+  "roubar": "<user>"
+}
