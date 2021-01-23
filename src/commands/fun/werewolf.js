@@ -28,6 +28,29 @@ class Werewolf extends Command {
                     image: 'a'
                 },
                 {
+                    name: "Vidente",
+                    users: [],
+                    habilidades: [{
+                        name: 'Ver a classe de outro jogador',
+                        emoji: '794932222293311498',
+                        special: (user, message, game, affetedUser) => {
+                            return user.send(`O trabalho do usuário é: **${affetedUser.worker.name}**!`);
+                        }
+                    }],
+                    usersSize: 1,
+                    priority: 0,
+                    description: 'a',
+                    image: 'a',
+                },
+                {
+                    name: 'Caçador',
+                    users: [],
+                    habilidades: [{
+                        name: 'matar',
+                        emoji: '🏹'
+                    }]
+                },
+                {
                     name: 'Lobisomem',
                     users: [],
                     habilidades: [{
@@ -119,11 +142,11 @@ class Werewolf extends Command {
                 owner: message.author.id
             });
 
-            this.respond('partida crida com sucesso. Para iniciá-lo, use `sw!werewolf iniciar` (minimo 4 jogadores)');
+            this.respond('Partida crida com sucesso. Para iniciá-lo, use `sw!werewolf iniciar` (minimo 4 jogadores)');
         }
 
         if (['cancelar'].includes(args[0].toLowerCase())) {
-            if (!game) return this.respond('1Não há nenhum jogo em espera.');
+            if (!game) return this.respond('Não há nenhum jogo em espera.');
 
             if (!message.member.hasPermission('MANAGE_GUILD') && message.author.id !== game.owner) return this.respond(`Apenas o dono da partida ou alguém com permissão acima de \`GERENCIAR_SERVIDOR\` pode cancelar uma partida. `)
 
@@ -131,6 +154,130 @@ class Werewolf extends Command {
 
             this.client.games.werewolf.delete(message.channel.id);
             this.respond('Cancelado com sucesso.')
+        }
+
+        if (['leave', 'sair', 'exit'].includes(args[0].toLowerCase())) {
+            if (!game) return this.respond('Não há nenhum jogo em espera.');
+
+            if (!game.users.find(u => u.id === message.author.id)) return this.respond('Você não está participando do jogo atual.');
+
+            if (game.owner === message.author.id) {
+                if (game.users.length === 1) {
+                    this.client.games.werewolf.delete(message.channel.id);
+
+                    this.respond('Você saiu do jogo com sucesso e o mesmo foi cancelado por você ser o único na sala.')
+                } else {
+                    const user = game.users.indexOf(game.users.find(u => u.id === message.author.id));
+
+                    game.users.splice(game.users.indexOf(user), 1);
+
+                    const userWorker = game.workers[game.workers.indexOf(game.workers.find(work => work.name === user.worker.name))];
+
+                    game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(userWorker)].users.indexOf(user.id), 1);
+
+                    game.owner = game.users[Math.floor(Math.random() * game.users.length)].id;
+
+                    this.respond('Você saiu do jogo com sucesso. A posse da sala foi passada para um jogador aleatório').then(msg => {
+                        return msg.channel.send(`O novo mestre do jogo é <@${game.owner}>`);
+                    })
+                }
+            }
+        }
+
+        if (['help', 'ajuda', 'howtoplay', 'comojogar'].includes(args[0].toLowerCase())) {
+            const helpPages = [
+                {
+                    name: 'objetive',
+                    embedTitle: 'Objetivo do jogo',
+                    description: 'O objetivo do jogo é descobrir quem são os lobisomens e eliminar os mesmos'
+                },
+                {
+                    name: 'workers',
+                    embedTitle: 'Funções',
+                    description: 'O jogo possui várias funções, sendo elas **Médico**, **Bruxa**, **Caçador**, **Vidente**, **Aldeão** e **Lobisomem**'
+                },
+                {
+                    name: 'Médico',
+                    embedTitle: 'Médico - Função',
+                    description: 'O médico possui apenas uma função, **curar**. Caso o lobisomem ou algum personagem que possa matar mate alguém e o médico cure essa pessoa, ela não morrerá.'
+                },
+                {
+                    name: 'Bruxa',
+                    embedTitle: 'Bruxa - Função',
+                    description: 'A bruxa possui duas funções, **curar** e **envenenar**. A função de curar faz a mesma do médico, enquanto a de envenenar pode matar algúem.'
+                },
+                {
+                    name: 'Caçador',
+                    embedTitle: 'Caçador - Função',
+                    description: 'O caçador possui uma função, **matar**. Seu objetivo é matar o lobisomem e caso o mesmo erre, ele morre.'
+                },
+                {
+                    name: 'Vidente',
+                    embedTitle: 'Vidente - Função',
+                    description: 'O vidente possui uma função, **ver a função de um jogador**. Seu objetivo é descobrir quem é o lobisomem e informar o resto da vila.'
+                },
+                {
+                    name: 'Aldeão',
+                    embedTitle: 'Aldeão - Função',
+                    description: "O aldeão é o único que não possui funções. Ele apenas tem direito de voto durante o dia."
+                },
+                {
+                    name: 'Lobisomem',
+                    embedTitle: 'Lobisomem - Função',
+                    description: 'O lobisomem é o vilão do jogo. Seu objetivo é causar desconfiança, brincando com os sentimentos dos jogadores e conseguir matar todos antes de ser descoberto e morto.'
+                },
+                {
+                    name: 'Distribuição de funções',
+                    embedTitle: 'Como é realizada a distribuição de funções',
+                    description: 'Para todos os trabalhos, exceto lobisomem, a cada 4 jogadores, existem 2 desta função. Já para os lobisomens, a cada 4 jogaodres, existem 1 lobisomem.\n\n Mas se tiver, por exemplo, 5 jogadores, a prioridade da vaga será para o lobisomem.'
+                }
+            ];
+
+            let index = -1;
+
+            const pages = helpPages.length;
+
+            const sendHelp = (msg) => {
+                index++;
+
+                const embed = new this.client.embed()
+                    .setAuthor(helpPages[index].embedTitle, this.client.user.displayAvatarURL())
+                    .setDescription(helpPages[index].description);
+
+                (msg ? msg.edit(embed) : message.channel.send(embed)).then(m => {
+
+                    const emojis = ['⬅️', '➡️'];
+
+                    emojis.map(e => m.react(e));
+
+                    const collector = m.createReactionCollector((r, u) => emojis.includes(r.emoji.name) && u.id === message.author.id);
+
+                    collector.on('collect', async ({ emoji }) => {
+                        switch (emoji.name) {
+                            case '➡️':
+                                if (index === pages - 1) return;
+
+                                sendHelp(m);
+
+                                return collector.stop();
+                                break;
+
+                            case '⬅️':
+                                if (index === 0) return;
+
+                                index -= 2;
+
+                                sendHelp(m)
+
+                                return collector.stop();
+                                break;
+                        }
+                    })
+
+                })
+
+            }
+            sendHelp()
         }
 
         if (['start', 'iniciar'].includes(args[0].toLowerCase())) {
@@ -180,8 +327,6 @@ class Werewolf extends Command {
                     game.users.find(c => c.id === user.id).worker = w;
 
                     game.workers[game.workers.indexOf(w)].users.push(user.id);
-
-                    console.log(`User ${user.id} alocado no trabalho ${w.name}.`)
                 }
             });
 
@@ -192,7 +337,7 @@ class Werewolf extends Command {
                         game.users.splice(game.users.indexOf(u), 1);
 
                         const userWorker = game.workers[game.workers.indexOf(game.workers.find(work => work.name === u.worker.name))]
-                        game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(worker)].users.indexOf(u.id), 1)
+                        game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(userWorker)].users.indexOf(u.id), 1)
                         message.channel.send(new this.client.embed().setDescription(`${user} foi desclassificado por estar com as mensagens privadas desabilitadas.`));
                         return res(true);
                     });
@@ -237,10 +382,12 @@ class Werewolf extends Command {
 
                     msg = await (msg ? await msg.edit(embed) : await message.channel.send(embed));
 
+                    const lobisomens = game.users.filter(u => u.worker.name === 'Lobisomem')
+
                     const userEmbed = new this.client.embed()
                         .setAuthor('Utilizar habilidade', this.client.user.displayAvatarURL())
                         .setDescription(u.worker.habilidades[0] ?
-                            `${user}, escolha uma habilidade para utilizar! \n\n ${u.worker.habilidades.map(h => `${this.client.emojis.cache.get(h.emoji) || h.emoji} - ${h.name}`)}`
+                            `${user}, escolha uma habilidade para utilizar! \n\n ${u.worker.habilidades.map(h => `${this.client.emojis.cache.get(h.emoji) || h.emoji} - ${h.name}`)}\n\n${u.worker.name === 'Lobisomem' ? lobisomens.length > 1 ? `Os outros lobisomens são: ${lobisomens.filter(lobi => lobi.id !== u.id).map(l => `<@${l.id}>`).join(", ")}` : '' : ''}`
                             :
                             `${user}, você como aldeão não possui habilidades, portanto, reaja com ✅ para continuar o jogo.`)
                         .setThumbnail(u.avatar);
@@ -249,7 +396,7 @@ class Werewolf extends Command {
                         game.users.splice(game.users.indexOf(u), 1);
 
                         const userWorker = game.workers[game.workers.indexOf(game.workers.find(work => work.name === u.worker.name))]
-                        game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(worker)].users.indexOf(u.id), 1)
+                        game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(userWorker)].users.indexOf(u.id), 1)
                         message.channel.send(new this.client.embed().setDescription(`${user} foi desclassificado por estar com as mensagens privadas desabilitadas.`));
                         return res(true);
                     });
@@ -279,15 +426,15 @@ class Werewolf extends Command {
 
                         const selectUserEmbed = new this.client.embed()
                             .setAuthor('Selecionar usuário', this.client.user.displayAvatarURL())
-                            .setDescription(`Digite abaiaxo o número correspondente ao usuário. 
-              
-              ${game.users.filter(usuario => usuario.id !== u.id).map((usuario, i) => `${i + 1} - <@${usuario.id}>`).join('\n')}`)
+                            .setDescription(`Digite abaiaxo o número correspondente ao usuário.
+
+                            ${game.users.filter(usuario => usuario.id !== u.id).map((usuario, i) => `${i + 1} - <@${usuario.id}>`).join('\n')}`)
 
                         const selectUserMessage = await user.send(selectUserEmbed).catch(err => {
                             game.users.splice(game.users.indexOf(u), 1);
 
                             const userWorker = game.workers[game.workers.indexOf(game.workers.find(work => work.name === u.worker.name))]
-                            game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(worker)].users.indexOf(u.id), 1)
+                            game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(userWorker)].users.indexOf(u.id), 1)
                             message.channel.send(new this.client.embed().setDescription(`${user} foi desclassificado por estar com as mensagens privadas desabilitadas.`));
                             return res(true);
 
@@ -304,11 +451,15 @@ class Werewolf extends Command {
 
                             const usuarioAfetado = game.users.filter(usuario => usuario.id !== u.id)[Number(content) - 1];
 
+                            const selectedAction = u.worker.habilidades.find(h => h.emoji === (r.emoji.id ? r.emoji.id : r.emoji.name))
+
                             game.actions.push({
                                 executor: u.id,
-                                action: u.worker.habilidades.find(h => h.emoji === (r.emoji.id ? r.emoji.id : r.emoji.name)).name,
+                                action: selectedAction.name,
                                 vítima: usuarioAfetado.id
                             });
+
+                            if (selectedAction.special) selectedAction.special(user, message, game, usuarioAfetado)
 
                             user.send(`✅`)
 
@@ -324,8 +475,8 @@ class Werewolf extends Command {
                             game.users.splice(game.users.indexOf(u), 1);
 
                             const userWorker = game.workers[game.workers.indexOf(game.workers.find(work => work.name === u.worker.name))]
-                            game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(worker)].users.indexOf(u.id), 1)
-                            message.channel.send(new this.client.embed().setDescription(`${user} foi desclassificado por estar com as mensagens privadas desabilitadas.`));
+                            game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(userWorker)].users.indexOf(u.id), 1)
+                            message.channel.send(new this.client.embed().setDescription(`${user} foi desclassificado por inatividade.`));
                             return res(true);
                         };
 
@@ -363,12 +514,13 @@ class Werewolf extends Command {
                     .setDescription(`${mortes.length ? `Houveram ${mortes.length} mortes! \n\n ${mortes.map((m, i) => {
                         const user = game.users.find(u => u.id === m.vítima);
 
-                        if (!user) return ``;
+                        if (!user) return `💀 Usuário já removido do jogo.`;
 
                         game.users.splice(game.users.indexOf(user), 1)
 
                         return `💀 <@${user.id}> - **${user.worker.name}**`
-                    }).join("\n")}` : `Não houveram mortes hoje!`}`)
+                    }).join("\n")}` : `Não houveram mortes hoje!`
+                        } `)
                     .setFooter('Continuando jogo em 10 segundos...', this.client.user.displayAvatarURL())
 
                 const sendLogEmbed = await sendDayEmbed.edit(logEmbed);
@@ -401,7 +553,7 @@ class Werewolf extends Command {
 
                                     const user = message.guild.members.cache.get(u.id);
 
-                                    votationEmbed.setDescription(`Está na vez de ${user}. Verifique seu privado! \`(60 segundos)\` `)
+                                    votationEmbed.setDescription(`Está na vez de ${user}.Verifique seu privado! \`(60 segundos)\` `)
                                     votationEmbed.setThumbnail(u.avatar);
 
                                     msg = await (msg ? await msg.edit(votationEmbed) : await message.channel.send(votationEmbed));
@@ -415,7 +567,7 @@ class Werewolf extends Command {
                                         game.users.splice(game.users.indexOf(u), 1);
 
                                         const userWorker = game.workers[game.workers.indexOf(game.workers.find(work => work.name === u.worker.name))]
-                                        game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(worker)].users.indexOf(u.id), 1)
+                                        game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(userWorker)].users.indexOf(u.id), 1)
                                         message.channel.send(new this.client.embed().setDescription(`${user} foi desclassificado por estar com as mensagens privadas desabilitadas.`));
                                         return res(true);
                                     })
@@ -447,8 +599,8 @@ class Werewolf extends Command {
                                                 game.users.splice(game.users.indexOf(u), 1);
 
                                                 const userWorker = game.workers[game.workers.indexOf(game.workers.find(work => work.name === u.worker.name))]
-                                                game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(worker)].users.indexOf(u.id), 1)
-                                                message.channel.send(new this.client.embed().setDescription(`${user} foi desclassificado por estar com as mensagens privadas desabilitadas.`));
+                                                game.workers[game.workers.indexOf(userWorker)].users.splice(game.workers[game.workers.indexOf(userWorker)].users.indexOf(u.id), 1)
+                                                message.channel.send(new this.client.embed().setDescription(`${user} foi desclassificado por inatividade.`));
                                                 return res(true);
                                             }
                                         })
@@ -461,10 +613,10 @@ class Werewolf extends Command {
 
                             const resultEmbed = new this.client.embed()
                                 .setAuthor('Resultado da votação', this.client.user.displayAvatarURL())
-                                .setDescription(sort[0].votes === sort[1].votes ? `<@${sort[0].id}> e <@${sort[1].id}> empataram!\n\nNinguém foi eliminado.` : `<@${sort[0].id}> foi eliminado por ter \`${sort[0].votes}\` votos!`)
+                                .setDescription(sort[1] && sort[0].votes === sort[1].votes ? `<@${sort[0].id}> e <@${sort[1].id}> empataram!\n\nNinguém foi eliminado.` : `<@${sort[0].id}> foi eliminado por ter \`${sort[0].votes}\` votos! **(${game.users.find(u => u.id === sort[0].id).worker.name})**`)
                                 .setFooter('Continuando jogo em 10 segundos...', this.client.user.displayAvatarURL());
 
-                            if (!sort[1].votes || sort[0].votes > sort[1].votes) game.users.splice(game.users.indexOf(game.users.find(u => u.id === sort[0].id)), 1);
+                            if (!sort[1] || sort[0].votes > sort[1].votes) game.users.splice(game.users.indexOf(game.users.find(u => u.id === sort[0].id)), 1);
 
                             message.channel.send(resultEmbed);
 
@@ -480,11 +632,15 @@ class Werewolf extends Command {
     }
 
     async endGame(message, game) {
-        message.channel.send(`Os ${game.users.find(u => u.worker.name === 'Lobisomem') ? `lobisomens` : 'aldeões'} venceram a partida!`);
+        message.channel.send(`Os ${game.users.find(u => u.worker.name === 'Lobisomem') ? `lobisomens` : 'aldeões'} venceram a partida! (${game.users.map(u => `<@${u.id}>`)})`);
 
         this.client.games.werewolf.delete(message.channel.id);
 
         if (message.channel.permissionsFor(this.client.user.id).has('MANAGE_CHANNELS')) message.channel.updateOverwrite(message.guild.roles.everyone, { SEND_MESSAGES: true, ADD_REACTIONS: true });
+    }
+
+    async updateChannel(game) {
+
     }
 }
 
