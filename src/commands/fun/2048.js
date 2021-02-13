@@ -111,6 +111,8 @@ module.exports = class Doismilequarentaeoito extends Base {
         if (Number(args[0]) > 8 || Number(args[0]) < 4) return this.respond(`${message.member}, o tabuleiro deve ser de tamanho no mímimo 4 e no máximo 8!`);
 
         let game = new Game(args[0] ? Number(args[0]) : 4);
+        game.addCard();
+        game.addCard();
 
         // await findAll(board, this.emojis[0].name).sort(() => 0.5 - Math.random()).slice(0, 2).map(r => board[r] = this.emojis[1].name)
 
