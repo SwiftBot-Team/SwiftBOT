@@ -51,4 +51,4 @@ client.on('error', async err => console.log(err));
 
 client.on('err', async err => console.log(err));
 
-module.exports = client
+module.exports = client;
