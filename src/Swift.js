@@ -84,6 +84,8 @@ module.exports = class Swift extends Client {
 
         this.music = []
         this.controllers = {}
+        
+        this.empresas = new Collection();
 
         this.msToTime = msToTime;
     }
@@ -364,6 +366,46 @@ module.exports = class Swift extends Client {
         translate.setLang(language)
 
         return t
+    }
+    
+    async loadEmpresas() {
+        const allRef = await this.database.ref(`SwiftBOT/empresas/`).once('value').then(d => d.val());
+  
+        if(!allRef) return;
+  
+        for(const [key, value] of Object.entries(allRef)) {
+            this.empresas.set(key, { ...value, lojas: value.lojas ? value.lojas : {} });
+      
+            Object.entries(value.lojas).map(loja => {
+                setInterval(() => {
+                    if(!this.empresas.get(key) || !this.empresas.get(key).lojas[loja[0]]) return;
+                    
+                    this.empresas.get(key).lojas[loja[0]].cacheMoney += loja[1].workers.itemValue;
+                }, loja[1].workers.cooldown)
+            })
+        }
+  
+        schedule('0 0 * * *', () => {
+            this.empresas.keyArray().map(key => {
+                const empresa = this.empresas.get(key);
+          
+                Object.entries(empresa.lojas).map(([k, value]) => {
+              
+                    value.cacheMoney -= ((value.workers.worker_payment * value.cacheMoney / 100) * value.workers.size);
+              
+                    value.cacheMoney -= value.customers_value.default * value.customers_value.multiplier;
+              
+                    this.database.ref(`SwiftBOT/empresas/${key}`).update({
+                        saldo: Number(empresa.saldo) + value.cacheMoney
+                    }).then(() => this.empresas.get(key).lojas[k].cacheMoney = 0;)
+              
+                })
+            })
+        });
+        
+        setInterval(() => {
+            this.client.database.ref(`SwiftBOT/empresas`).set(Object.fromEntries(this.client.empresas))
+        }, 60000 * 10)
     }
 
 }
