@@ -140,11 +140,11 @@ class Damas extends Base {
                                     };
 
                                     if (key.includes('Up') && game.atual.go === 'up') {
-                                        if (!value.emoji) continue;
+                                        if (value.label === ' ') continue;
                                     }
 
                                     if (key.includes('Down') && game.atual.go === 'down') {
-                                        if (!value.emoji) continue;
+                                        if (value.label === ' ') continue;
                                     }
 
                                     const b = new MessageButton()
