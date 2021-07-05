@@ -140,10 +140,12 @@ class Damas extends Base {
                                     };
 
                                     if (key.includes('Up') && game.atual.go === 'up') {
+                                        console.log(value.label)
                                         if (value.label === ' ') continue;
                                     }
 
                                     if (key.includes('Down') && game.atual.go === 'down') {
+                                        console.log(value.label)
                                         if (value.label === ' ') continue;
                                     }
 
