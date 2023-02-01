@@ -1,0 +1,21 @@
+{
+  "mail": {
+    "errors": {
+      "autorole": {
+        "title": "**AutoRole Error**",
+        "body": "Hey! An error occurred in the AutoRole module, when I tried to set the position for the user {{user}}!"
+      }
+    }
+  },
+  "music": {
+    "trackStart": "<:UNSPMidiaIcon:703725149467312129> Playing now: [{{music}}]({{url}}) ",
+    "queueEnd": "<:UNSPWarntIcon:703725150159241216> The music queue end and I'm leaving of the channel",
+    "voiceStateUpdate": {
+      "removed": "<:UNSPWarntIcon:703725150159241216> The music queue was cleared because someone removed me from the channel"
+    },
+    "noMembers": "<:UNSPWarntIcon:703725150159241216> I disconnected of the voice channel because anyone was listening my music! ",
+    "noPlaying": "<@{{member}}>, I don't playing nothing now!",
+    "canal": "<@{{member}}>, you need be in a voice channel to execute this command!",
+    "canal2": "<@{{member}}>, <@{{member}}>, you need to be in the same voice channel as me to execute this command!"
+  }
+}

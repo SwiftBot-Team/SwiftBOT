@@ -1,0 +1,14 @@
+{
+  "default": "Others",
+  "info": "Informations",
+  "fun": "Fun",
+  "mod": "Moderation",
+  "config": "Config",
+  "images": "Images",
+  "music": "Music",
+  "utils": "Utilities",
+  "devs": "Developers",
+  "economy": "Economy",
+  "filters": "Filters",
+  "games": "Games"
+}

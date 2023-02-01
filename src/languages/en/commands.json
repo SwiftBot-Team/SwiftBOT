@@ -1,0 +1,839 @@
+{
+  "lembrete": {
+    "noArgs0": "<@{{member}}>, você precisa escolher o que deseja fazer! `[criar|listar]`",
+    "invalidOption": "<@{{member}}>, essa opção não existe.",
+    "noArgs1": "<@{{member}}>, você precisa inserir o nome do lembrete!",
+    "limiteChar": "<@{{member}}>, o limite de caracteres para o nome do lembrete é de `100`!",
+    "limiteLembretes": "<@{{member}}>, você já atingiu o limite de 5 lembretes.",
+    "noFound": "<@{{member}}>, eu não consegui encontrar este lembrete.",
+    "noValidTime": "<@{{member}}>, você precisa inserir um tempo válido!",
+    "noLembretes": "<@{{member}}>, você não possui nenhum lembrete ativo no momento. Crie um já com o comando {{prefix}}lembrete criar",
+    "embedAuthor": "Veja abaixo os seus lembretes",
+    "timeEmbed": "Agora, diga quando você quer que eu te avise deste lembrete. Exemplo: (`1 hora`, `5 minutos`, `29/1/2021`, e etc)",
+    "sucessCreate": "<@{{member}}>, lembrete criado com sucesso.",
+    "sucessDelete": "<@{{member}}>, lembrete deletado com sucesso."
+  },
+  "backup": {
+    "noOption": "<@{{member}}>, você não inseriu o que deseja fazer! Opções disponíveis: `[load|create|list]`",
+    "list": {
+      "noBackups": "<@{{member}}>, você não possui nenhum backup criado no momento. Crie um agora com o comando `{{prefix}}backup create`",
+      "autor": "Veja abaixo a lista de todos os seus backups criados."
+    },
+    "create": {
+      "inCooldown": "<@{{member}}>, você está em cooldown por ter `criado` um backup recentemente. Aguarde {{time}} para poder criar um backup novamente.",
+      "sucess": " <@{{member}}>, o backup foi criado com sucesso. Para carregá-lo, basta utilizar o comando `{{prefix}}backup load {{id}}`"
+    },
+    "load": {
+      "inCooldown": "<@{{member}}>, você está em cooldown por ter `carregado` um backup recentemente. Aguarde {{time}} para poder carregar um backup novamente.",
+      "noArgs1": "<@{{member}}>, você deve inserir o ID do backup que deseja carregar!",
+      "noFound": "<@{{member}}>, não foi possível encontrar este backup. Veja seus backups disponíveis com o comando `{{prefix}}backup list`.",
+      "sucess": "Backup carregado com sucesso."
+    }
+  },
+  "mute": {
+    "noArgs0": "<@{{member}}>, você deve inserir um usuário para mutar! Siga o modelo de comando: `{{prefix}}mute <user> [motivo].`",
+    "noUser": "<@{{member}}>, não foi possível encontrar este usuário.",
+    "noManageable": "<@{{member}}>, eu não posso mutar este usuário por ele ter um cargo maior que o meu!",
+    "noReason": "<@{{member}}>, você deve inserir um motivo para o mute! Siga o modelo de comando: `{{pregix}}mute <user> [motivo].`",
+    "whatTime": "<@{{member}}>, por favor, agora diga por quanto tempo deseja que o usuário seja mutado.",
+    "invalidTime": "<@{{member}}>, eu não consegui reconhecer este tempo. Por favor, insira novamente uma duração válida!",
+    "sucess": "Usuário mutado com sucesso."
+  },
+  "unmute": {
+    "noArgs0": "<@{{member}}>, você deve inserir um usuário para desmutar!",
+    "noUser": "<@{{member}}>, não foi possível encontrar este usuário.",
+    "noManageable": "<@{{member}}>, eu não posso desmutar este usuário por ele ter um cargo maior que o meu!",
+    "noMuted": "<@{{member}}>, este usuário não está mutado!",
+    "sucess": "Usuário desmutado com sucesso."
+  },
+  "youtubenotification": {
+    "noArgs": "<@{{member}}>, você deve inserir o que deseja fazer! <`add`/`remove`>.",
+    "add": {
+      "maxChannels": "<@{{member}}>, este servidor já atingiu o limite de 3 canais no youtube de notificação de vídeos",
+      "noUrl": "<@{{member}}>, você deve inserir o url do canal! Por favor, siga este modelo: `{{prefix}}youtubenotification add <url do canal> <canal que a mensagem será enviada>`.",
+      "channelError": "<@{{member}}>, não foi possível encontrar este canal. Lembrando que você não deve utilizar links personalizados, exemplo: `https://www.youtube.com/c/nomedocanal`",
+      "exists": "<@{{member}}>, este canal já está configurado para enviar notificações neste servidor.",
+      "textChannelError": "<@{{member}}>, não foi possível encontrar o canal de texto informado ou ele não é um canal de texto válido.",
+      "noTextChannel": "<@{{member}}>, você deve inserir o canal de texto que será enviado a notificação! Por favor, siga este modelo: `{{prefix}}youtubenotification add <url do canal> <canal que a mensagem será enviada>`.",
+      "sucess": "<:UNSPAcceptIcon:703725149546872932> <@{{member}}>, as notificações de vídeo do canal foram ativadas com sucesso."
+    },
+    "remove": {
+      "noArgs1": "<@{{member}}>, você deve inserir o url do canal que deseja remover!.",
+      "noHas": "<@{{member}}>, eu não estou configurado para enviar notificação de vídeos deste canal.",
+      "channelError": "<@{{member}}>, não foi possível encontrar este canal. Lembrando que você não deve utilizar links personalizados, exemplo: `https://www.youtube.com/c/nomedocanal`",
+      "sucess": "<:UNSPAcceptIcon:703725149546872932> | As notificações de vídeo do canal foram desativadas com sucesso."
+    }
+  },
+  "twitchnotification": {
+    "noArgs": "<@{{member}}>, você deve inserir o que deseja fazer! <`add`/`remove`>.",
+    "add": {
+      "noUrl": "<@{{member}}>, você deve inserir o url do usuário da twitch! Por favor, siga este modelo: `{{prefix}}twitchnotification add <url do usuário> <canal que a mensagem será enviada>`.",
+      "channelError": "<@{{member}}>, não foi possível encontrar este usuário. Exemplo: `https://www.twitch.tv/srwhale1`",
+      "exists": "<@{{member}}>, este usuário já está configurado para enviar notificações neste servidor.",
+      "textChannelError": "<@{{member}}>, não foi possível encontrar o canal de texto informado ou ele não é um canal de texto válido.",
+      "noTextChannel": "<@{{member}}>, você deve inserir o canal de texto que será enviado a notificação! Por favor, siga este modelo: `{{prefix}}twitchnotification add <url do usuário> <canal que a mensagem será enviada>`.",
+      "sucess": "<:UNSPAcceptIcon:703725149546872932> <@{{member}}>, as notificações de lives do canal foram ativadas com sucesso."
+    },
+    "remove": {
+      "noArgs1": "<@{{member}}>, você deve inserir o url do usuário que deseja remover!.",
+      "noHas": "<@{{member}}>, eu não estou configurado para enviar notificação de vídeos deste canal.",
+      "channelError": "<@{{member}}>, não foi possível encontrar este canal. Exemplo: `https://www.twitch.tv/srwhale1`",
+      "sucess": "<:UNSPAcceptIcon:703725149546872932> | As notificações de lives do canal foram desativadas com sucesso."
+    }
+  },
+  "tweet": {
+    "noArgs1": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, você deve inserir o nome do perfil do tweet!",
+    "noArgs2": "<@{{member}}>, você deve inserir o conteúdo do tweet!"
+  },
+  "limpar": {
+    "noArgs": "<@{{member}}>, você deve inserir a quantidade de mensagens que deseja limpar!",
+    "invalidAmount": "<@{{member}}>, a quantidade de mensagens deve ser maior que `1` e no máximo `1000`!",
+    "sucess": "O chat foi limpo por **{{memberTag}}**.",
+    "sucess2": "O chat foi limpo por **{{memberTag}}**, porém **{{fail}}** mensagens não puderam ser deletadas por terem sido enviadas há mais de `14` dias."
+  },
+  "unlockcmd": {
+    "noArgs": "<@{{member}}>, você deve inserir qual comando/categoria (ou se quiser, todos) deseja bloquear! Exemplo:  ``*``, ``ban`` ou ``musica``.",
+    "noFound": "<@{{member}}>, isto não é uma opção válida ou não encontrei nenhum comando/categoria com este nome! (Comandos de desenvolvimento não são válidos)",
+    "allUnlocked": "Todos os comandos foram desbloqueados com sucesso.",
+    "categoryUnlocked": "Todos os comandos da categoria `{{categoria}}` foram desbloqueados.",
+    "oneUnlocked": "O comando `{{comando}}` foi desbloqueado com sucesso."
+  },
+  "lockcmd": {
+    "noArgs": "<@{{member}}>, você deve inserir qual comando/categoria (ou se quiser, todos) deseja bloquear! Exemplo:  ``*``, ``ban`` ou ``musica``.",
+    "noFound": "<@{{member}}>, isto não é uma opção válida ou não encontrei nenhum comando/categoria com este nome! (Comandos de desenvolvimento não são válidos)",
+    "allLocked": "Todos os comandos foram bloqueados com sucesso.",
+    "categoryLocked": "Todos os comandos da categoria `{{categoria}}` foram bloqueados.",
+    "oneLocked": "O comando `{{comando}}` foi bloqueado com sucesso."
+  },
+  "atendimento": {
+    "noConfig": "<@{{member}}>, o sistema de atendimentos ainda não foi configurado neste servidor. Utilize o comando `{{prefix}}atendimento config` para configurá-lo.",
+    "noArgs": "<@{{member}}>, você não inseriu o deseja fazer. Utilize `{{prefix}}atendimento help` para ver as opções.",
+    "timeExpired": "<@{{member}}>, você demorou muito para responder e a operação foi cancelada.",
+    "enable": {
+      "noConfig": "<@{{member}}>, o sistema de atendimentos ainda não foi configurado neste servidor. Utilize o comando `{{prefix}}atendimento config` para configurá-lo.",
+      "isEnabled": "<:UNSPDenyIcon:703725149504929812 | <@{{member}}>, o sistema de atendimentos já está ativado.",
+      "noCategories": "<:UNSPDenyIcon:703725149504929812 | <@{{member}}>, não é possível iniciar o sistema de atendimentos pois ainda não há nenhuma categoria nele. Adicione uma agora com o comando ``{{prefix}}atendimento addcategory``",
+      "sucess": "O sistema de atendimentos foi ativado com sucesso."
+    },
+    "disable": {
+      "noConfig": "<@{{member}}>, o sistema de atendimentos ainda não foi configurado neste servidor. Utilize o comando `{{prefix}}atendimento config` para configurá-lo.",
+      "isDiabled": "<:UNSPDenyIcon:703725149504929812 | <@{{member}}>, o sistema de atendimentos já está desativado.",
+      "sucess": "O sistema de atendimentos foi desativado com sucesso."
+    },
+    "setmessage": {
+      "noChannelExists": "<@{{member}}>, o canal configurado no sistema de atendimentos não existe mais. Configure-o novamente com o comando ``{{prefix}}atendimento config``.",
+      "maxChar": "Sua mensagem é grande demais! Envie uma mensagem novamente, mas de no máximos 2000 caracteres.",
+      "canceled": "Operação cancelada com sucesso.",
+      "erroAddReaction": "A operação foi cancelada pois ocorreu um erro ao adicionar o emoji {{emoji}}.",
+      "erroSendMessage": "A operação foi cancelada pois ocorreu um erro ao enviar a mensagem (verifique se tenho permissão de enviar mensagens e gerenciar webhooks no canal)."
+    },
+    "help": {
+      "title": "Swift - Sistema de Atendimentos",
+      "1": "``{{prefix}}atendimento ligar`` - Habilite o sistema de atendimentos;",
+      "2": "``{{prefix}}atendimento desligar`` - Desabilite o sistema de atendimentos;",
+      "3": "``{{prefix}}atendimento config`` - Configure o sistema de atendimentos;",
+      "4": "``{{prefix}}atendimento adicionarcategoria`` - Adicione uma categoria ao sistema de atendimentos;",
+      "5": "``{{prefix}}atendimento removercategoria`` - Remova uma categoria do sistema de atendimentos;",
+      "6": "``{{prefix}}atendimento configmensagem`` - Configure a mensagem que será enviada no canal ao ser criado.",
+      "7": "``{{prefix}}atendimento setchannel`` - Mude o canal em que o a mensagem de ticket funcionará."
+    },
+    "status": {
+      "author": "Swift - Sistema de Atendimentos",
+      "field1": {
+        "name": "Configuração atual",
+        "channel": "Canal: <#{{channel}}>",
+        "category": "Categoria onde será criada os canais: ``{{categoryName}} ({{categoryId}})``"
+      },
+      "field2": {
+        "name": "Categorias"
+      }
+    },
+    "config": {
+      "isConfig": "<@{{member}}>, o sistema de atendimentos já está configurado. Caso deseje mudar alguma coisa, veja os subcomandos em `{{prefix}}atendimento ajuda.`",
+      "channelID": "Informe o canal que a mensagem do atendimento será enviada (menção | ID | Nome).",
+      "categoryToCreate": "Agora, informe a categoria em que os canais de atendimento serão criados (ID | Nome).",
+      "allowUserClose": "Por último, deseja que o usuário que abriu o atendimento possa fechar o tickdt ou apenas os cargos com permissão? \n\n0: Usuário poder fechar;\n1: Apenas os cargos adicionados.",
+      "cancel": "Digite 'cancelar' a qualquer momento para cancelar a operação.",
+      "canceled": "Operação cancelada com sucesso.",
+      "1024": "<@{{member}}>, a sua resposta foi grande demais e não consegui enviar para o banco de dados. Por favor, insira uma resposta mais curta.",
+      "invalidChannel": "Você inseriu um canal inválido. Por favor, isnira um canal válido!",
+      "invalidOption": "Ops! Você deve colocar uma opção válida! As possíveis opções são: `0|1`",
+      "sucess": "Sistema de atendimentos configurado com sucesso. Digite ``{{prefix}}atendimento addcategory`` para adicionar uma categoria."
+    },
+    "addcategory": {
+      "canceled": "<@{{member}}>, você cancelou a operação com sucesso.",
+      "cancel": "Digite 'cancelar' a qualquer momento para cancelar a operação.",
+      "timeExpired": "<@{{member}}>, você demorou muito para responder e a operação foi cancelada.",
+      "questionName": "<@{{member}}>, por favor, insira o nome da categoria. (exemplo: `compras`, `bugs`, `denuncias`.",
+      "rolesToAdd": "Agora, informe os cargos que terão acesso à esta categoria (menção | ID).",
+      "noRoles": "<@{{member}}>, eu não consegui encontrar nenhum cargo nesta mensagem. Por favor, insira ao menos 1 cargo.",
+      "invalidName": "<@{{member}}>, o nome da categoria não poder conter acentos ou números! Por favor, novamente um nome válido.",
+      "exists": "<@{{member}}>, já eixste uma categoria com este nome. Utilize o comando `{{prefix}}atendimento status` para ver as categorias existentes no mesmo.",
+      "maxCategories": "<@{{member}}>, você já atingiu o máximo de 5 categorias no sistema de atendimentos. Remova uma para poder adicionar esta.",
+      "categoryEmoji": "<@{{member}}>, por favor, insira o emoji correspondente à esta categoria.",
+      "noEmojis": "<@{{member}}>, não foi possível encontrar nenhum emoji. Por favor, utilize um emoji válido!",
+      "added": "<@{{member}}>, a categoria foi adicionada com sucesso. Utilize o comando `{{prefix}} atendimento configmsg` para editar/enviar a mensagem de atendimento atualizada."
+    },
+    "removecategory": {
+      "noArgs": "<@{{member}}>, você deve inserir o nome da categoria que deseja remover!",
+      "noFound": "<@{{member}}>, não foi possível encontrar esta categoriua. Utilize o comando ``{{prefix}}atendimento status`` para ver as categorias.",
+      "sucess": "A categoria foi removida com sucesso."
+    },
+    "setchannel": {
+      "noArgs1": "<@{{member}}>, você deve inserir o novo canal!",
+      "noChannelFound": "<@{{member}}, eu não consegui encontrar o canal. Tente enviar um canal válido.",
+      "sucess": "<@{{member}}>, o canal foi atualizado com sucesso."
+    }
+  },
+  "antiinvite": {
+    "noArgs": "<@{{member}}>, você não inseriu o que deseja fazer! Utilize: `{{prefix}}antiinvite desativar` ou `{{prefix}}antiinvite habilitar` ou `{{prefix}}antiinvite addperm` ou `{{prefix}}antiinvite removeperm`.",
+    "isDisabled": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, o antiinvite já está desativado.",
+    "isEnabled": "<:UNSPDenyIcon:703725149504929812 | <@{{member}}>, o antiinvite já está ativado.",
+    "enabled": "<@{{member}}>, o antiinvite foi ativado com sucesso.",
+    "disabled": "<@{{member}}>, o antiinvite foi desativado com sucesso.",
+    "status": {
+      "author": "Swift antiinvite - Status",
+      "description": "O Antiinvite está **{{status}}**. \n\nCargos, membros ou canais liberados para enviar antiinvite:"
+    },
+    "noArgs1": "<@{{member}}>, você deve inserir um canal, cargo ou usuário! (id ou manção).",
+    "noPermFound": "<@{{member}}>, eu não consegui encontrar nenhum canal, cargo ou usuário nesta resposta. Desculpe.",
+    "added": "<@{{member}}>, permissão adicionada com sucesso.",
+    "noStarted": "<@{{member}}>, o antiinvite precisa ser ativado pelo menos 1 vez para poder adicionar uma permissão.",
+    "noInsertRole": "<@{{member}}>, este cargo, membro ou canal não está cadastrado nas permissões do antiinvite.",
+    "removed": "<@{{member}}>, permissão removida com sucesso."
+  },
+  "lyrics": {
+    "noFound": "<@{{member}}>, não consegui encontrar nenhum resultado para **{{music}}**.",
+    "embed": {
+      "title": "{{title}}",
+      "footer": "Lyrics - Página {{page}} de {{pages}}."
+    }
+  },
+  "seek": {
+    "limit": "<@{{member}}>, você ultrapassou o limite de tempo. Por favor, siga este modelo: HH:MM:SS.",
+    "invalidTime": "<@{{member}}>, eu não consegui entender este tempo. Por favor, siga este formato: ``1:30``.",
+    "noArgs": "<@{{member}}>, você precisa para onde deseja pular/voltar o video! Exemplo: ``1:20``"
+  },
+  "kick": {
+    "noArgs": "<@{{member}}>, você deve inserir um usuário para kickar!",
+    "noUser": "<@{{member}}>, não foi possível encontrar este usuário.",
+    "noBannable": "<@{{member}}>, eu não posso kickar este usuário por ele ter um cargo maior que o meu!",
+    "hasReason": "Kickado por {{member}} - {{reason}}",
+    "reason": "Kickado por {{member}} - Motivo não inserido.",
+    "sucess": "<:UNSPAcceptIcon:703725149546872932> | Usuário Kickado com sucesso."
+  },
+  "ban": {
+    "noArgs": "<@{{member}}>, você deve inserir um usuário para banir!",
+    "noUser": "<@{{member}}>, não foi possível encontrar este usuário.",
+    "noBannable": "<@{{member}}>, eu não posso banir este usuário por ele ter um cargo maior que o meu!",
+    "hasReason": "Banido por {{member}} - {{reason}}",
+    "reason": "Banido por {{member}} - Motivo não inserido.",
+    "sucess": "<:UNSPAcceptIcon:703725149546872932> | Usuário banido com sucesso."
+  },
+  "playlist": {
+    "noArgs": "<@{{member}}>, você se esqueceu de inserir o que á para mim fazer!\nUtilize ``{{prefix}}playlist ajuda`` para ver os comandos de playlist. ",
+    "criar": {
+      "playlistLimit": "<@{{member}}>, não foi possível criar a playlist pois você já atingiu o máximo de 5 playlists.",
+      "chatLimit": "<@{{member}}>, este nome é inválido ou grande demais!!",
+      "noArgs1": "<@{{member}}>, você se esqueceu de inserir o nome da playlist que deseja criar!",
+      "invalidName": "<@{{member}}>, o nome da playlist só pode conter 1 palavra!",
+      "exists": "<@{{member}}>, esta playlist já existe. Utilize o comando ``{{prefix}}playlist addmusica <playlist> <musica>`` para adicionar alguma música na mesma. ",
+      "created": "<@{{member}}>, a playlist foi criada com sucesso. Utilize o comando ``{{prefix}}playlist addmusic <plylist> <musica>`` para adicionar alguma música na mesma."
+    },
+    "help": {
+      "commands": "Veja abaixo os comandos de playlist:\n\n``{{prefix}}playlist criar <nome>``\n``{{prefix}}playlist tocar <nome>``\n``{{prefix}}playlist addmusic <playlist> <musica>``\n``{{prefix}}playlist removemusic <playlist> <musica>``\n``{{prefix}}playlist info <playlist>``\n``{{prefix}}playlist listar``\n``{{prefix}}playlist deletar <playlist>``"
+    },
+    "addmusic": {
+      "noArgs1": "<@{{member}}>, você se esqueceu de dizer em qual playlist você deseja adicionar a música. Utilize o comando ``{{prefix}}playlist listar`` para ver suas playlists. ",
+      "noPlaylistFound": "<@{{member}}>, eu não encontrei esta playlist. Utilize o comando ``{{prefix}}playlist listar`` para ver suas playlists.",
+      "noArgsMusic": "<@{{member}}>, você deve inserir a música que deseja adicionar na playlist (id, url, ou nome).",
+      "noMusicFound": "<@{{member}}>, sinto muito, mas nao encontrei esta musica.",
+      "noPlaylistAllowed": "<@{{member}}>, você não pode adicionar playlists em playlists.",
+      "exists": "<@{{member}}>, esta música já está na playlist.",
+      "added": "A música ``{{musica}}`` foi adicionada na playlist ``{{playlist}}``"
+    },
+    "removemusic": {
+      "noArgs1": "<@{{member}}>, você se esqueceu de dizer de qual playlist você deseja remover a música. Utilize o comando ``{{prefix}}playlist listar`` para ver suas playlists. ",
+      "noPlaylistFound": "<@{{member}}>, eu não encontrei esta playlist. Utilize o comando ``{{prefix}}playlist listar`` para ver suas playlists.",
+      "noArgsMusic": "<@{{member}}>, você deve inserir a música que deseja remover da playlist (id, url, ou nome).",
+      "noMusicFound": "<@{{member}}>, sinto muito, mas nao encontrei esta musica.",
+      "noExists": "<@{{member}}>, esta música não está na playlist.",
+      "removed": "A música ``{{musica}}`` foi removida da playlist ``{{playlist}}`` com sucesso."
+    },
+    "play": {
+      "isTTS": "<@{{member}}>, no momento estou enviando uma mensagem TTS.",
+      "noNodes": "<@{{member}}>, no momento não possuo nenhuma conexão com o player de músicas.",
+      "noPerms": "<@{{member}}>, eu não tenho as permissões de `{{perms}}` neste canal de voz, que são precisas para esta função funcionar.",
+      "noArgs1": "<@{{member}}>, você deve inserir o nome da sua playlist que você deseja tocar.",
+      "isPlaying": "<@{{member}}>, você só pode tocar playlists privadas caso não haja nada tocando no momento.",
+      "noMusic": "<@{{member}}>, não há nenhuma música na playlist para eu tocar.",
+      "play": "<@{{member}}>, a playlist ``{{playlist}}`` foi iniciada. ``{{amount}}`` músicas foram inseridas.  "
+    },
+    "listar": {
+      "veja": "Veja abaixo as suas playlists.",
+      "playlistName": "Nome da playlist: {{name}}",
+      "footer": "Para mais informações de alguma playlist, utilize: {{prefix}}playlist info <playlist>",
+      "noPlaylist": "<@{{member}}>, você não possui playlist's. Crie uma já utilizando o comando {{prefix}}playlist criar."
+    }
+  },
+  "tocando": {
+    "tocando": "<@{{member}}>, música tocando no momento: [{{title}}]({{url}}) ",
+    "yes": "Sim",
+    "no": "Não"
+  },
+  "resume": {
+    "isPlaying": "<:UNSPDenyIcon:703725149504929812> <@{{member}}>, a música não está pausada.",
+    "resume": "<:UNSPWarntIcon:703725150159241216> A música foi retomada."
+  },
+  "pause": {
+    "pause": "<:UNSPWarntIcon:703725150159241216> A música foi pausada.",
+    "resume": "<:UNSPWarntIcon:703725150159241216> A música foi retomada."
+  },
+  "volume": {
+    "noArgs": "<@{{member}}>, você precisa inserir o numero equivalente a posicai da musica na playlist!",
+    "invalidNumber": "<@{{member}}>, voce deve inserir um numero valido maior que 1 e menor que 200!",
+    "finish": "<:UNSPWarntIcon:703725150159241216> O volume do player foi alterado para ``{{volume}}`` com sucesso."
+  },
+  "remove": {
+    "positionNotFound": "<@{{member}}>, não existe nenhuma música na posição `{{position}}`",
+    "noArgs": "<@{{member}}>, você precisa inserir o numero equivalente a posicai da musica na playlist!",
+    "invalidNumber": "<@{{member}}>, voce deve inserir um numero valido e maior que 1!",
+    "deny": "<@{{member}}>, você não pode remover a música que está tocando."
+  },
+  "loop": {
+    "noVoiceChannel": "<@{{member}}>, você precisa estar em um canal de voz para executar este comando!",
+    "noVoiceChannel2": "<@{{member}}>, você precisa estar no mesmo canal de voz que eu para executar este comando.",
+    "noPlaying": "<@{{member}}>, não estou tocando nada no momento.",
+    "disable": "<:UNSPWarntIcon:703725150159241216> O loop foi desativado.",
+    "enable": "<:UNSPWarntIcon:703725150159241216> O loop foi ativado."
+  },
+  "queue": {
+    "noQueue": "<@{{member}}>, a música atual é a única na fila de reprodução.",
+    "embed": {
+      "playing": "<:UNSPPlayIcon:703725149563912312> | Música tocando no momento: [{{title}}]({{url}})",
+      "totalTime": "<:UNSPMidiaIcon:703725149467312129> | Duração da playlist completa: ``{{time}}``",
+      "description": "<:UNSPAnnounceIcon:703725149320511529> | Próximas músicas:"
+    },
+    "noPlaying": "<@{{member}}>, não estou tocando nada no momento.",
+    "embedAuthor": "Swift - Lista de reprodução",
+    "footer1": "Swift - Lista de músicas na playlist",
+    "footer2": "Swift - Página {{pagina}} de {{paginas}}"
+  },
+  "stop": {
+    "noVoiceChannel": "<@{{member}}>, você precisa estar em um canal de voz para executar este comando!",
+    "noVoiceChannel2": "<@{{member}}>, você precisa estar no mesmo canal de voz que eu para executar este comando.",
+    "noPlaying": "<@{{member}}>, não estou tocando nada no momento."
+  },
+  "skip": {
+    "noVoiceChannel": "<@{{member}}>, você precisa estar em um canal de voz para executar este comando!",
+    "noVoiceChannel2": "<@{{member}}>, você precisa estar no mesmo canal de voz que eu para executar este comando.",
+    "noPlaying": "<@{{member}}>, não estou tocando nada no momento.",
+    "sucess": "<:check:802145617002102794> Música pulada com sucesso."
+  },
+  "play": {
+    "isTTS": "<@{{member}}>, no momento estou enviando uma mensagem TTS.",
+    "noNodes": "<@{{member}}>, no momento não possuo nenhuma conexão com o player de músicas.",
+    "fail": "<:UNSPDenyIcon:703725149504929812> Ocorreu um erro ao pesquisar por esta música.",
+    "canal": "<@{{member}}>, você precisa estar em um canal de voz para executar este comando!",
+    "isPlaying": "<@{{member}}>, eu já estou tocando em um canal de voz! Entre nele para utilizar o comando.",
+    "noPerms": "<@{{member}}>, eu não tenho as permissões de `{{perms}}` neste canal de voz, que são precisas para esta função funcionar.",
+    "noArgs": "<@{{member}}>, você se esqueceu de inserir o que é para mim tocar!",
+    "playlistLoaded": "<:check:802145617002102794> Foram adicionadas **{{amount}}** músicas na playlist com sucesso.",
+    "musicLoaded": "<:check:802145617002102794> A música `{{name}}` foi adicionada à playlist com sucesso.",
+    "noMusicFound": "Sinto muito, não foi possível encontrar nenhuma música.",
+    "adding": "<a:Loading:745327497096331314> Adicionando playlist à lista de reprodução...\n Músicas adicionadas: {{amount}}",
+    "added": "<:check:802145617002102794> Foram adicionadas {{amount}} músicas na playlist."
+  },
+  "slap": {
+    "noArgs": "<@{{member}}>, você deve inserir um usuário para bater!",
+    "noFoundUser": "Não foi possível encontrar o usuário informado.",
+    "author": "**<@{{user1}}> deu um tapa em <@{{user2}}>!**"
+  },
+  "jogodavelha": {
+    "deny": "<@{{autor}}>, <@{{member}}> negou seu desafio.",
+    "sendQuestion": "<@{{member}}>, <@{{autor}}> acaba de te desafiar para uma partida de jogodavelha! Reaja abaixo com ✅ para aceitar.",
+    "noMentionUser": "<@{{member}}>, você deve mencionar um usuário para jogar!"
+  },
+  "ppt": {
+    "noOption": "<@{{member}}>, por favor, utilize {{prefix}}ppt desafiar <user>",
+    "noMention": "<@{{member}}>, você se esqueceu de mencionar um usuário para ser desafiado!",
+    "noUserFound": "<@{{member}}>, não foi possível encontrar este usuário.",
+    "isBot": "<@{{member}}>, você não pode desafiar um BOT!",
+    "isYou": "<@{{member}}>, você não pode desafiar à si mesmo!",
+    "sendChallenge": {
+      "description": "<@{{user}}>, <@{{member}}> acaba de te desafiar para  uma partida de **Pedra Papel Tesoura!**",
+      "footer": "Reaja abaixo com ✅ para aceitar o desafio. (2 minutos)"
+    },
+    "waitingAccept": "<a:Loading:745327497096331314> O desafio foi enviado para o usuário. Aguardando resposta...",
+    "challengeDeny": "<:errado:739176302317273089> O usuário negou o desafio.",
+    "challengeAccept": "<a:errado:739210548020772926> O usuário aceitou o desafio, verifique seu privado.",
+    "reactToPlay": "Reaja abaixo com a sua jogada.",
+    "waitingPlay": "Aguardando jogada do oponente...",
+    "winMessage": "{{message}} \n\n {{member}} vs {{user}}"
+  },
+  "pescar": {
+    "pescou": "Você pescou um... {{item}}! E por isso ganhou ``{{valor}}`` uCoins.",
+    "author": " Yay! você pescou"
+  },
+  "perguntar": {
+    "noArgs": "<@{{member}}>, você deve inserir alguma pergunta!"
+  },
+  "leet": {
+    "noArgs": "<@{{member}}>, você deve inserir algum texto!"
+  },
+  "sorteio": {
+    "item": "O que você deseja sortear?",
+    "winnerCount": "Quantos ganhadores vão ser?",
+    "time": "Quanto tempo o sorteio vai durar?",
+    "channel": "Em qual canal o sorteio vai acontecer?",
+    "emoji": "Qual emoji você deseja utilizar no sorteio?",
+    "giveaway": {
+      "timeRemaining": "Tempo restante: **{duration}**",
+      "inviteToParticipate": "Reaja com {{emoji}} para participar!",
+      "winMessage": "Parabéns {winners}! Você(s) ganhou **{prize}**!",
+      "embedFooter": "Swift - Sorteios",
+      "noWinner": "O sorteio foi cancelado pois não há participantes suficientes.",
+      "hostedBy": "Sorteio realizado por {user}",
+      "winners": "Ganhador(es)",
+      "endedAt": "Finalizado às",
+      "units": {
+        "segundos": "segundos",
+        "minutos": "minutos",
+        "horas": "horas",
+        "dias": "dias"
+      },
+      "lastChance": "⚠️ Última chance para entrar! ⚠️"
+    },
+    "end": "Item a ser sorteado: {{item}} \nQuantidade de ganhadores: {{winnerCount}} \nGanhadores: {{winners}}",
+    "author": "Swift - Sorteio",
+    "authorEnd": "Swift - Sorteio finalizado",
+    "endWhen": "Sorteio finaliza",
+    "noReactions": "O sorteio foi cancelado pois a quantidade de reações é muito pequena.",
+    "cancel": "Escreva 'cancelar' a qualquer momento para cancelar a operação.",
+    "canceled": "<@{{member}}>, você cancelou a operação com sucesso.",
+    "1024": "<@{{member}}>, a sua resposta foi grande demais e não consegui enviar para o banco de dados. Por favor, insira uma resposta mais curta.",
+    "noTimeFound": "<@{{member}}>, não consegui entender o tempo inserido. Por favor, insira um tempo válido.",
+    "noChannelFound": "<@{{member}}, eu não consegui encontrar o canal. Tente enviar um canal válido.",
+    "noPermissionsInChannel": "<@{{member}}>, eu não posso realizar o sorteo neste canal pois não tenho permissão para enviar mensagens nele ou adicionar reações. Por favor, insira um canal válido!",
+    "noEmojiFound": "<@{{member}}>, não consegui encontrar nenhum emoji nessa mensagem. Por favor, insira um emoji válido!",
+    "invalidNumber": "<@{{member}}>, a quantidade de ganhadores deve ser um número. Responda novamente com um **número**."
+  },
+  "ressortear": {
+    "noArgs": "<@{{member}}>, você deve inserir o ID da mensagem do sorteio!",
+    "noGiveawayFound": "<@{{member}}>, não foi possível encontrar nenhum sorteio neste ID.",
+    "sucess": "Ressorteado com sucesso! Os novos vencedores são: {winners}!",
+    "error": "Não foi possível ressortear pois a quantidade de participantse não é suficiente!"
+  },
+  "ascii": {
+    "args_error": "<@{{member}}>, você precisa inserir algo para eu converter!",
+    "caractere": "<@{{member}}>, você não pode inserir caracteres especiais!"
+  },
+  "kiss": {
+    "no_user": "<@{{member}}>, você deve inserir quem deseja beijar!",
+    "no_found": "<@{{member}}>, não consegui encontrar este usuário.",
+    "kiss": "acaba de beijar",
+    "author": "Aii, que fofo!"
+  },
+  "coroa": {
+    "girar": "Vamos girar a moeda!"
+  },
+  "dado": {
+    "grande": "<@{{user}}>, o número de faces deve ser entre 1 e 6!",
+    "result": "Rolei um dado de {{faces}} e o número virado foi {{result}}."
+  },
+  "emojify": {
+    "no_args": "<@{{user}}>, você deve inserir um texto para eu converter em emojis!",
+    "error": "<@{{user}}>, não é possível converter caracteres especiais em emoji!"
+  },
+  "ajuda": {
+    "footer": "{{locked}} comandos não estão visíveis por terem sido bloqueados por um administrador.",
+    "noCommands": "<:UNSPWarntIcon:703725150159241216> Os comandos desta categoria não estão visíveis por terem sido bloqueados por um administrador.",
+    "no_command_embed": {
+      "title": "Hey! Não encontrei nenhum comando parecido com `{{cmd}}`"
+    },
+    "commandHelp": {
+      "title": "Aqui vai as informações sobre o comando `{{cmd}}`",
+      "field1": "Alternativas:",
+      "field2": "Modo de usar:",
+      "field3": "Permissões que o usuário precisa:",
+      "field4": "Permissões que o bot precisa:"
+    },
+    "nothing": "Nenhum",
+    "title": "Ajuda"
+  },
+  "prefixo": {
+    "invalidOption": "Ops! Você deve colocar uma opção válida! As possíveis opções são: `setar|restaurar`",
+    "invalidNewPrefix": "Você deve colocar o novo prefix que deseja!",
+    "confirmation": "Prefixo alterado com sucesso!"
+  },
+  "language": {
+    "invalidOption": "Ops! Você deve colocar uma opção válida! As possíveis opções são: `setar|restaurar`",
+    "invalidNewLanguage": "Você deve colocar a nova linguagem que deseja! As opções são: `pt`",
+    "confirmation": "Linguagem alterada com sucesso!"
+  },
+  "autorole": {
+    "use": "Modelo de uso incorreto! Use `{{prefix}}autorole add`, `{{prefix}}autorole desativar` ou `{{prefix}}autorole status.`",
+    "channel": "Olá, **{{user.username}}**. Por favor, insira o cargo de que deseja utilizar na Autorole. Lembrando, mencione apenas **um**.",
+    "confirmation": "Cargo para autorole setado com sucesso.",
+    "isoff": "O AutoRole já está desativado.",
+    "markoff": "AutoRole desativado com sucesso!",
+    "status": "Status do AutoRole",
+    "statusmark": "{{status}}",
+    "statuscargoOFF": "Desativado",
+    "statuscargoON": "Ativado",
+    "cargoName": "Cargo:",
+    "footer": "Solicitado por",
+    "noArgs1": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, você deve inserir um cargo para eu {{acao}}!",
+    "isAtive": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, o autorole já está ativado.",
+    "isDisabled": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, o autorole já está desativado.",
+    "sucessActived": "<:UNSPAcceptIcon:703725149546872932> | <@{{member}}>, o autorole foi ativado com sucesso.",
+    "sucessDisabled": "<:UNSPAcceptIcon:703725149546872932> | <@{{member}}>, o autorole foi desativado com sucesso.",
+    "roleNoExists": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, o cargo <@&{{role}}> não está no autorole.",
+    "exists": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, não foi possível adicionar a role <@&{{role}}> pois ela já se encontra no autorole.",
+    "noFoundRole": "<:UNSPDenyIcon:703725149504929812> | <@{{member}}>, não foi possível encontrar a role {{role}}.",
+    "sucessAdd": "<:UNSPAcceptIcon:703725149546872932> | <@{{member}}>, a role <@&{{role}}> foi adicionada ao autorole com sucesso.",
+    "sucessRemove": "<:UNSPAcceptIcon:703725149546872932> | <@{{member}}>, a role <@&{{role}}> foi removida do autorole com sucesso."
+  },
+  "config": {
+    "statusError": "<:errado:739176302317273089> **»** Você deve colocar `on` ou `off`. Digite o comando novamente!",
+    "cancel": "<:check:802145617002102794> **»** Ação cancelada",
+    "join": {
+      "title": "Entrada",
+      "submodules": {
+        "status": {
+          "title": "Status(On/Off)",
+          "desc": "Status do módulo de Entrada, se ele está ativado ou não",
+          "msg": "Digite `on` ou `off` para definir se a mensagem de entrada será ativada \n\n Digite `cancelar` para cancelar",
+          "sucess": "<:check:802145617002102794> **» Oh Yah!** \n\n Você setou o status do módulo de entrada para `{{status}}`!"
+        },
+        "channel": {
+          "title": "Canal",
+          "desc": "Canal onde será enviado a mensagem de Entrada",
+          "msg": "Mencione o canal aonde será enviado a mensagem de entrada \n\n Digite `cancelar` para cancelar",
+          "sucess": "<:check:802145617002102794> **» Oh Yah!** \n\n Você setou o status do módulo de entrada para `{{status}}`!"
+        },
+        "message": {
+          "title": "Mensagem",
+          "desc": "Mensagem que será enviada quando alguém entrar",
+          "msg": "Digite a mensagem que irá aparecer quando alguém entrar. \n\n Você pode utilizar váriaveis: \n ```ini\n[server] - Mostra o nome do servidor. \n[userMention] - Mencionar o usuário. \n[user] - Mostrar o nome do usuário. \n[userId] - Mostrar o id do usuário.\n``` \n\n Digite `cancelar` para cancelar",
+          "sucess": "<:check:802145617002102794> **» Oh Yah!** \n\n Você setou o status do módulo de entrada para `{{status}}`!"
+        }
+      }
+    },
+    "leave": {
+      "title": "Saída"
+    },
+    "noArgs": "Hey! Está esquecendo de algo, não?!",
+    "examples": "Aqui vai alguns exemplos de como usar este comando!",
+    "footer": "Para mais informações, utilize {{prefix}}config {{arg}} [identificador do módulo]",
+    "listJustModules": "Aqui vai todas os módulos disponíveis",
+    "module": "módulo",
+    "format": "Formato: `[Nome do Módulo]: [Identificador]`",
+    "notFound": "Desculpe-me, mas não encontrei nenhum módulo com o identificador `{{search}}`!",
+    "notSubmoduleFound": "Desculpe-me, mas não encontrei nenhum submódulo com o identificador `{{search}}`!",
+    "moduleInfo": "Informações sobre o módulo `{{module}}`",
+    "formatDescription": "Formato: `[Nome do SubMódulo]: [Identificador]`"
+  },
+  "clear": {
+    "notArg": "Hey, você deve colocar, no 1º parâmetro, o número de mensagens!",
+    "notNumber": "Hey, isto não é um número!",
+    "low": "Hey, esse número é muito baixo (use algum número entre 2 e 100)",
+    "hight": "Hey, esse número é muito alto (use algum número entre 2 e 100)"
+  },
+  "botinfo": {
+    "title": "SwiftBOT | Informações",
+    "description-header": "Olá, me chamo **SwiftBOT**! Sou um bot multifuncional para lhe auxiliar e entreter os membros do seu servidor! Ajudo a deixar o seu servidor um local mais agradável!",
+    "stats": {
+      "title": "> **»** Estatísticas",
+      "1": "Servidores: ``{{var}}``",
+      "2": "Usuários: ``{{var}}``",
+      "3": "Comandos: ``{{var}}``",
+      "4": "Canais: ``{{var}}``",
+      "5": "Comandos usados: ``{{var}}``"
+    },
+    "host": {
+      "title": "> **»** Hospedagem",
+      "1": "Processador: ``{{var}}``",
+      "2": "Uso de memória RAM: ``{{var}}MB``",
+      "3": "Uso de CPU: ``{{var}}%``"
+    },
+    "infos": {
+      "title": "> **»** Informações",
+      "1": "Tecnologias: [JavaScript](https://www.javascript.com/) | [NodeJS](https://nodejs.org/)",
+      "2": "Livraria: [Discord.js](https://discord.js.org/#/)",
+      "3": "Database: [MongoDB](https://www.mongodb.com/) | [Mongoose](https://mongoosejs.com/)"
+    },
+    "status": {
+      "title": "> **»** Status",
+      "1": "Estou online há: ``{{var}}``"
+    }
+  },
+  "serverinfo": {
+    "notFound": "Desculpe-me, mas não encontrei nenhuma guilda com esse id!",
+    "owner": "Dono",
+    "nitro": "Estado de impulsionamento",
+    "nivel": "Nível",
+    "impulso": "Impulsos",
+    "region": "Região",
+    "dates": "Datas",
+    "created": "Criado em: ",
+    "ijoined": "Eu entrei em: ",
+    "infos": "Informações",
+    "text": "Canais de textos:",
+    "voice": "Canais de voz:",
+    "members": "Membros: ",
+    "bots": "Bots: ",
+    "roles": "Cargos: ",
+    "toMuch": "Muitos cargos"
+  },
+  "servericon": {
+    "notFound": "<:errado:739176302317273089> **»** Desculpe-me, mas não encontrei nenhuma guilda com esse id!",
+    "description": "🖌️ | Clique [aqui]({{link}}) para baixar o ícone do servidor"
+  },
+  "uptime": {
+    "time": "**{{u.h}}** Hora(s), **{{u.m}}** Minutos, **{{u.s}}** Segundos",
+    "online": "estou online há:"
+  },
+  "avatar": {
+    "title-1": "<:art:751221968728227951> **»** Aqui está o seu avatar",
+    "title-2": "<:art:751221968728227951> **»** Aqui está o avatar do <@{{user}}>"
+  },
+  "convite": {
+    "1": "<:swiftDiscord:751390656777289798> **»** Verifique o seu privado!",
+    "2": "<:swiftHearts:751406085763498035> **»** [Clique aqui](https://discord.com/oauth2/authorize?=&client_id=577139966379819044&scope=bot&permissions=8) para adicionar o Swift em seu servidor!"
+  },
+  "emojis": {
+    "title": "Lista de emojis",
+    "page": "Página atual: {{actualPage}}"
+  },
+  "npm": {
+    "notSearch": "<:errado:739176302317273089> **»** Hey! Você deve colocar uma livraria a pesquisar!",
+    "description": "**»** Descrição da livraria",
+    "notDescription": "Não definida",
+    "package": "**»** Acesse a livraria pelo site oficial do npm:",
+    "error": "<:errado:739176302317273089> **»** Esta livraria não existe!",
+    "downloads": "**»** Número de downloads da semana passada: ",
+    "version": "**»** Versão atual da package: ",
+    "publisher": "**»** Publicado por: "
+  },
+  "calculadora": {
+    "exError": "<:errado:739176302317273089> **»** Hey, coloque uma expressão!",
+    "confirm": "Qual o resultado da expressão `{{e}}`? \n\n Hm... é `{{r}}`!",
+    "error": "<:errado:739176302317273089> **»** Essa expressão é inválida!"
+  },
+  "anunciar": {
+    "arg1": "<:errado:739176302317273089> **»** Coloque um título para o seu anúncio!",
+    "arg2": "<:errado:739176302317273089> **»** Coloque o conteúdo do seu anúncio!",
+    "title": "Você está prestes a realizar o anuncio!",
+    "canceled": "<:check:802145617002102794> **»** Anúncio cancelado com sucesso!",
+    "optionsTitle": "Opções do anúncio",
+    "mention": "**»** Menção: ",
+    "mentionNone": "Nenhuma",
+    "end": "**»** O tempo acabou e o anúncio foi cancelado!",
+    "options": "Opções do anúncio",
+    "preview": "Ver preview do anúncio",
+    "final": "Finalizar anúncio",
+    "cancel": "Cancelar anúncio",
+    "end-2": "**»** Tempo limite alcançado. Configuração de opções canceladas."
+  },
+  "country": {
+    "error": "<:errado:739176302317273089> **»** Coloque um país válido!",
+    "names": "**»** Outros nomes",
+    "lang": "**»** Linguas faladas",
+    "city": "**»** Capital",
+    "region": "**»** Região",
+    "population": "**»** População",
+    "area": "**»** Área",
+    "hours": "**»** Fuso horários",
+    "coins": "**»** Moeda",
+    "reqerror": "<:errado:739176302317273089> **»** Um erro ocorreu ao consultar a API"
+  },
+  "hexcolor": {
+    "args": "<:errado:739176302317273089> **»** Coloque uma cor!",
+    "error": "<:errado:739176302317273089> **»** Esta cor não existe!"
+  },
+  "weather": {
+    "error": "<:errado:739176302317273089> **»** Coloque o nome de um local!",
+    "cityError": "<:errado:739176302317273089> **»** Desculpe, não encontrei este local na minha API!",
+    "tempo": "Tempo",
+    "temp": "Temperatura",
+    "hum": "Humidade"
+  },
+  "docs": {
+    "error": "<:errado:739176302317273089> **»** Você deve colocar algo a pesquisar nas docs!",
+    "nothing": "<:errado:739176302317273089> **»** Não encontrei nada relacionado a **`{{item}}`**",
+    "author": "Documentação oficial do discord.js"
+  },
+  "covid19": {
+    "all": "Mundo",
+    "error": "<:errado:739176302317273089> **»** Um erro ocorreu ou o local não foi encontrado."
+  },
+  "support": {
+    "click": "**»** Clique [aqui](https://discord.gg/F7WHYU5) para entrar no servidor de suporte."
+  },
+  "daily": {
+    "not": "<a:coins:815230011224227893> **»** Hey, você não pode pegar o seu daily... Aguarde `{{remain}}` para pegar novamente!",
+    "ok": "<:check:802145617002102794> **»** Gêgê! Você pegou o seu daily de `{{daily}} sCoins`"
+  },
+  "coins": {
+    "moneyUser": "<a:coins:815230011224227893> **»** {{user}} tem `{{money}} sCoins` em mãos!",
+    "money": "<a:coins:815230011224227893> **»** Você tem `{{money}} sCoins` em mãos.",
+    "withoutBank": "<:banco:721757555226968065> **»** {{user}} não possui um banco.",
+    "withoutBankAuthor": "<:banco:721757555226968065> **»** Você não possui um banco.",
+    "userMoneyBank": "<:banco:721757555226968065> **»** {{user}} possui `{{bank}} sCoins` no banco.",
+    "moneyBank": "<:banco:721757555226968065> **»** Você possui `{{bank}} sCoins` no banco.",
+    "notHave": "<:errado:739176302317273089> **»** Você não tem sCoins suficientes para isso.",
+    "okDeposit": "<:check:802145617002102794> **»** Transferido com sucesso!",
+    "noUser": "<:errado:739176302317273089> **»** Mencione um usuário válido!",
+    "not": "<:errado:739176302317273089> **»** Quantidade inválida!"
+  },
+  "buy-bank": {
+    "not": "<:banco:721757555226968065> **»** Você não possui dinheiro suficiente para comprar um banco. Você necessita de mais `{{buy}} sCoins`",
+    "ok": "<:banco:721757555226968065> **»** Você comprou um banco! GêGê!",
+    "notOk": "<:banco:721757555226968065> **»** Você já possui um banco"
+  },
+  "debitar": {
+    "not": "<a:coins:815230011224227893> **»** Coloque uma quantidade válida!",
+    "notMoney": "<a:coins:815230011224227893> **»** Você não tem todo esse money!",
+    "ok": "<a:coins:815230011224227893> **»** **»** Debitados `{{amount}} sCoins` com sucesso!(`{{tax}}%` de taxa)",
+    "bank": "<a:coins:815230011224227893> **»** Você não possui um banco!"
+  },
+  "depositar": {
+    "not": "<:banco:721757555226968065> **»** Coloque uma quantidade válida!",
+    "notMoney": "<:banco:721757555226968065> **»** Você não tem todo esse money!",
+    "ok": "<:banco:721757555226968065> **»** Depositados `{{amount}} sCoins` com sucesso!(`{{tax}}%` de taxa)",
+    "bank": "<a:coins:815230011224227893> **»** Você não possui um banco! Tente upar o seu rank",
+    "error": "<:Errado:804857898030989334> **»** Você não pode depositar essa quantia, pois se depositar, o seu banco passará do seu limite: `{{limit}} sCoins`"
+  },
+  "roubar": {
+    "error": "<a:coins:815230011224227893> **»** Mencione um usuário que deseja roubar!",
+    "coinError": "<a:coins:815230011224227893> **»** Oque? Você quer roubar um mendigo? Essa pessoa não tem nem 200 sCoins!  \n\nSó por isso, você foi preso!",
+    "roubo": "<a:coins:815230011224227893> **»** YAH! Você acaba de roubar 200 sCoins!",
+    "jail": "<a:coins:815230011224227893> **»** Hey, o policial viu você roubando! Por isso, foi preso!"
+  },
+  "time": {
+    "1": "<a:coins:815230011224227893> **»** Agora é dia!",
+    "2": "<a:coins:815230011224227893> **»** Agora é noite!"
+  },
+  "mysterybox": {
+    "coins": "<a:coins:815230011224227893> **»** Você não tem money suficiente! Você precisa, no total, de 1000 sCoins!",
+    "ok": "<a:coins:815230011224227893> **»** Yah! Você comprou uma caixa-misteriosa! \n\nSeja o primeiro e digite o código para resgatar o seu prêmio! \n\nCuidado com os ladrões de código... xD",
+    "end": "**»** O tempo acabou e a caixa-misteriosa foi cancelada!",
+    "endCode": "**»** Você errou o código! Por isso, a caixa-misteriosa foi cancelada!",
+    "code": "**»** Yah! Você acertou o código e ganhou {{thing}}"
+  },
+  "fianca": {
+    "notJail": "<a:coins:815230011224227893> **»** Pera lá! Você nem está preso!",
+    "money": "<a:coins:815230011224227893> **»** Hey, você não tem money suficiente! Precisa de mais {{1}} sCoins!",
+    "ok": "\n\n<:check:802145617002102794> Oh yah! Você foi liberado da cadeia\n\n"
+  },
+  "topmoney": {
+    "invalid": "Usuário não encontrado"
+  },
+  "mcserver": {
+    "error": "<:errado:739176302317273089> **»** Coloque o ip de um servidor!",
+    "offline": "Este servidor se encontra **offline**",
+    "online": "Este servidor se encontra **online** \n\n",
+    "now": "players estão jogando aqui",
+    "nowZero": "Não há jogadores online",
+    "reqError": "<:465183813971214356:653041442331033610> **»** Ocorreu um erro ao buscar as informações."
+  },
+  "mcskin": {
+    "error": "<:errado:739176302317273089> **»** Coloque o nome de um usuário!"
+  },
+  "mchead": {
+    "error": "<:errado:739176302317273089> **»** Coloque o nome de um usuário!"
+  },
+  "disconnect": {
+    "error": "<:errado:739176302317273089> **»** Coloque um texto"
+  },
+  "rank": {
+    "costs": "**»** Valor do próximo rank",
+    "t": "**»** Vantagens do próximo rank",
+    "inteligence": "Inteligencia",
+    "tax": "Taxa",
+    "t2": "**»** Vantagens do rank atual"
+  },
+  "rankup": {
+    "error": "**»** Você não tem money suficiente para isto!",
+    "error1": "**»** Você já está no rank máximo!",
+    "up": "YAH! Você acaba de upar para o Rank ",
+    "confirm": "<:Duvida:807665311373459457> **»** Você realmente deseja upar de rank? Você gastará {{coins}} sCoins.",
+    "cancel": "<:Correto:805054626448670762> **»** Ação cancelada."
+  },
+  "apostar": {
+    "not": "<:Errado:804857898030989334> **»** Aposta inválida!",
+    "not1": "<:Errado:804857898030989334> **»** Quantidade a ser apostada inválida! Verifique se você tem a quantia ou se o número é válido",
+    "confirm": "<:Duvida:807665311373459457> **»** Você realmente deseja apostar? Você gastará {{coins}} sCoins.",
+    "cancel": "<:Correto:805054626448670762> **»** Ação cancelada.",
+    "no": "<a:coins:815230011224227893> **»** XIIIIII você apostou e perdeu :(",
+    "yes": "<a:coins:815230011224227893> **»** YAAAAH você apostou e ganhou o seu valor multiplicado por 2!"
+  },
+  "isitup": {
+    "args": "<:Errado:804857898030989334> **»** Coloque um website válido!",
+    "question": "O site está online?",
+    "yes": "<:Correto:805054626448670762>・ O site `{{website}}` está online e respondeu ao request com o código ** {{rescode}} ** - Demorou {{ping}} segundos para responder",
+    "not": "<:Errado:804857898030989334>・ O site `{{website}}` está offline"
+  },
+  "ocr": {
+    "error": "<:Errado:804857898030989334>・O link é inválido!",
+    "loading": "・Preparando a leitura..."
+  },
+  "desc": {
+    "noset": "<:Errado:804857898030989334>・**{{user}}** não tem uma descrição setada",
+    "text": "<:Correto:805054626448670762>・O texto de **{{user}}** foi modificado pela ultima vez há {{lastTime.d}} dias, {{lastTime.h}} horas e {{lastTime.m}} minutos \n\n ・{{text}}"
+  },
+  "setdesc": {
+    "error": "<:Errado:804857898030989334>・**{{user}}** você deve colocar um texto como argumento!",
+    "confirm": "<:Correto:805054626448670762>・**{{user}}** o seu texto foi setado com sucesso!"
+  },
+  "userinfo": {
+    "dates": "Datas",
+    "created": "Criado em: ",
+    "ijoined": "Entrei aqui em: ",
+    "roles": "<:seta:725131284678049833> Cargos",
+    "infos": "<:peepo:759073700984914010> Informações"
+  },
+  "loja": {
+    "exists": "<:Errado:804857898030989334> ・ Item não encontrado",
+    "dontMoney": "<:Errado:804857898030989334> ・ Você não tem money para isto!",
+    "already": "<:Errado:804857898030989334> ・ Você já contêm esse item",
+    "use": "<:badgeA:795773919465963551> Use `{{prefix}}loja info ID` para ver mais informações sobre um item e caso queira comprar, use `{{prefix}}loja comprar ID`",
+    "ok": "<:Correto:805054626448670762> ・ Item comprado com sucesso!",
+    "title": "Lista de Itens",
+    "itens": {
+      "stampOne": {
+        "title": "Selo 1",
+        "description": "Selo com duas penas. Elas lhe ajudaram na defesa pessoal: Embora fracas, fazem com que a sua chance de ser roubado diminua."
+      },
+      "stampTwo": {
+        "title": "Selo 2",
+        "description": "Um lindo simbolo. Ele fará com que a sua fiança custe 3.000 sCoins"
+      },
+      "stampThree": {
+        "title": "Selo 3",
+        "description": "Um simbolo quanto diferente. Ele fará você se tornar forte: a sua chance de roubo dar certo sempre será 80%"
+      },
+      "stampFour": {
+        "title": "Selo 4",
+        "description": "Ele fará com que você se torne REI!"
+      }
+    }
+  },
+  "streak": {
+    "daily": "<a:coins:815230011224227893> **»** Sequencia de daily",
+    "vote": "<a:coins:815230011224227893> **»** Sequencia de votos",
+    "not": "<:Errado:804857898030989334> ・ Coloque um argumento válido(daily, vote)"
+  },
+  "roman": {
+    "encode": "<:Correto:805054626448670762> ・ Em números romanos: `{{text}}`",
+    "decode": "<:Correto:805054626448670762> ・ Número romano em texto: `{{text}}`",
+    "error": "<:Errado:804857898030989334> ・ Argumento inválido (você deve utilizar `encode` ou `decode`)",
+    "invalid": "<:Errado:804857898030989334> ・ Argumento inválido"
+  },
+  "colorthief": {
+    "args": "<:Errado:804857898030989334> **»** Coloque uma imagem válida!",
+    "title": "<:badgeA:795773919465963551> Paleta de cores da imagem",
+    "error": "<:Errado:804857898030989334> ・ Argumento inválido. Use `{{prefix}}ajuda colorthief`"
+  }
+}

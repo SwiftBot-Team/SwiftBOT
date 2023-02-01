@@ -1,0 +1,15 @@
+{
+  "default": "An error occurred!",
+  "devsOnly": "Just developers can execute this command!",
+  "botPermissionError": {
+    "singular": "I don't have permission for `{{perm}}`, which is necessary for execute this command!",
+    "plural": "I don't have permissions for `{{perm}}`, which is necessary for execute this command!"
+  },
+  "userPermissionError": {
+    "singular": "You don't have permission for `{{perm}}`, which is necessary for execute this command!",
+    "plural": "You don't have permissions for `{{perm}}`, which is necessary for execute this command"
+  },
+  "cooldownError": "Hey, you are in cooldown! Wait {{cooldown}} seconds for use this command!",
+  "private": "<:swiftBravo:751407111791050793> I could not send messages in your DM... ",
+  "isJailed": "<:errado:739176302317273089> **»** Hey, you are in jail... you can not execute this action..."
+}

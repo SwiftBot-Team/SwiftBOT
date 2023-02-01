@@ -1,0 +1,32 @@
+{
+  "lockedcmd": "<@{{member}}>, este comando foi bloqueado por um administrador do grupo.",
+  "operationCancel": "Digite 'cancelar' para cancelar a operação.",
+  "operationCanceled": "Operação cancelada com sucesso.",
+  "mail": {
+    "errors": {
+      "autorole": {
+        "title": "**Erro no AutoRole**",
+        "body": "Hey! Ocorreu um erro no modulo do AutoRole! Ao tentar setar os cargos para `{{user}}`, "
+      }
+    }
+  },
+  "music": {
+    "trackStart": "<:UNSPMidiaIcon:703725149467312129> Tocando agora: [{{music}}]({{url}}) ",
+    "queueEnd": "<:UNSPWarntIcon:703725150159241216> A fila de músicas acabou e eu saí do canal de voz.",
+    "trackError": "<:UNSPWarntIcon:703725150159241216> | Ocorreu um erro ao tocar a música {{track}}. Erro: `{{error}}`",
+    "voiceStateUpdate": {
+      "removed": "<:UNSPWarntIcon:703725150159241216> A fila de músicas foi limpa por me removerem do canal de voz.",
+      "2minutos": "<:UNSPWarntIcon:703725150159241216> A fila de músicas foi pausada pois fui deixado tocando sozinho. Caso ninguém entre dentro de 2 minutos irei limpar a lista de músicas.",
+      "2minutosEnd": "<:UNSPWarntIcon:703725150159241216> Fui deixado tocando sozinho por mais de 2 minutos e por isso limpei a fila de músicas."
+    },
+    "noMembers": "<:UNSPWarntIcon:703725150159241216> Eu desconectei do canal de voz por não ter ninguém escutando minhas músicas! ",
+    "noPlaying": "<@{{member}}>, eu não estou tocando nada no momento.",
+    "canal": "<@{{member}}>, você precisa estar em um canal de voz para executar este comando!",
+    "canal2": "<@{{member}}>, você precisa estar no mesmo canal de voz que eu para executar este comando.",
+    "tts": "<@{{member}}>, no momento estou sendo utilizado para enviar mensagens em TTS."
+  },
+  "day": "dia atrás",
+  "days": "dias atrás",
+  "no": "Não tem",
+  "yes": "Sim"
+}
