@@ -1,7 +1,7 @@
 # **Terms of Service (ToS) for SwiftBOT**
 
 ## 1. **Acceptance of Terms**
-By using SwiftBOT, you agree to comply with these Terms of Service (ToS). These terms apply to all users of the bot. You also agree that you've read our Privacy Policy and agreed to it. If you do not agree with these terms, you may not use SwiftBOT. 
+By using SwiftBOT, you agree to comply with these Terms of Service (ToS). These terms apply to all users of the bot. You also agree that you've read our [Privacy Policy](https://github.com/SwiftBot-Team/SwiftBOT/blob/master/legal/privacy.md) and agreed to it. If you do not agree with these terms, you may not use SwiftBOT. 
 
 ## 2. **User Conduct**
 While using SwiftBOT, you agree to:
